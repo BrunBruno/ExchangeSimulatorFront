@@ -1,6 +1,6 @@
 import classes from "./Header.module.scss";
 
-function Header() {
+function Header(props) {
   return (
     <header className={classes.header}>
       <div className={classes["header__logo"]}>
@@ -36,10 +36,16 @@ function Header() {
       </div>
       <nav className={classes["header__nav"]}>
         <ul className={classes["header__nav__ul"]}>
-          <li>Home</li>
+          <li
+            onClick={() => {
+              location.reload();
+            }}
+          >
+            Home
+          </li>
           <li>About</li>
-          <li>Register</li>
-          <li>Sing In</li>
+          <li onClick={props.handleRegisterPopUp}>Register</li>
+          <li onClick={props.handleSignInPopUp}>Sing In</li>
         </ul>
       </nav>
     </header>

@@ -31,6 +31,7 @@
       display: flex;
       gap: 2rem;
       list-style-type: none;
+      user-select: none;
 
       li {
         padding: 0.8rem 1.6rem;
@@ -55,16 +56,6 @@
           width: 0;
           background-color: rgba($grey-color0, 0.5);
           transition: all 0.3s;
-        }
-
-        &:nth-child(4) {
-          border: solid 0.2rem $grey-color0;
-          &:hover {
-            border: solid 0.2rem rgba($grey-color0, 0.5);
-            &::after {
-              width: 0;
-            }
-          }
         }
       }
     }
