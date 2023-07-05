@@ -1,0 +1,37 @@
+@import "./Variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: DejaVu Sans Mono, monospace;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  background-color: $main-color9;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    #118799,
+    #095969,
+    #094049,
+    #082229,
+    #010901,
+    #000000
+  );
+  color: $grey-color0;
+  overflow-y: overlay;
+  overflow-x: hidden;
+
+  &::-webkit-scrollbar {
+    &-thumb {
+      display: none;
+    }
+  }
+}

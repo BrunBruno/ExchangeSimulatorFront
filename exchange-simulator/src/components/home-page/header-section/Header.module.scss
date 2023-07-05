@@ -1,0 +1,64 @@
+@import "../../../Variables.scss";
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100%;
+  padding: 2% 0;
+  display: flex;
+  justify-content: space-evenly;
+
+  &__logo {
+    width: 100px;
+  }
+
+  &__nav {
+    background-color: rgba($main-color0, 0.2);
+    padding: 1.2rem 2.4rem;
+    border-radius: 10rem;
+
+    &__ul {
+      display: flex;
+      gap: 2rem;
+      list-style-type: none;
+
+      li {
+        padding: 0.8rem 1.6rem;
+        flex-grow: 1;
+        font-size: 1.6rem;
+        font-weight: 500;
+        border-radius: 10rem;
+        transition: all 0.3s;
+
+        &:hover {
+          cursor: pointer;
+          &::after {
+            width: 100%;
+          }
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          top: 50%;
+          height: 2px;
+          width: 0;
+          background-color: rgba($grey-color0, 0.5);
+          transition: all 0.3s;
+        }
+
+        &:nth-child(4) {
+          border: solid 0.2rem $grey-color0;
+          &:hover {
+            border: solid 0.2rem rgba($grey-color0, 0.5);
+            &::after {
+              width: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
