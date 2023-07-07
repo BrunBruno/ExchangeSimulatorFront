@@ -35,7 +35,7 @@ function Header(props) {
         </svg>
       </div>
       <nav className={classes["header__nav"]}>
-        <ul className={classes["header__nav__ul"]}>
+        <ul>
           <li
             onClick={() => {
               location.reload();

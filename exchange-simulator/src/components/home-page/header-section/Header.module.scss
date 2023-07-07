@@ -2,9 +2,9 @@
 
 .header {
   position: fixed;
+  z-index: 8;
   top: 0;
   left: 0;
-  z-index: 9;
   width: 100%;
   padding: 2% 0;
   display: flex;
@@ -26,12 +26,14 @@
     background-color: rgba($main-color0, 0.2);
     padding: 1.2rem 2.4rem;
     border-radius: 10rem;
+    z-index: inherit;
 
-    &__ul {
+    ul {
       display: flex;
       gap: 2rem;
       list-style-type: none;
       user-select: none;
+      z-index: inherit;
 
       li {
         padding: 0.8rem 1.6rem;
@@ -40,6 +42,7 @@
         font-weight: 500;
         border-radius: 10rem;
         transition: all 0.3s;
+        z-index: inherit;
 
         &:hover {
           cursor: pointer;
@@ -56,6 +59,25 @@
           width: 0;
           background-color: rgba($grey-color0, 0.5);
           transition: all 0.3s;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .header {
+    justify-content: center;
+
+    &__logo {
+      width: 0;
+    }
+
+    &__nav {
+      ul {
+        li {
+          padding: 1.2rem 2.4rem;
+          font-size: 2.4rem;
         }
       }
     }

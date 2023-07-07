@@ -135,6 +135,37 @@
   }
 }
 
+@media (max-width: 800px) {
+  .form-page {
+    width: 90%;
+
+    form {
+      h2 {
+        font-size: 6rem;
+      }
+      .x {
+        width: 4rem;
+      }
+      .form-container {
+        div {
+          span {
+            font-size: 4rem;
+          }
+          input {
+            font-size: 4rem;
+          }
+          button {
+            font-size: 4rem;
+          }
+          .error {
+            font-size: 3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
 .hidden {
   width: 0;
   height: 0;

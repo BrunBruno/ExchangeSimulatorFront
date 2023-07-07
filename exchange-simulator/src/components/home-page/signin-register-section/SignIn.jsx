@@ -19,8 +19,10 @@ function SignIn(props) {
     try {
       const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
       localStorage.setItem("token", response.data);
+      console.log(response);
 
       try {
+        console.log("Logged in");
       } catch (err) {
         console.log(err);
       }
