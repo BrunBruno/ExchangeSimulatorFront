@@ -1,13 +1,89 @@
+import { useRef } from "react";
+import baseUrl from "../../../Shared";
 import classes from "../HomePage.module.scss";
+import axios from "axios";
 
 function Register(props) {
+  const emailErrRef = useRef(null);
+  const userNameErrRef = useRef(null);
+  const passwordErrRef = useRef(null);
+
+  const registerUser = async (event) => {
+    event.preventDefault();
+
+    const userData = {
+      email: event.target.email.value,
+      userName: event.target.userName.value,
+      password: event.target.password.value,
+      confirmPassword: event.target.confirmPassword.value,
+    };
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userData.email)) {
+      emailErrRef.current.innerHTML = "Email is not valid.";
+      return;
+    } else {
+      emailErrRef.current.innerHTML = "";
+    }
+
+    if (userData.userName.length > 30 || userData.userName.length < 5) {
+      userNameErrRef.current.innerHTML =
+        "Username must be between 5 and 30 characters.";
+      return;
+    } else {
+      userNameErrRef.current.innerHTML = "";
+    }
+
+    if (userData.password.length < 5) {
+      passwordErrRef.current.innerHTML =
+        "Password must have atleast 5 characters.";
+      return;
+    } else {
+      passwordErrRef.current.innerHTML = "";
+    }
+
+    if (userData.password.indexOf(" ") >= 0) {
+      passwordErrRef.current.innerHTML = "Password can't contain whitespaces.";
+      return;
+    } else {
+      passwordErrRef.current.innerHTML = "";
+    }
+
+    if (userData.password !== userData.confirmPassword) {
+      passwordErrRef.current.innerHTML =
+        "Password and Confirm Password don't match";
+      return;
+    } else {
+      passwordErrRef.current.innerHTML = "";
+    }
+
+    try {
+      const response = await axios.post(`${baseUrl}/user/register`, userData);
+      console.log("Account was created");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const clearErrors = () => {
+    emailErrRef.current.innerHTML = "";
+    userNameErrRef.current.innerHTML = "";
+    passwordErrRef.current.innerHTML = "";
+  };
+
   return (
     <div
       ref={props.popupRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
-      <form>
-        <div className={classes.x} onClick={props.handleRegisterPopUp}>
+      <form onSubmit={registerUser}>
+        <div
+          className={classes.x}
+          onClick={() => {
+            props.handleRegisterPopUp();
+            clearErrors();
+          }}
+        >
           <svg
             viewBox="0 -0.5 25 25"
             fill="none"
@@ -23,19 +99,22 @@ function Register(props) {
         <div className={classes["form-container"]}>
           <div>
             <span>Email</span>
-            <input type="text"></input>
+            <input type="text" name="email"></input>
+            <span ref={emailErrRef} className={classes.error}></span>
           </div>
           <div>
             <span>Nick Name</span>
-            <input type="text"></input>
+            <input type="text" name="userName"></input>
+            <span ref={userNameErrRef} className={classes.error}></span>
           </div>
           <div>
             <span>Password</span>
-            <input type="password"></input>
+            <input type="password" name="password"></input>
+            <span ref={passwordErrRef} className={classes.error}></span>
           </div>
           <div>
             <span>Confirm Password</span>
-            <input type="password"></input>
+            <input type="password" name="confirmPassword"></input>
           </div>
           <div>
             <button type="submit">Register</button>

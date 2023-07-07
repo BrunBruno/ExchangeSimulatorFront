@@ -1,12 +1,40 @@
+import { useRef } from "react";
+import axios from "axios";
+
+import baseUrl from "../../../Shared";
+
 import classes from "../HomePage.module.scss";
 
 function SignIn(props) {
+  const emailErrRef = useRef(null);
+  const passwordErrRef = useRef(null);
+
+  const loginUser = async (event) => {
+    event.preventDefault();
+    const userData = {
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+
+    try {
+      const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
+      localStorage.setItem("token", response.data);
+
+      try {
+      } catch (err) {
+        console.log(err);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div
       ref={props.popupRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
-      <form>
+      <form onSubmit={loginUser}>
         <div className={classes.x} onClick={props.handleSignInPopUp}>
           <svg
             viewBox="0 -0.5 25 25"
@@ -23,12 +51,14 @@ function SignIn(props) {
         <div className={classes["form-container"]}>
           <div>
             <span>Email</span>
-            <input type="text"></input>
+            <input type="text" name="email"></input>
+            <span ref={emailErrRef} className={classes.error}></span>
           </div>
 
           <div>
             <span>Password</span>
-            <input type="password"></input>
+            <input type="password" name="password"></input>
+            <span ref={passwordErrRef} className={classes.error}></span>
           </div>
 
           <div>
