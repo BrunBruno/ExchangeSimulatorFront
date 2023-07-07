@@ -1,0 +1,181 @@
+@import "../../../Variables.scss";
+
+.form-page {
+  position: absolute;
+  z-index: 10;
+  width: 40%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba($main-color9, 0.9);
+  border-radius: 4rem;
+  padding: 4rem;
+  border: solid 0.5rem $grey-color0;
+  visibility: visible;
+  transition: all 0.3s;
+  overflow: hidden;
+
+  form {
+    position: relative;
+    height: 100%;
+    h2 {
+      font-size: 3rem;
+      padding-bottom: 0.3rem;
+      border-bottom: solid 0.3rem $grey-color0;
+      user-select: none;
+    }
+    .x {
+      position: absolute;
+      width: 3rem;
+      aspect-ratio: 1 / 1;
+      background-color: $main-color0;
+      color: $main-color9;
+      border: solid 1px $main-color9;
+      border-radius: 100%;
+      top: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $main-color1;
+      }
+
+      svg {
+        height: 100%;
+      }
+    }
+
+    .form-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+
+      div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        span {
+          font-size: 2rem;
+          user-select: none;
+        }
+
+        input {
+          padding: 0.5rem 2rem;
+          font-size: 2rem;
+          background-color: $main-color0;
+          border: solid 0.3rem #0000;
+          outline: none;
+          border-radius: 2rem;
+          text-align: center;
+          color: $main-color9;
+
+          &:focus {
+            border: solid 0.3rem $main-color3;
+          }
+        }
+
+        .error {
+          position: relative;
+          background-color: $main-color0;
+          color: #f00;
+          font-size: 1.6rem;
+          padding: 0.3rem 0.6rem;
+          margin: 1rem;
+          border-radius: 1rem;
+          border-top-right-radius: 0;
+          width: fit-content;
+          z-index: 0;
+
+          &::after {
+            content: "";
+            position: absolute;
+            z-index: -2;
+            background-color: #0000;
+            top: -2.4rem;
+            right: 0;
+            height: 2.4rem;
+            width: 2.4rem;
+            border-bottom-right-radius: 1.2rem;
+            box-shadow: 0.1px 1.2rem 0 0 $main-color0;
+          }
+        }
+
+        button {
+          position: absolute;
+          right: 0;
+          width: fit-content;
+          padding: 0.5rem 2rem;
+          font-size: 2rem;
+          background-color: $main-color0;
+          border: solid 0.3rem #0000;
+          outline: none;
+          border-radius: 2rem;
+          text-align: center;
+          color: $main-color9;
+          transition: all 0.3s;
+
+          &:hover {
+            cursor: pointer;
+            border: solid 0.3rem $main-color3;
+          }
+          &:focus {
+            border: solid 0.3rem $main-color3;
+            box-shadow: 0 0 1rem 0.1rem $main-color1;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .form-page {
+    width: 90%;
+
+    form {
+      h2 {
+        font-size: 6rem;
+      }
+      .x {
+        width: 4rem;
+      }
+      .form-container {
+        div {
+          span {
+            font-size: 3.6rem;
+          }
+          input {
+            font-size: 3.6rem;
+          }
+
+          button {
+            font-size: 3.6rem;
+          }
+
+          .error {
+            font-size: 2.6rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+.hidden {
+  width: 0;
+  height: 0;
+  padding: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}

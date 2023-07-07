@@ -1,15 +1,18 @@
+import { useRef, useState } from "react";
+
 import classes from "./HomePage.module.scss";
+import srclasses from "./signin-register-section/SigninRegister.module.scss";
 
 import Header from "./header-section/Header";
 import Hero from "./hero-section/Hero";
 import SignIn from "./signin-register-section/SignIn";
 import Register from "./signin-register-section/Register";
-
-import { useRef, useState } from "react";
+import EmailVerification from "./signin-register-section/EmailVerification";
 
 function HomePage() {
   const signInPageRef = useRef(null);
   const registerPageRef = useRef(null);
+  const emailVerificationPageRef = useRef(null);
   const [signInPageOn, setSignInPageOn] = useState(false);
   const [registerPageOn, setRegisterPageOn] = useState(false);
 
@@ -17,10 +20,10 @@ function HomePage() {
     if (!registerPageOn) {
       setSignInPageOn(!signInPageOn);
 
-      if (signInPageRef.current.classList.contains(classes.hidden)) {
-        signInPageRef.current.classList.remove(classes.hidden);
+      if (signInPageRef.current.classList.contains(srclasses.hidden)) {
+        signInPageRef.current.classList.remove(srclasses.hidden);
       } else {
-        signInPageRef.current.classList.add(classes.hidden);
+        signInPageRef.current.classList.add(srclasses.hidden);
       }
     }
   };
@@ -28,12 +31,17 @@ function HomePage() {
     if (!signInPageOn) {
       setRegisterPageOn(!registerPageOn);
 
-      if (registerPageRef.current.classList.contains(classes.hidden)) {
-        registerPageRef.current.classList.remove(classes.hidden);
+      if (registerPageRef.current.classList.contains(srclasses.hidden)) {
+        registerPageRef.current.classList.remove(srclasses.hidden);
       } else {
-        registerPageRef.current.classList.add(classes.hidden);
+        registerPageRef.current.classList.add(srclasses.hidden);
       }
     }
+  };
+
+  const handleEmailVerificationPopUp = () => {
+    registerPageRef.current.classList.add(srclasses.hidden);
+    emailVerificationPageRef.current.classList.remove(srclasses.hidden);
   };
 
   return (
@@ -49,7 +57,12 @@ function HomePage() {
       <SignIn handleSignInPopUp={handleSignInPopUp} popupRef={signInPageRef} />
       <Register
         handleRegisterPopUp={handleRegisterPopUp}
+        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
         popupRef={registerPageRef}
+      />
+      <EmailVerification
+        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
+        popupRef={emailVerificationPageRef}
       />
 
       <Hero handleRegisterPopUp={handleRegisterPopUp} />

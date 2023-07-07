@@ -5,65 +5,48 @@ import baseUrl from "../../../Shared";
 
 import classes from "./SigninRegister.module.scss";
 
-function SignIn(props) {
-  const emailErrRef = useRef(null);
-  const passwordErrRef = useRef(null);
+function EmailVerification(props) {
+  const codeRef = useRef(null);
 
-  const loginUser = async (event) => {
+  const verify = async (event) => {
     event.preventDefault();
-    const userData = {
-      email: event.target.email.value,
-      password: event.target.password.value,
+
+    const verificationCode = {
+      code: event.target.code.value,
     };
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(userData.email)) {
-      emailErrRef.current.classList.add(classes.error);
-      emailErrRef.current.innerHTML = "Email is not valid.";
-      return;
+    if (verificationCode.code.length === 0) {
+      codeRef.current.classList.add(classes.error);
+      codeRef.current.innerHTML = "Please enter the code.";
     } else {
-      emailErrRef.current.classList.remove(classes.error);
-      emailErrRef.current.innerHTML = "";
-    }
-
-    if (userData.password.length === 0) {
-      passwordErrRef.current.classList.add(classes.error);
-      passwordErrRef.current.innerHTML = "Password can not be empty.";
-      return;
-    } else {
-      passwordErrRef.current.classList.remove(classes.error);
-      passwordErrRef.current.innerHTML = "";
+      codeRef.current.classList.remove(classes.error);
+      codeRef.current.innerHTML = "";
     }
 
     try {
-      const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
-      localStorage.setItem("token", response.data);
-      console.log(response);
-      console.log("Logged in");
-    } catch (err) {
-      passwordErrRef.current.classList.add(classes.error);
-      passwordErrRef.current.innerHTML = "Invalid email or password.";
+      const response = await axios.put(
+        `${baseUrl}/user/verify-email`,
+        verificationCode,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      console.log("Verification was successfull.");
+    } catch {
+      codeRef.current.classList.add(classes.error);
+      codeRef.current.innerHTML = "Code incorrect.";
     }
   };
-
-  const clearErrors = () => {
-    emailErrRef.current.innerHTML = "";
-    passwordErrRef.current.innerHTML = "";
-    emailErrRef.current.classList.remove(classes.error);
-    passwordErrRef.current.classList.remove(classes.error);
-  };
-
   return (
     <div
       ref={props.popupRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
-      <form onSubmit={loginUser}>
+      <form onSubmit={verify}>
         <div
           className={classes.x}
           onClick={() => {
-            props.handleSignInPopUp();
-            clearErrors();
+            props.handleEmailVerificationPopUp();
           }}
         >
           <svg
@@ -77,22 +60,21 @@ function SignIn(props) {
             />
           </svg>
         </div>
-        <h2>Sign In</h2>
+        <h2>Email Verification</h2>
         <div className={classes["form-container"]}>
           <div>
-            <span>Email</span>
-            <input type="text" name="email"></input>
-            <span ref={emailErrRef}></span>
+            <p>
+              We sent you verification code to your email. Please enter the code
+              to verify your accout.
+            </p>
           </div>
-
           <div>
-            <span>Password</span>
-            <input type="password" name="password"></input>
-            <span ref={passwordErrRef}></span>
+            <span>Enter code</span>
+            <input type="text" name="code"></input>
+            <span ref={codeRef}></span>
           </div>
-
           <div>
-            <button type="submit">Sign In</button>
+            <button type="submit">Verify</button>
           </div>
         </div>
       </form>
@@ -100,4 +82,4 @@ function SignIn(props) {
   );
 }
 
-export default SignIn;
+export default EmailVerification;

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import baseUrl from "../../../Shared";
-import classes from "../HomePage.module.scss";
+import classes from "./SigninRegister.module.scss";
 import axios from "axios";
 
 function Register(props) {
@@ -20,48 +20,75 @@ function Register(props) {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
+      emailErrRef.current.classList.add(classes.error);
       emailErrRef.current.innerHTML = "Email is not valid.";
       return;
     } else {
+      emailErrRef.current.classList.remove(classes.error);
       emailErrRef.current.innerHTML = "";
     }
 
     if (userData.userName.length > 30 || userData.userName.length < 5) {
+      userNameErrRef.current.classList.add(classes.error);
       userNameErrRef.current.innerHTML =
         "Username must be between 5 and 30 characters.";
       return;
     } else {
+      userNameErrRef.current.classList.remove(classes.error);
       userNameErrRef.current.innerHTML = "";
     }
 
     if (userData.password.length < 5) {
+      passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML =
         "Password must have atleast 5 characters.";
       return;
     } else {
+      passwordErrRef.current.classList.remove(classes.error);
       passwordErrRef.current.innerHTML = "";
     }
 
     if (userData.password.indexOf(" ") >= 0) {
+      passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML = "Password can't contain whitespaces.";
       return;
     } else {
+      passwordErrRef.current.classList.remove(classes.error);
       passwordErrRef.current.innerHTML = "";
     }
 
     if (userData.password !== userData.confirmPassword) {
+      passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML =
         "Password and Confirm Password don't match";
       return;
     } else {
+      passwordErrRef.current.classList.remove(classes.error);
       passwordErrRef.current.innerHTML = "";
     }
 
     try {
-      const response = await axios.post(`${baseUrl}/user/register`, userData);
+      const registerResponse = await axios.post(
+        `${baseUrl}/user/register`,
+        userData
+      );
+
+      const logUserData = {
+        email: event.target.email.value,
+        password: event.target.password.value,
+      };
+
+      const signinResponse = await axios.post(
+        `${baseUrl}/user/sign-in`,
+        logUserData
+      );
+      localStorage.setItem("token", signinResponse.data);
+
+      props.handleEmailVerificationPopUp();
       console.log("Account was created");
     } catch (err) {
-      console.log(err);
+      emailErrRef.current.classList.add(classes.error);
+      emailErrRef.current.innerHTML = "User already exists.";
     }
   };
 
@@ -69,6 +96,9 @@ function Register(props) {
     emailErrRef.current.innerHTML = "";
     userNameErrRef.current.innerHTML = "";
     passwordErrRef.current.innerHTML = "";
+    emailErrRef.current.classList.remove(classes.error);
+    userNameErrRef.current.classList.remove(classes.error);
+    passwordErrRef.current.classList.remove(classes.error);
   };
 
   return (
@@ -100,17 +130,17 @@ function Register(props) {
           <div>
             <span>Email</span>
             <input type="text" name="email"></input>
-            <span ref={emailErrRef} className={classes.error}></span>
+            <span ref={emailErrRef}></span>
           </div>
           <div>
             <span>Nick Name</span>
             <input type="text" name="userName"></input>
-            <span ref={userNameErrRef} className={classes.error}></span>
+            <span ref={userNameErrRef}></span>
           </div>
           <div>
             <span>Password</span>
             <input type="password" name="password"></input>
-            <span ref={passwordErrRef} className={classes.error}></span>
+            <span ref={passwordErrRef}></span>
           </div>
           <div>
             <span>Confirm Password</span>
