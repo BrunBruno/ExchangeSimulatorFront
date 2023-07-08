@@ -39,9 +39,14 @@ function HomePage() {
     }
   };
 
-  const handleEmailVerificationPopUp = () => {
-    registerPageRef.current.classList.add(srclasses.hidden);
-    emailVerificationPageRef.current.classList.remove(srclasses.hidden);
+  const handleEmailVerificationPopUp = (open) => {
+    if (open) {
+      registerPageRef.current.classList.add(srclasses.hidden);
+      emailVerificationPageRef.current.classList.remove(srclasses.hidden);
+    } else {
+      setRegisterPageOn(!registerPageOn);
+      emailVerificationPageRef.current.classList.add(srclasses.hidden);
+    }
   };
 
   return (

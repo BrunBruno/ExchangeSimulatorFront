@@ -46,7 +46,7 @@ function EmailVerification(props) {
         <div
           className={classes.x}
           onClick={() => {
-            props.handleEmailVerificationPopUp();
+            props.handleEmailVerificationPopUp(false);
           }}
         >
           <svg

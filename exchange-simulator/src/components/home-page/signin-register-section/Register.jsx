@@ -84,7 +84,7 @@ function Register(props) {
       );
       localStorage.setItem("token", signinResponse.data);
 
-      props.handleEmailVerificationPopUp();
+      props.handleEmailVerificationPopUp(true);
       console.log("Account was created");
     } catch (err) {
       emailErrRef.current.classList.add(classes.error);
