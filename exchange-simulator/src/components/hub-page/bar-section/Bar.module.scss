@@ -76,6 +76,10 @@
         margin-top: 0.5rem;
         border-bottom: none;
         transition: all 0.1s;
+
+        span {
+          display: none;
+        }
       }
 
       svg {

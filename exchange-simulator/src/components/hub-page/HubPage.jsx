@@ -7,8 +7,8 @@ import Intro from "./intro-section/Intro";
 function HubPage() {
   return (
     <>
-      <Header />
       <div className={classes.container}>
+        <Header />
         <Intro />
         <Games />
       </div>

@@ -3,13 +3,15 @@
 // header section
 .header {
   position: sticky;
+  top: 0;
+  z-index: 10;
   width: 100%;
-  background-color: rgba($main-color9, 0.9);
   padding: 1%;
   display: flex;
   align-items: center;
   gap: 5rem;
   font-size: 1.2rem;
+  background-color: rgba($main-color9, 0.9);
 
   &__logo {
     svg {
