@@ -1,0 +1,121 @@
+@import "../../../Variables.scss";
+
+// games container
+.games {
+  width: 100%;
+  height: 50%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  &__card {
+    margin: 2rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50rem;
+
+    &:nth-child(1) {
+      background-color: $main-color7;
+      background-image: repeating-conic-gradient(
+        from 0deg at 80% 20%,
+        #0000 20%,
+        $main-color3 40%
+      );
+    }
+    &:nth-child(2) {
+      background-color: $main-color9;
+      background-image: repeating-conic-gradient(
+        from 0deg at 20% 60%,
+        #0000 20%,
+        $main-color5 40%
+      );
+    }
+    &:nth-child(3) {
+      background-color: $main-color4;
+      background-image: repeating-conic-gradient(
+        from 0deg at 70% 40%,
+        #0000 20%,
+        $main-color8 40%
+      );
+    }
+
+    h2 {
+      font-size: 2rem;
+      text-shadow: 2px 2px 2px #000;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .form-search {
+      width: 80%;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 1rem;
+      padding: 2rem 0;
+
+      input {
+        @include mainInput;
+        font-size: 1.2rem;
+      }
+
+      button {
+        @include mainButton;
+        font-size: 1.2rem;
+      }
+    }
+
+    ul {
+      list-style-type: none;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      overflow: overlay;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: $main-color0;
+        border-radius: 1rem;
+      }
+
+      li {
+        width: 80%;
+        padding: 1rem;
+        border-radius: 1rem;
+        background-color: $grey-color9;
+      }
+    }
+
+    .pagination {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+
+      button {
+        @include mainButton;
+        font-size: 1rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+}
+// end games container

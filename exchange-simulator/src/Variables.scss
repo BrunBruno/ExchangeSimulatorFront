@@ -25,3 +25,66 @@ $grey-color9: #212529;
 // other colors
 $danger-color: #f03e3e;
 $success-color: #51cf66;
+
+@mixin mainButton {
+  width: fit-content;
+  padding: 0.5rem 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  background-color: $main-color0;
+  border: solid 0.3rem #0000;
+  outline: none;
+  border-radius: 2rem;
+  text-align: center;
+  color: $main-color9;
+  transition: all 0.3s;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+    border: solid 0.3rem $main-color3;
+  }
+
+  &:focus {
+    border: solid 0.3rem $main-color3;
+    box-shadow: 0 0 1rem 0.1rem $main-color1;
+  }
+}
+
+@mixin seconadryButton {
+  width: fit-content;
+  padding: 0.5rem 2rem;
+  font-size: 2rem;
+  border: solid 0.3rem #0000;
+  outline: none;
+  border-radius: 2rem;
+  text-align: center;
+  color: $main-color0;
+  background-color: $main-color8;
+  transition: all 0.3s;
+
+  &:hover {
+    cursor: pointer;
+    border: solid 0.3rem $main-color3;
+  }
+
+  &:focus {
+    border: solid 0.3rem $main-color3;
+    box-shadow: 0 0 1rem 0.1rem $main-color1;
+  }
+}
+
+@mixin mainInput {
+  padding: 0.5rem 2rem;
+  font-size: 2rem;
+  background-color: $main-color0;
+  border: solid 0.3rem #0000;
+  outline: none;
+  border-radius: 2rem;
+  text-align: center;
+  color: $main-color9;
+
+  &:focus {
+    border: solid 0.3rem $main-color3;
+  }
+}
