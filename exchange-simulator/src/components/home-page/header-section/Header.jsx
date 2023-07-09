@@ -45,7 +45,7 @@ function Header(props) {
           </li>
           <li>About</li>
           <li onClick={props.handleRegisterPopUp}>Register</li>
-          <li onClick={props.handleSignInPopUp}>Sing In</li>
+          <li onClick={props.handleSignInPopUp}>Sign In</li>
         </ul>
       </nav>
     </header>

@@ -82,7 +82,7 @@ function Register(props) {
         `${baseUrl}/user/sign-in`,
         logUserData
       );
-      localStorage.setItem("token", signinResponse.data);
+      localStorage.setItem("token", signinResponse.data.token);
 
       props.handleEmailVerificationPopUp(true);
       console.log("Account was created");
@@ -146,7 +146,7 @@ function Register(props) {
             <span>Confirm Password</span>
             <input type="password" name="confirmPassword"></input>
           </div>
-          <div>
+          <div className={classes.buttons}>
             <button type="submit">Register</button>
           </div>
         </div>

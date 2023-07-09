@@ -31,12 +31,28 @@ function EmailVerification(props) {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
+
       console.log("Verification was successfull.");
-    } catch {
+    } catch (err) {
       codeRef.current.classList.add(classes.error);
       codeRef.current.innerHTML = "Code incorrect.";
     }
   };
+
+  const regenerateCode = async () => {
+    try {
+      const response = await axios.post(
+        `${baseUrl}/user/regenerate-code`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div
       ref={props.popupRef}
@@ -73,7 +89,11 @@ function EmailVerification(props) {
             <input type="text" name="code"></input>
             <span ref={codeRef}></span>
           </div>
-          <div>
+
+          <div className={classes.buttons}>
+            <button type="button" onClick={regenerateCode}>
+              Resend code
+            </button>
             <button type="submit">Verify</button>
           </div>
         </div>

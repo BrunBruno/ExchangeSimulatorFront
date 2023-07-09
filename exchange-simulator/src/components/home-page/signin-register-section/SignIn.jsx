@@ -91,7 +91,7 @@ function SignIn(props) {
             <span ref={passwordErrRef}></span>
           </div>
 
-          <div>
+          <div className={classes.buttons}>
             <button type="submit">Sign In</button>
           </div>
         </div>
