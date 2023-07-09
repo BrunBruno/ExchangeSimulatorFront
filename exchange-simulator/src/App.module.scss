@@ -1,0 +1,65 @@
+@import "./Variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: DejaVu Sans Mono, monospace;
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  background-color: $main-color9;
+  background: radial-gradient(
+    ellipse at 100% 0%,
+    #118799,
+    #095969,
+    #094049,
+    #082229,
+    #010901,
+    #000000
+  );
+  color: $grey-color0;
+  overflow: hidden;
+}
+
+@media (max-width: 1400px) {
+  html {
+    font-size: 58%;
+  }
+}
+
+@media (max-width: 1300px) {
+  html {
+    font-size: 52%;
+  }
+}
+
+@media (max-width: 1150px) {
+  html {
+    font-size: 48%;
+  }
+}
+
+@media (max-width: 1000px) {
+  html {
+    font-size: 42%;
+  }
+}
+
+@media (max-width: 800px) {
+  html {
+    font-size: 36%;
+  }
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 30%;
+  }
+}
