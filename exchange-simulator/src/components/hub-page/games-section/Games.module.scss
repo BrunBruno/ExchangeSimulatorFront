@@ -110,10 +110,32 @@
 
       button {
         @include mainButton;
-        font-size: 1rem;
+        font-size: 0.8rem;
         padding: 0.5rem;
         height: 100%;
         aspect-ratio: 1/1;
+      }
+
+      .currentPage {
+        @include seconadryButton;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+      }
+
+      p {
+        @include mainButton;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+        background-color: #0000;
+        &:hover {
+          background-color: #0000;
+          cursor: default;
+          border-color: #0000;
+        }
       }
     }
   }
