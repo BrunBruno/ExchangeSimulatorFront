@@ -5,21 +5,21 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 3%;
+  padding: 4%;
 
   ul {
-    width: 50%;
     display: flex;
     background-color: $grey-color9;
     border-radius: 3rem;
     gap: 1rem;
     padding: 1rem;
+    margin: 1rem;
     box-shadow: 0 1rem 2rem #000;
 
     li {
       width: 100%;
       padding: 1.5rem 3rem;
-      background-color: $grey-color7;
+      background-color: $main-color8;
       list-style-type: none;
       font-size: 2rem;
       text-align: center;

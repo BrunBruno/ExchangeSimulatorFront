@@ -105,6 +105,10 @@ function Card(props) {
           {">"}
         </button>
       </div>
+
+      <div className={classes.cover}>
+        <h2>{props.title}</h2>
+      </div>
     </div>
   );
 }
