@@ -47,13 +47,21 @@ function SignIn(props) {
       localStorage.setItem("token", response.data.token);
 
       console.log("Logged in");
+
+      const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
+
+      if (!isEmailVerified.data.isEmailVerified) {
+        props.handleEmailVerificationPopUp(true);
+      }
     } catch (err) {
       console.log(err);
 
       // Display backend exeptions
       if (err.response && err.response.data) {
-        codeRef.current.classList.add(classes.error);
-        codeRef.current.innerHTML = err.response.data;
+        emailErrRef.current.classList.add(classes.error);
+        emailErrRef.current.innerHTML = err.response.data;
       } else {
         mainErrRef.current.classList.add(classes["main-error"]);
         mainErrRef.current.innerHTML = "Connection error.";

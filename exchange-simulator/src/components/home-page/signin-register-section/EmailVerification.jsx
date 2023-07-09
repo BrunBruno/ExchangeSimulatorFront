@@ -56,13 +56,9 @@ function EmailVerification(props) {
   const regenerateCode = async () => {
     try {
       // Generate new code and delete previous
-      const response = await axios.post(
-        `${baseUrl}/user/regenerate-code`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      const response = await axios.post(`${baseUrl}/user/regenerate-code`, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
     } catch (err) {
       console.log(err);
 

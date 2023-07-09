@@ -46,10 +46,16 @@ function HomePage() {
   // handle verification modal
   const handleEmailVerificationPopUp = (isOpen) => {
     if (isOpen) {
-      registerPageRef.current.classList.add(srclasses.hidden);
+      if (!signInPageRef.current.classList.contains(srclasses.hidden)) {
+        signInPageRef.current.classList.add(srclasses.hidden);
+      }
+      if (!registerPageRef.current.classList.contains(srclasses.hidden)) {
+        registerPageRef.current.classList.add(srclasses.hidden);
+      }
       emailVerificationPageRef.current.classList.remove(srclasses.hidden);
     } else {
-      setRegisterPageOn(!registerPageOn);
+      setSignInPageOn(false);
+      setRegisterPageOn(false);
       emailVerificationPageRef.current.classList.add(srclasses.hidden);
     }
   };
@@ -64,7 +70,11 @@ function HomePage() {
       {(signInPageOn || registerPageOn) && (
         <div className={classes["form-bg"]}></div>
       )}
-      <SignIn handleSignInPopUp={handleSignInPopUp} popupRef={signInPageRef} />
+      <SignIn
+        handleSignInPopUp={handleSignInPopUp}
+        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
+        popupRef={signInPageRef}
+      />
       <Register
         handleRegisterPopUp={handleRegisterPopUp}
         handleEmailVerificationPopUp={handleEmailVerificationPopUp}
