@@ -1,0 +1,53 @@
+@import "../../../Variables.scss";
+
+// bar container
+.bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 3%;
+
+  ul {
+    width: 50%;
+    display: flex;
+    background-color: $grey-color9;
+    border-radius: 3rem;
+    gap: 1rem;
+    padding: 1rem;
+    box-shadow: 0 1rem 2rem #000;
+
+    li {
+      width: 100%;
+      padding: 1.5rem 3rem;
+      background-color: $grey-color7;
+      list-style-type: none;
+      font-size: 2rem;
+      text-align: center;
+      border-bottom: solid 0.5rem $grey-color0;
+      user-select: none;
+      transition: all 0.1s;
+
+      &:nth-child(1) {
+        border-top-left-radius: 3rem;
+        border-bottom-left-radius: 3rem;
+      }
+      &:nth-child(4) {
+        border-top-right-radius: 3rem;
+        border-bottom-right-radius: 3rem;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: $grey-color8;
+        transition: all 0.1s;
+      }
+
+      &:active {
+        margin-top: 0.5rem;
+        border-bottom: none;
+        transition: all 0.1s;
+      }
+    }
+  }
+}
+// end bar container

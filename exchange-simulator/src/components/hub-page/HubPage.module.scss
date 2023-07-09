@@ -2,9 +2,10 @@
 .container {
   position: relative;
   overflow: overlay;
-  height: fit-content;
+  height: 100vh;
 
   &::-webkit-scrollbar {
     background-color: #0000;
+    width: 0;
   }
 }
