@@ -17,6 +17,7 @@
     box-shadow: 0 1rem 2rem #000;
 
     li {
+      position: relative;
       width: 100%;
       padding: 1.5rem 3rem;
       background-color: $main-color8;
@@ -25,15 +26,44 @@
       text-align: center;
       border-bottom: solid 0.5rem $grey-color0;
       user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       transition: all 0.1s;
 
       &:nth-child(1) {
         border-top-left-radius: 3rem;
         border-bottom-left-radius: 3rem;
+
+        &:hover {
+          span {
+            height: 100%;
+          }
+        }
+      }
+      &:nth-child(2) {
+        &:hover {
+          span {
+            height: 100%;
+          }
+        }
+      }
+      &:nth-child(3) {
+        &:hover {
+          span {
+            height: 100%;
+          }
+        }
       }
       &:nth-child(4) {
         border-top-right-radius: 3rem;
         border-bottom-right-radius: 3rem;
+
+        &:hover {
+          span {
+            height: 100%;
+          }
+        }
       }
 
       &:hover {
@@ -46,6 +76,22 @@
         margin-top: 0.5rem;
         border-bottom: none;
         transition: all 0.1s;
+      }
+
+      svg {
+        height: 4rem;
+      }
+
+      span {
+        position: absolute;
+        bottom: -100%;
+        height: 0;
+        overflow: hidden;
+        font-size: 1.6rem;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s;
       }
     }
   }
