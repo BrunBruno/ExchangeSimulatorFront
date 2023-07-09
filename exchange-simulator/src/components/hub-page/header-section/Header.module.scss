@@ -1,0 +1,86 @@
+@import "../../../Variables.scss";
+
+// header section
+.header {
+  position: sticky;
+  width: 100%;
+  background-color: rgba($main-color9, 0.9);
+  padding: 1%;
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  font-size: 1.2rem;
+
+  &__logo {
+    svg {
+      height: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__nav {
+    width: 100%;
+    ul {
+      height: 100%;
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      li {
+        white-space: nowrap;
+        padding: 0.5rem;
+
+        &::after {
+          content: "";
+          display: block;
+          top: 50%;
+          height: 2px;
+          width: 0;
+          background-color: rgba($grey-color0, 0.5);
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &__account {
+    ul {
+      height: 100%;
+      list-style-type: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      li {
+        white-space: nowrap;
+
+        &::after {
+          content: "";
+          display: block;
+          top: 50%;
+          height: 2px;
+          width: 0;
+          background-color: rgba($grey-color0, 0.5);
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+// end header section

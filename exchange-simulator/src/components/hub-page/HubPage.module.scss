@@ -1,0 +1,10 @@
+// hub page container
+.container {
+  position: relative;
+  overflow: overlay;
+  height: fit-content;
+
+  &::-webkit-scrollbar {
+    background-color: #0000;
+  }
+}
