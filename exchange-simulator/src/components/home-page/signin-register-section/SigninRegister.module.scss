@@ -1,5 +1,6 @@
 @import "../../../Variables.scss";
 
+// form modal
 .form-page {
   position: absolute;
   z-index: 10;
@@ -16,15 +17,18 @@
   transition: all 0.3s;
   overflow: hidden;
 
+  // from
   form {
     position: relative;
     height: 100%;
+
     h2 {
       font-size: 3rem;
       padding-bottom: 0.3rem;
       border-bottom: solid 0.3rem $grey-color0;
       user-select: none;
     }
+
     .x {
       position: absolute;
       width: 3rem;
@@ -49,6 +53,7 @@
       }
     }
 
+    // inputs, errors and buttons container
     .form-container {
       position: absolute;
       left: 50%;
@@ -59,6 +64,7 @@
       align-items: center;
       gap: 2rem;
 
+      // form row
       div {
         width: 100%;
         display: flex;
@@ -90,10 +96,22 @@
           }
         }
 
+        .main-error {
+          background-color: $main-color0;
+          color: $danger-color;
+          font-size: 1.6rem;
+          padding: 0.3rem 0.6rem;
+          margin: 1rem;
+          border-radius: 1rem;
+          width: fit-content;
+          z-index: 0;
+          margin: auto;
+        }
+
         .error {
           position: relative;
           background-color: $main-color0;
-          color: #f00;
+          color: $danger-color;
           font-size: 1.6rem;
           padding: 0.3rem 0.6rem;
           margin: 1rem;
@@ -114,10 +132,6 @@
             border-bottom-right-radius: 1.2rem;
             box-shadow: 0.1px 1.2rem 0 0 $main-color0;
           }
-        }
-
-        a {
-          font-size: 2rem;
         }
 
         button {
@@ -142,7 +156,9 @@
           }
         }
       }
+      // end form row
 
+      // buttons container
       .buttons {
         width: 100%;
         display: flex;
@@ -150,9 +166,13 @@
         gap: 1rem;
       }
     }
+    // end container
   }
+  // end from
 }
+// end form modal
 
+// mobil layout
 @media (max-width: 800px) {
   .form-page {
     width: 90%;
@@ -186,6 +206,7 @@
   }
 }
 
+// hidden form modal
 .hidden {
   width: 0;
   height: 0;

@@ -7,14 +7,18 @@ import classes from "./SigninRegister.module.scss";
 
 function EmailVerification(props) {
   const codeRef = useRef(null);
+  const mainErrRef = useRef(null);
 
+  // verify code
   const verify = async (event) => {
     event.preventDefault();
 
+    // Code object
     const verificationCode = {
       code: event.target.code.value,
     };
 
+    // Check if user puts code
     if (verificationCode.code.length === 0) {
       codeRef.current.classList.add(classes.error);
       codeRef.current.innerHTML = "Please enter the code.";
@@ -24,6 +28,7 @@ function EmailVerification(props) {
     }
 
     try {
+      // Verify code
       const response = await axios.put(
         `${baseUrl}/user/verify-email`,
         verificationCode,
@@ -34,13 +39,23 @@ function EmailVerification(props) {
 
       console.log("Verification was successfull.");
     } catch (err) {
-      codeRef.current.classList.add(classes.error);
-      codeRef.current.innerHTML = "Code incorrect.";
+      console.log(err);
+
+      // Display backend exeptions
+      if (err.response && err.response.data) {
+        codeRef.current.classList.add(classes.error);
+        codeRef.current.innerHTML = err.response.data;
+      } else {
+        mainErrRef.current.classList.add(classes["main-error"]);
+        mainErrRef.current.innerHTML = "Connection error.";
+      }
     }
   };
 
+  // regenrate code
   const regenerateCode = async () => {
     try {
+      // Generate new code and delete previous
       const response = await axios.post(
         `${baseUrl}/user/regenerate-code`,
         {},
@@ -50,6 +65,15 @@ function EmailVerification(props) {
       );
     } catch (err) {
       console.log(err);
+
+      // Display backend exeptions
+      if (err.response && err.response.data) {
+        codeRef.current.classList.add(classes.error);
+        codeRef.current.innerHTML = err.response.data;
+      } else {
+        mainErrRef.current.classList.add(classes["main-error"]);
+        mainErrRef.current.innerHTML = "Connection error.";
+      }
     }
   };
 
@@ -78,6 +102,9 @@ function EmailVerification(props) {
         </div>
         <h2>Email Verification</h2>
         <div className={classes["form-container"]}>
+          <div>
+            <span ref={mainErrRef}></span>
+          </div>
           <div>
             <p>
               We sent you verification code to your email. Please enter the code

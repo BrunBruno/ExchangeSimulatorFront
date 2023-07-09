@@ -13,9 +13,11 @@ function HomePage() {
   const signInPageRef = useRef(null);
   const registerPageRef = useRef(null);
   const emailVerificationPageRef = useRef(null);
+
   const [signInPageOn, setSignInPageOn] = useState(false);
   const [registerPageOn, setRegisterPageOn] = useState(false);
 
+  // handle logil modal
   const handleSignInPopUp = () => {
     if (!registerPageOn) {
       setSignInPageOn(!signInPageOn);
@@ -27,6 +29,8 @@ function HomePage() {
       }
     }
   };
+
+  // handel register modal
   const handleRegisterPopUp = () => {
     if (!signInPageOn) {
       setRegisterPageOn(!registerPageOn);
@@ -39,8 +43,9 @@ function HomePage() {
     }
   };
 
-  const handleEmailVerificationPopUp = (open) => {
-    if (open) {
+  // handle verification modal
+  const handleEmailVerificationPopUp = (isOpen) => {
+    if (isOpen) {
       registerPageRef.current.classList.add(srclasses.hidden);
       emailVerificationPageRef.current.classList.remove(srclasses.hidden);
     } else {

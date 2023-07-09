@@ -12,15 +12,20 @@ function Hero(props) {
     "rotateY(180deg)",
   ];
   const figureRef = useRef(null);
+
+  // resize animated cube
   const handleResize = () => {
     if (figureRef && figureRef.current) {
       const figure = figureRef.current;
       figure.childNodes.forEach((d, i) => {
         const transformSize = figure.offsetWidth / 2;
 
+        // adjust cube
         d.style.transform = `${rotations[i]} translateZ(${
           transformSize * 1.5
         }px)`;
+
+        // adjust cubs walls
         d.childNodes.forEach((p, i) => {
           if (i !== 0 && i !== d.childNodes.length - 1) {
             p.style.transform = `${rotations[i]} translateZ(${transformSize}px)`;

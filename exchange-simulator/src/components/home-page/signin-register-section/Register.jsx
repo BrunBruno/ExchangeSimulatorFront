@@ -7,10 +7,13 @@ function Register(props) {
   const emailErrRef = useRef(null);
   const userNameErrRef = useRef(null);
   const passwordErrRef = useRef(null);
+  const mainErrRef = useRef(null);
 
+  // Register user
   const registerUser = async (event) => {
     event.preventDefault();
 
+    // Register user object
     const userData = {
       email: event.target.email.value,
       userName: event.target.userName.value,
@@ -18,6 +21,7 @@ function Register(props) {
       confirmPassword: event.target.confirmPassword.value,
     };
 
+    // Check for email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
       emailErrRef.current.classList.add(classes.error);
@@ -28,6 +32,7 @@ function Register(props) {
       emailErrRef.current.innerHTML = "";
     }
 
+    // Check username length
     if (userData.userName.length > 30 || userData.userName.length < 5) {
       userNameErrRef.current.classList.add(classes.error);
       userNameErrRef.current.innerHTML =
@@ -38,16 +43,18 @@ function Register(props) {
       userNameErrRef.current.innerHTML = "";
     }
 
+    // Check for minimal password length
     if (userData.password.length < 5) {
       passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML =
-        "Password must have atleast 5 characters.";
+        "Password must have at least 5 characters.";
       return;
     } else {
       passwordErrRef.current.classList.remove(classes.error);
       passwordErrRef.current.innerHTML = "";
     }
 
+    // Check for posword not containing whitespaces
     if (userData.password.indexOf(" ") >= 0) {
       passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML = "Password can't contain whitespaces.";
@@ -57,6 +64,7 @@ function Register(props) {
       passwordErrRef.current.innerHTML = "";
     }
 
+    // Check for password match
     if (userData.password !== userData.confirmPassword) {
       passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML =
@@ -68,6 +76,7 @@ function Register(props) {
     }
 
     try {
+      // Register new user
       const registerResponse = await axios.post(
         `${baseUrl}/user/register`,
         userData
@@ -78,6 +87,7 @@ function Register(props) {
         password: event.target.password.value,
       };
 
+      // Log in new user
       const signinResponse = await axios.post(
         `${baseUrl}/user/sign-in`,
         logUserData
@@ -87,18 +97,29 @@ function Register(props) {
       props.handleEmailVerificationPopUp(true);
       console.log("Account was created");
     } catch (err) {
-      emailErrRef.current.classList.add(classes.error);
-      emailErrRef.current.innerHTML = "User already exists.";
+      console.log(err);
+
+      // Display backend exeptions
+      if (err.response && err.response.data) {
+        emailErrRef.current.classList.add(classes.error);
+        emailErrRef.current.innerHTML = err.response.data;
+      } else {
+        mainErrRef.current.classList.add(classes["main-error"]);
+        mainErrRef.current.innerHTML = "Connection error.";
+      }
     }
   };
 
+  // Clear errors
   const clearErrors = () => {
     emailErrRef.current.innerHTML = "";
     userNameErrRef.current.innerHTML = "";
     passwordErrRef.current.innerHTML = "";
+    mainErrRef.current.innerHTML = "";
     emailErrRef.current.classList.remove(classes.error);
     userNameErrRef.current.classList.remove(classes.error);
     passwordErrRef.current.classList.remove(classes.error);
+    mainErrRef.current.classList.remove(classes["main-error"]);
   };
 
   return (
@@ -127,6 +148,9 @@ function Register(props) {
         </div>
         <h2>Register</h2>
         <div className={classes["form-container"]}>
+          <div>
+            <span ref={mainErrRef}></span>
+          </div>
           <div>
             <span>Email</span>
             <input type="text" name="email"></input>

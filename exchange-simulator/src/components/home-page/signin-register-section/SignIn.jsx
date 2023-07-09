@@ -8,14 +8,19 @@ import classes from "./SigninRegister.module.scss";
 function SignIn(props) {
   const emailErrRef = useRef(null);
   const passwordErrRef = useRef(null);
+  const mainErrRef = useRef(null);
 
+  // Login user
   const loginUser = async (event) => {
     event.preventDefault();
+
+    // Logging user object
     const userData = {
       email: event.target.email.value,
       password: event.target.password.value,
     };
 
+    // Check for valid email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
       emailErrRef.current.classList.add(classes.error);
@@ -26,6 +31,7 @@ function SignIn(props) {
       emailErrRef.current.innerHTML = "";
     }
 
+    // Check for empty password
     if (userData.password.length === 0) {
       passwordErrRef.current.classList.add(classes.error);
       passwordErrRef.current.innerHTML = "Password can not be empty.";
@@ -36,13 +42,22 @@ function SignIn(props) {
     }
 
     try {
+      // Log in user
       const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
-      localStorage.setItem("token", response.data);
-      console.log(response);
+      localStorage.setItem("token", response.data.token);
+
       console.log("Logged in");
     } catch (err) {
-      passwordErrRef.current.classList.add(classes.error);
-      passwordErrRef.current.innerHTML = "Invalid email or password.";
+      console.log(err);
+
+      // Display backend exeptions
+      if (err.response && err.response.data) {
+        codeRef.current.classList.add(classes.error);
+        codeRef.current.innerHTML = err.response.data;
+      } else {
+        mainErrRef.current.classList.add(classes["main-error"]);
+        mainErrRef.current.innerHTML = "Connection error.";
+      }
     }
   };
 
@@ -79,6 +94,9 @@ function SignIn(props) {
         </div>
         <h2>Sign In</h2>
         <div className={classes["form-container"]}>
+          <div>
+            <span ref={mainErrRef}></span>
+          </div>
           <div>
             <span>Email</span>
             <input type="text" name="email"></input>
