@@ -37,6 +37,7 @@ $success-color: #51cf66;
   border-radius: 2rem;
   text-align: center;
   color: $main-color9;
+  user-select: none;
   transition: all 0.3s;
   text-align: center;
 
@@ -47,7 +48,11 @@ $success-color: #51cf66;
 
   &:focus {
     border: solid 0.3rem $main-color3;
-    box-shadow: 0 0 1rem 0.1rem $main-color1;
+  }
+
+  &:active {
+    background-color: $main-color1;
+    border: solid 0.3rem $main-color3;
   }
 }
 
@@ -61,16 +66,21 @@ $success-color: #51cf66;
   text-align: center;
   color: $main-color0;
   background-color: $main-color8;
-  transition: all 0.3s;
+  user-select: none;
+  transition: all 0.1s;
 
   &:hover {
     cursor: pointer;
-    border: solid 0.3rem $main-color3;
+    border: solid 0.3rem $main-color0;
   }
 
   &:focus {
-    border: solid 0.3rem $main-color3;
-    box-shadow: 0 0 1rem 0.1rem $main-color1;
+    border: solid 0.3rem $main-color0;
+  }
+
+  &:active {
+    background-color: $main-color7;
+    border: solid 0.3rem $main-color0;
   }
 }
 

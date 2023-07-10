@@ -1,0 +1,291 @@
+@import "../../../Variables.scss";
+
+// create game container
+.container {
+  width: 100%;
+  height: 100vh;
+  overflow: overlay;
+
+  &::-webkit-scrollbar {
+    background-color: #0000;
+    width: 0;
+  }
+
+  .create-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__content {
+      width: 80%;
+      margin-top: 4rem;
+      background-color: rgba($main-color9, 0.5);
+      padding: 4rem;
+      border-radius: 4rem;
+      border: solid 0.5rem $main-color0;
+      display: flex;
+
+      &__column {
+        width: 50%;
+
+        &:nth-child(1) {
+          border-right: solid 0.5rem $main-color0;
+        }
+
+        &:nth-child(2) {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .create-coin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background-color: rgba($main-color9, 0.9);
+            border-radius: 2rem;
+            padding: 4rem;
+            border: solid 0.2rem $main-color0;
+            overflow: hidden;
+            transition: all 0.3s;
+
+            form {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 2rem;
+
+              .button-container {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 4rem;
+
+                button {
+                  &:nth-child(1) {
+                    @include mainButton;
+                  }
+
+                  &:nth-child(2) {
+                    @include seconadryButton;
+                  }
+                }
+              }
+            }
+          }
+
+          .create-coin-hidden {
+            width: 0;
+            height: 0;
+            padding: 0;
+            border: 0;
+          }
+        }
+
+        h1 {
+          font-size: 5rem;
+          border-bottom: solid 0.5rem $main-color7;
+          width: fit-content;
+          height: fit-content;
+          text-shadow: 2px 2px #000;
+        }
+
+        .intro {
+          padding: 2rem;
+
+          font-size: 1.2rem;
+          color: $grey-color3;
+          text-align: justify;
+          text-shadow: 1px 1px #000;
+
+          p {
+            padding: 0;
+          }
+
+          ul {
+            padding: 1rem;
+            li {
+              color: $grey-color4;
+              span {
+                font-weight: bold;
+                color: $main-color3;
+              }
+            }
+          }
+        }
+
+        // form
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+          width: 90%;
+
+          // row
+          .row {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+
+            span {
+              font-size: 2rem;
+            }
+
+            textarea {
+              @include mainInput;
+              text-align: left;
+              resize: none;
+
+              &::-webkit-scrollbar {
+                background-color: #0000;
+              }
+            }
+
+            // start row split
+            .row-split {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+              padding: 1rem 0;
+              gap: 3rem;
+
+              &__block {
+                width: 50%;
+              }
+
+              input {
+                @include mainInput;
+                width: 100%;
+              }
+
+              input[type="date"] {
+                width: fit-content;
+              }
+
+              input[type="number"] {
+                width: 100%;
+              }
+              input[type="number"]::-webkit-inner-spin-button,
+              input[type="number"]::-webkit-outer-spin-button {
+                -webkit-appearance: none;
+              }
+
+              input[type="radio"] {
+                display: none;
+              }
+
+              .radio {
+                display: inline-block;
+                cursor: pointer;
+                user-select: none;
+
+                span {
+                  display: inline-block;
+                  border-radius: 1rem;
+                  padding: 0.5rem 1rem;
+                  border: solid 0.2rem $main-color0;
+                }
+
+                input[type="radio"]:checked ~ span {
+                  color: $main-color9;
+                  border: solid 0.2rem $main-color9;
+                  background-color: $main-color0;
+                }
+              }
+            }
+            // end row split
+
+            .list-row {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              padding: 1rem 0;
+              gap: 5rem;
+
+              .list {
+                width: 100%;
+                height: 5rem;
+                padding: 1rem;
+                border-left: solid 0.2rem $main-color0;
+                border-right: solid 0.2rem $main-color0;
+                border-radius: 1rem;
+                display: inline-flex;
+                flex-direction: row;
+                gap: 1rem;
+                overflow-x: scroll;
+                overflow-y: hidden;
+
+                &::-webkit-scrollbar {
+                  display: none;
+                }
+
+                .coin {
+                  width: fit-content;
+                  height: 100%;
+                  background-color: $main-color0;
+                  color: $main-color9;
+                  border-radius: 1rem;
+                  padding: 1rem;
+                  display: flex;
+                  flex-direction: row;
+                  gap: 0.5rem;
+                  white-space: nowrap;
+                  user-select: none;
+
+                  svg {
+                    height: 100%;
+
+                    &:hover {
+                      cursor: pointer;
+                      background-color: $main-color9;
+                      border-radius: 100%;
+                      stroke: $main-color0;
+                    }
+                  }
+                }
+              }
+
+              .add-button {
+                position: relative;
+                aspect-ratio: 1/1;
+                border-radius: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                svg {
+                  position: absolute;
+                  background-color: $main-color9;
+                  height: 80%;
+                  border-radius: 100%;
+
+                  &:hover {
+                    cursor: pointer;
+                  }
+
+                  &:active {
+                    background-color: $main-color7;
+                  }
+                }
+              }
+            }
+
+            button {
+              @include mainButton;
+              margin: auto;
+            }
+          }
+          // end row
+        }
+        // end form
+      }
+    }
+  }
+}
+// end create game container

@@ -1,6 +1,6 @@
 import classes from "./HubPage.module.scss";
 import Games from "./games-section/Games";
-import Header from "./header-section/Header";
+import Header from "../header/Header";
 import Intro from "./intro-section/Intro";
 
 function HubPage() {

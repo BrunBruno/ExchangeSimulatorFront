@@ -1,11 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import classes from "./Bar.module.scss";
 import BarIcons from "./BarIcons";
 
 function Bar() {
+  const navigate = useNavigate();
+
   return (
     <div className={classes.bar}>
       <ul>
-        <li>
+        <li onClick={() => navigate("/hub/create")}>
           <BarIcons name="plus" />
           <span>Create Game</span>
         </li>
