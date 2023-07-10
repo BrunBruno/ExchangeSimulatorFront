@@ -21,10 +21,6 @@ function Bar() {
           <BarIcons name="ranking" />
           <span>See Ranking</span>
         </li>
-        {/* <li>Create Game</li>
-        <li>Invite Friend</li>
-        <li>Account Details</li>
-        <li>See Ranking</li> */}
       </ul>
     </div>
   );

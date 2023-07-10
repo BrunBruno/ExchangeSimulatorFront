@@ -1,6 +1,6 @@
 import classes from "./Header.module.scss";
 
-import Logo from "../../Shared/Logo";
+import Logo from "../../../Shared/Logo";
 
 function Header() {
   return (
