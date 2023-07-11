@@ -59,6 +59,7 @@ function GameForm(props) {
         </div>
       </div>
       <div className={classes.row}>
+        <span>Coins</span>
         <div className={classes["list-row"]}>
           <div className={classes.list} ref={props.coinListRef}>
             {props.coinList.map((coin, index) => (

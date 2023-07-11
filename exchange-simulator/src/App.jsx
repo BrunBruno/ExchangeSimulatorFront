@@ -8,8 +8,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/hub/*" element={<HubRouter />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <div className={classes.background} />
+              <HomePage />
+            </>
+          }
+        />
+        <Route
+          path="/hub/*"
+          element={
+            <>
+              <div className={classes.background} />
+              <HubRouter />
+            </>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

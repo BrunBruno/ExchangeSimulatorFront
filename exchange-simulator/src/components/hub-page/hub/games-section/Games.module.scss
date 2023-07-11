@@ -213,3 +213,19 @@
   // end card
 }
 // end games container
+
+@media (max-width: 600px) {
+  .games {
+    grid-template-columns: 1fr;
+    padding-top: 30rem;
+
+    .section-title {
+      white-space: normal;
+      max-height: 20rem;
+    }
+
+    &__card {
+      height: 80rem;
+    }
+  }
+}

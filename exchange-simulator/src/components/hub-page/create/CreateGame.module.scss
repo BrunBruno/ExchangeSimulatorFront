@@ -1,6 +1,6 @@
 @import "../../../Variables.scss";
 
-// create game container
+// container
 .container {
   width: 100%;
   height: 100vh;
@@ -11,11 +11,13 @@
     width: 0;
   }
 
+  // create widnow
   .create-container {
     width: 100%;
     display: flex;
     justify-content: center;
 
+    // content
     &__content {
       width: 80%;
       margin-top: 4rem;
@@ -24,7 +26,9 @@
       border-radius: 4rem;
       border: solid 0.5rem $main-color0;
       display: flex;
+      margin-bottom: 10rem;
 
+      // clumn
       &__column {
         width: 50%;
 
@@ -97,7 +101,6 @@
 
         .intro {
           padding: 2rem;
-
           font-size: 1.2rem;
           color: $grey-color3;
           text-align: justify;
@@ -109,6 +112,10 @@
 
           ul {
             padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
             li {
               color: $grey-color4;
               span {
@@ -134,6 +141,7 @@
 
             span {
               font-size: 2rem;
+              white-space: nowrap;
             }
 
             textarea {
@@ -164,13 +172,6 @@
                 width: 100%;
               }
 
-              input[type="date"] {
-                width: fit-content;
-              }
-
-              input[type="number"] {
-                width: 100%;
-              }
               input[type="number"]::-webkit-inner-spin-button,
               input[type="number"]::-webkit-outer-spin-button {
                 -webkit-appearance: none;
@@ -201,6 +202,7 @@
             }
             // end row split
 
+            // list row
             .list-row {
               width: 100%;
               display: flex;
@@ -275,7 +277,9 @@
                 }
               }
             }
+            // end list row
 
+            // confirm button
             button {
               @include mainButton;
               margin: auto;
@@ -285,7 +289,47 @@
         }
         // end form
       }
+      // end column
+    }
+    // end content
+  }
+  // end create widown
+}
+// end container
+
+@media (max-width: 600px) {
+  .container {
+    .create-container {
+      &__content {
+        flex-direction: column;
+        width: 98%;
+
+        &__column {
+          width: 100%;
+
+          &:nth-child(1) {
+            border: none;
+            border-bottom: solid 0.5rem $main-color0;
+          }
+          &:nth-child(2) {
+            padding-top: 4rem;
+          }
+
+          .intro {
+            font-size: 2rem;
+          }
+
+          form {
+            .row {
+              button {
+                @include mainButton;
+                font-size: 4rem;
+                margin: auto;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
-// end create game container

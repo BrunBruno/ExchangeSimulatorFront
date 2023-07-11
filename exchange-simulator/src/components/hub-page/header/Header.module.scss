@@ -25,6 +25,8 @@
 
   &__nav {
     width: 100%;
+    overflow: hidden;
+
     ul {
       height: 100%;
       list-style-type: none;
@@ -63,12 +65,17 @@
       align-items: center;
       gap: 1rem;
       li {
+        position: relative;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
 
         &::after {
           content: "";
+          position: absolute;
           display: block;
-          top: 50%;
+          bottom: -20%;
           height: 2px;
           width: 0;
           background-color: rgba($grey-color0, 0.5);
@@ -81,8 +88,39 @@
             width: 100%;
           }
         }
+
+        svg {
+          height: 2rem;
+        }
       }
     }
   }
 }
 // end header section
+
+@media (max-width: 600px) {
+  .header {
+    font-size: 3rem;
+    padding: 2%;
+    justify-content: space-between;
+
+    &__logo {
+      svg {
+        height: 3rem;
+      }
+    }
+
+    &__nav {
+      width: 0;
+    }
+    &__account {
+      ul {
+        li {
+          svg {
+            height: 3rem;
+          }
+        }
+      }
+    }
+  }
+}

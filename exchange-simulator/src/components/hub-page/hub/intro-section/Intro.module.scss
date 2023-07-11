@@ -7,6 +7,7 @@
   display: flex;
   margin-top: 10rem;
 
+  // logo container
   &__logo {
     width: 40%;
     height: 100%;
@@ -62,7 +63,9 @@
       }
     }
   }
+  // end logo contatiner
 
+  // content container
   &__content {
     position: relative;
     width: 60%;
@@ -108,6 +111,31 @@
     .hidden-intro {
       height: 0;
       transition: all 0.5s;
+    }
+  }
+  // end content container
+}
+
+@media (max-width: 600px) {
+  .intro {
+    flex-direction: column;
+    height: 60rem;
+
+    &__logo {
+      height: 0;
+      width: 0;
+    }
+
+    &__content {
+      width: 100%;
+      .introduction {
+        width: 100%;
+        padding: 5rem;
+
+        p {
+          font-size: 2.2rem;
+        }
+      }
     }
   }
 }

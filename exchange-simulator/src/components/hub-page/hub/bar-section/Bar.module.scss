@@ -101,3 +101,15 @@
   }
 }
 // end bar container
+
+@media (max-width: 600px) {
+  .bar {
+    ul {
+      li {
+        svg {
+          height: 6rem;
+        }
+      }
+    }
+  }
+}

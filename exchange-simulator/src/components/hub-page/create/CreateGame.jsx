@@ -21,10 +21,6 @@ function CreateGame() {
     coinListRef.current.addEventListener("wheel", handleScroll, {
       passive: false,
     });
-
-    return () => {
-      coinListRef.current.removeEventListener("wheel", handleScroll);
-    };
   }, []);
 
   const onAddCoin = (event) => {
