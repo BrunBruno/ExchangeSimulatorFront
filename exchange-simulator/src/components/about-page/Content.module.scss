@@ -3,7 +3,7 @@
 // content container
 .content {
   position: relative;
-  max-height: 60rem;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   gap: 1rem;
