@@ -3,6 +3,8 @@ import classes from "./App.module.scss";
 
 import HomePage from "./components/home-page/home/HomePage";
 import HubRouter from "./components/hub-page/HubRouter";
+import About from "./components/about-page/About";
+import HomePage from "./components/home-page/HomePage";
 
 function App() {
   return (
