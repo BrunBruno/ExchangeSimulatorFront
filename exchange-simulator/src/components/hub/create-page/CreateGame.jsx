@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import classes from "./CreateGame.module.scss";
 
-import Header from "../header/Header";
+import Header from "../header-shared/Header";
 import CoinForm from "./CoinForm";
 import GameForm from "./GameForm";
 

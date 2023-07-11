@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import classes from "./About.module.scss";
-import Content from "./Content";
+
+import Content from "./content-section/Content";
 
 function About() {
   const options = [
@@ -10,6 +13,7 @@ function About() {
     { title: "Privacy" },
   ];
 
+  const navigate = useNavigate();
   const [selectedContent, setSelectedContent] = useState(0);
 
   function arrowRight() {
@@ -58,7 +62,13 @@ function About() {
             ))}
           </ul>
           <ul>
-            <li>{arrowLeft()}Home Page</li>
+            <li
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              {arrowLeft()}Home Page
+            </li>
           </ul>
         </div>
       </div>

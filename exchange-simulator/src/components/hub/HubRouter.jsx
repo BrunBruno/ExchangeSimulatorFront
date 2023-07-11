@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import CreateGame from "./create/CreateGame";
-import HubPage from "./hub/HubPage";
-import Browser from "./browser/Browser";
+import CreateGame from "./create-page/CreateGame";
+import HubPage from "./index-page/HubPage";
+import Browser from "./browser-page/Browser";
 
 function HubRouter() {
   return (

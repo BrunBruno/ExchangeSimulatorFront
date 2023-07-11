@@ -1,4 +1,4 @@
-@import "../../../Variables.scss";
+@import "../../../../Variables.scss";
 
 // header
 .header {
@@ -15,6 +15,11 @@
   &__logo {
     position: relative;
     width: 20%;
+
+    &:hover {
+      cursor: pointer;
+    }
+
     svg {
       position: absolute;
       width: 50%;

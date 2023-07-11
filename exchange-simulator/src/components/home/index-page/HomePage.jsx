@@ -3,11 +3,11 @@ import { useRef, useState } from "react";
 import classes from "./HomePage.module.scss";
 import srclasses from "./signin-register-section/SigninRegister.module.scss";
 
-import Header from "../header-section/Header";
+import Header from "./header-section/Header";
 import Hero from "./hero-section/Hero";
-import SignIn from "../signin-register-section/SignIn";
-import Register from "../signin-register-section/Register";
-import EmailVerification from "../signin-register-section/EmailVerification";
+import SignIn from "./signin-register-section/SignIn";
+import Register from "./signin-register-section/Register";
+import EmailVerification from "./signin-register-section/EmailVerification";
 
 function HomePage() {
   const signInPageRef = useRef(null);
@@ -17,7 +17,7 @@ function HomePage() {
   const [signInPageOn, setSignInPageOn] = useState(false);
   const [registerPageOn, setRegisterPageOn] = useState(false);
 
-  // handle logil modal
+  // handle login modal
   const handleSignInPopUp = () => {
     if (!registerPageOn) {
       setSignInPageOn(!signInPageOn);

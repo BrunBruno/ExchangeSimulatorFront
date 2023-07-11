@@ -3,7 +3,7 @@ import classes from "./Browser.module.scss";
 
 import Card from "./Card";
 import Details from "./Details";
-import Header from "../header/Header";
+import Header from "../header-shared/Header";
 
 function Browser() {
   const location = useLocation();

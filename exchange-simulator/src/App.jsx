@@ -1,21 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import classes from "./App.module.scss";
 
-import HomePage from "./components/home-page/home/HomePage";
-import HubRouter from "./components/hub-page/HubRouter";
-import About from "./components/about-page/About";
-import HomePage from "./components/home-page/HomePage";
+import HubRouter from "./components/hub/HubRouter";
+import HomeRouter from "./components/home/HomeRouter";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route
-          path="/"
+          path="/*"
           element={
             <>
               <div className={classes.background} />
-              <HomePage />
+              <HomeRouter />
             </>
           }
         />
