@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import classes from "./Card.module.scss";
+import classes from "./Browser.module.scss";
 
 function Card(props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,19 +74,13 @@ function Card(props) {
   };
 
   return (
-    <div className={`${classes["card"]} ${classes["column-fit"]}`}>
+    <div className={classes["browser__card"]}>
       <h2>{props.title}</h2>
       <form className={classes["form-search"]}>
         <input type="text" />
         <button>Search</button>
       </form>
-      <ul>
-        <li>Game</li>
-        <li>Game</li>
-        <li>Game</li>
-        <li>Game</li>
-        <li>Game</li>
-      </ul>
+      <ul>{/* List of games */}</ul>
       <div className={classes.pagination}>
         <button
           disabled={currentPage === 1}
@@ -105,10 +99,6 @@ function Card(props) {
         >
           {">"}
         </button>
-      </div>
-
-      <div className={classes.cover}>
-        <h2>{props.title}</h2>
       </div>
     </div>
   );
