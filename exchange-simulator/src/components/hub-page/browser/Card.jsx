@@ -1,5 +1,6 @@
 import { useState } from "react";
-import classes from "./Games.module.scss";
+
+import classes from "./Card.module.scss";
 
 function Card(props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +74,7 @@ function Card(props) {
   };
 
   return (
-    <div className={`${classes["games__card"]} ${classes["column-fit"]}`}>
+    <div className={`${classes["card"]} ${classes["column-fit"]}`}>
       <h2>{props.title}</h2>
       <form className={classes["form-search"]}>
         <input type="text" />

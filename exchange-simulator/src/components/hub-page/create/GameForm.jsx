@@ -18,7 +18,7 @@ function GameForm(props) {
       <div className={classes.row}>
         <span>Description</span>
         <textarea
-          placeholder="This game is awesowme"
+          placeholder="This game is awesome"
           name="description"
         ></textarea>
       </div>
