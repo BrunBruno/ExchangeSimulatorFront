@@ -67,12 +67,17 @@ function SignIn(props) {
 
           navigate("/hub");
         } catch (err) {
-          console.log(err);
+          // Display backend exeptions
+          if (err.response && err.response.data) {
+            emailErrRef.current.classList.add(classes.error);
+            emailErrRef.current.innerHTML = err.response.data;
+          } else {
+            mainErrRef.current.classList.add(classes["main-error"]);
+            mainErrRef.current.innerHTML = "Connection error.";
+          }
         }
       }
     } catch (err) {
-      console.log(err);
-
       // Display backend exeptions
       if (err.response && err.response.data) {
         emailErrRef.current.classList.add(classes.error);

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import classes from "./CreateGame.module.scss";
 
+import baseUrl from "../../Shared/Url";
 import Header from "../header-shared/Header";
 import CoinForm from "./CoinForm";
 import GameForm from "./GameForm";
-import axios from "axios";
-import baseUrl from "../../Shared/Url";
 
 function CreateGame() {
   const [coinList, setCoinList] = useState([]);
@@ -15,6 +16,8 @@ function CreateGame() {
   const coinMenuRef = useRef(null);
   const errorMenuRef = useRef(null);
   const coinListRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = (event) => {
@@ -120,7 +123,6 @@ function CreateGame() {
       return;
     }
 
-    console.log(game);
     try {
       await axios.post(`${baseUrl}/game`, game, {
         headers: {
@@ -132,14 +134,21 @@ function CreateGame() {
         gameName: game.name,
         password: game.password,
       };
+
       await axios.post(`${baseUrl}/game/join-game`, joinPlayer, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-    } catch (err) {
-      console.log(err);
 
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      errorMenuRef.current.classList.add(classes["success"]);
+      setErrorMessage("Game created.");
+
+      setTimeout(() => {
+        navigate("/hub");
+      }, 3000);
+    } catch (err) {
       if (err.response && err.response.data) {
         errorMenuRef.current.classList.remove(classes["hidden"]);
         setErrorMessage(err.response.data);
@@ -216,7 +225,6 @@ function CreateGame() {
               className={`${classes["error-box"]} ${classes["hidden"]}`}
               onClick={onErrorMenuClose}
             >
-              <h2>Error</h2>
               <p>{errorMessage}</p>
             </div>
             <div
