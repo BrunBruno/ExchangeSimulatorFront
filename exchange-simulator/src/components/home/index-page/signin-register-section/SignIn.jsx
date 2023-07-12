@@ -56,7 +56,19 @@ function SignIn(props) {
       if (!isEmailVerified.data.isEmailVerified) {
         props.handleEmailVerificationPopUp(true);
       } else {
-        navigate("/hub");
+        try {
+          const user = await axios.get(`${baseUrl}/user`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          localStorage.setItem("userInfo", JSON.stringify(user.data));
+
+          navigate("/hub");
+        } catch (err) {
+          console.log(err);
+        }
       }
     } catch (err) {
       console.log(err);

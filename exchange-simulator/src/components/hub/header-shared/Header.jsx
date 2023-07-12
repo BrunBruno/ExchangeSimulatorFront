@@ -1,10 +1,19 @@
+import { useNavigate } from "react-router-dom";
+
 import classes from "./Header.module.scss";
 
 import Logo from "../../Shared/Logo";
-import { useNavigate } from "react-router-dom";
 
 function Header() {
   const navigate = useNavigate();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  const onLogOut = () => {
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("token");
+
+    navigate("/");
+  };
 
   return (
     <header className={classes.header}>
@@ -22,17 +31,21 @@ function Header() {
       <div className={classes["header__account"]}>
         <ul>
           <li>
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <circle fill="none" stroke="#e3fafc" cx="12" cy="7" r="5" />
-              <path
-                fill="none"
-                stroke="#e3fafc"
-                d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"
-              />
-            </svg>
-            <span>Account</span>
+            {userInfo.imageUrl === null ? (
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <circle fill="none" stroke="#e3fafc" cx="12" cy="7" r="5" />
+                <path
+                  fill="none"
+                  stroke="#e3fafc"
+                  d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"
+                />
+              </svg>
+            ) : (
+              <img src={userInfo.imageUrl} alt="User Avatar" />
+            )}
+            <span>{userInfo.userName}</span>
           </li>
-          <li>
+          <li onClick={onLogOut}>
             <svg
               viewBox="0 0 24 24"
               fill="none"
