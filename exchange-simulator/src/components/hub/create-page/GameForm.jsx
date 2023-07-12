@@ -1,8 +1,8 @@
-import classes from "./CreateGame.module.scss";
+import classes from "./GameForm.module.scss";
 
 function GameForm(props) {
   return (
-    <form onSubmit={props.onCreateNewGame}>
+    <form onSubmit={props.onCreateNewGame} className={classes.form}>
       <div className={classes.row}>
         <div className={classes["row-split"]}>
           <div className={classes["row-split__block"]}>
@@ -50,7 +50,13 @@ function GameForm(props) {
         <div className={classes["row-split"]}>
           <div className={classes["row-split__block"]}>
             <span>End of the Game</span>
-            <input type="date" name="endDate" />
+            <input
+              type="datetime-local"
+              name="endDate"
+              onClick={(event) => {
+                event.target.showPicker();
+              }}
+            />
           </div>
           <div className={classes["row-split__block"]}>
             <span>Number of players</span>
@@ -99,7 +105,7 @@ function GameForm(props) {
         </div>
       </div>
       <div className={classes.row}>
-        <button>Create</button>
+        <button type="submit">Create</button>
       </div>
     </form>
   );

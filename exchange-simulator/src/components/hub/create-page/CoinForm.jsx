@@ -1,28 +1,24 @@
-import classes from "./CreateGame.module.scss";
+import classes from "./CoinForm.module.scss";
 
 function CoinForm(props) {
   return (
-    <form onSubmit={props.onAddCoin}>
+    <form onSubmit={props.onAddCoin} className={classes.form}>
       <div className={classes.row}>
-        <div className={classes["row-split"]}>
-          <div>
-            <span>Coin Name</span>
-            <input type="text" placeholder="Super Coin" name="coinName" />
-          </div>
+        <div>
+          <span>Coin Name</span>
+          <input type="text" placeholder="Super Coin" name="coinName" />
         </div>
       </div>
       <div className={classes.row}>
-        <div className={classes["row-split"]}>
-          <div>
-            <span>Amount of coins</span>
-            <input type="number" placeholder="0" name="amount" step="any" />
-          </div>
+        <div>
+          <span>Amount of coins</span>
+          <input type="number" placeholder="0" name="amount" step="any" />
         </div>
       </div>
       <div className={classes["button-container"]}>
-        <button>Add</button>
+        <button type="submit">Add</button>
         <button onClick={props.onCoinMenuExpand} type="button">
-          Cancel
+          Close
         </button>
       </div>
     </form>

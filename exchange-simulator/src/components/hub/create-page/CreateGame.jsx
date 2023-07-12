@@ -5,11 +5,15 @@ import classes from "./CreateGame.module.scss";
 import Header from "../header-shared/Header";
 import CoinForm from "./CoinForm";
 import GameForm from "./GameForm";
+import axios from "axios";
+import baseUrl from "../../Shared/Url";
 
 function CreateGame() {
   const [coinList, setCoinList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const coinMenuRef = useRef(null);
+  const errorMenuRef = useRef(null);
   const coinListRef = useRef(null);
 
   useEffect(() => {
@@ -51,14 +55,19 @@ function CreateGame() {
   };
 
   const onCoinMenuExpand = () => {
-    if (coinMenuRef.current.classList.contains(classes["create-coin-hidden"])) {
-      coinMenuRef.current.classList.remove(classes["create-coin-hidden"]);
+    if (coinMenuRef.current.classList.contains(classes["hidden"])) {
+      coinMenuRef.current.classList.remove(classes["hidden"]);
     } else {
-      coinMenuRef.current.classList.add(classes["create-coin-hidden"]);
+      coinMenuRef.current.classList.add(classes["hidden"]);
     }
   };
 
-  const onCreateNewGame = (event) => {
+  const onErrorMenuClose = () => {
+    errorMenuRef.current.classList.add(classes["hidden"]);
+    setErrorMessage("");
+  };
+
+  const onCreateNewGame = async (event) => {
     event.preventDefault();
     const game = {
       name: event.target.gameName.value,
@@ -66,11 +75,79 @@ function CreateGame() {
       password: event.target.password.value,
       money: event.target.amount.value,
       coins: coinList,
-      endGame: event.target.endDate.value,
+      endGame: new Date(event.target.endDate.value),
       numberOfPlayers: event.target.numberOfPlayers.value,
     };
 
+    if (game.name === "") {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please choose a name.");
+      return;
+    }
+
+    if (game.description === "") {
+      game.description = "No description.";
+    }
+
+    if (game.password === "") {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please choose a password.");
+      return;
+    }
+
+    if (game.money <= 0) {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please select amount of starting assets.");
+      return;
+    }
+
+    if (game.coins.length === 0) {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please fill some coins.");
+      return;
+    }
+
+    const currentDate = new Date();
+    if (game.endGame === "" || currentDate > game.endGame) {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please enter correct end date.");
+      return;
+    }
+
+    if (game.numberOfPlayers <= 0) {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please select correct number of players.");
+      return;
+    }
+
     console.log(game);
+    try {
+      await axios.post(`${baseUrl}/game`, game, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      const joinPlayer = {
+        gameName: game.name,
+        password: game.password,
+      };
+      await axios.post(`${baseUrl}/game/join-game`, joinPlayer, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+
+      if (err.response && err.response.data) {
+        errorMenuRef.current.classList.remove(classes["hidden"]);
+        setErrorMessage(err.response.data);
+      } else {
+        errorMenuRef.current.classList.remove(classes["hidden"]);
+        setErrorMessage("Connection error.");
+      }
+    }
   };
 
   return (
@@ -135,8 +212,16 @@ function CreateGame() {
           </div>
           <div className={classes["create-container__content__column"]}>
             <div
+              ref={errorMenuRef}
+              className={`${classes["error-box"]} ${classes["hidden"]}`}
+              onClick={onErrorMenuClose}
+            >
+              <h2>Error</h2>
+              <p>{errorMessage}</p>
+            </div>
+            <div
               ref={coinMenuRef}
-              className={`${classes["create-coin"]} ${classes["create-coin-hidden"]}`}
+              className={`${classes["create-coin"]} ${classes["hidden"]}`}
             >
               <CoinForm
                 onAddCoin={onAddCoin}

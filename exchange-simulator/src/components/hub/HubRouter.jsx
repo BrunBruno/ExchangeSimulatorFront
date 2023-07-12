@@ -10,32 +10,32 @@ import Browser from "./browser-page/Browser";
 import LoadingPage from "../Shared/LoadingPage";
 
 function HubRouter() {
-  const [authorize, setAuthorize] = useState(false);
-  const navigate = useNavigate();
+  // const [authorize, setAuthorize] = useState(false);
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const verifyUsersToken = async () => {
-      try {
-        const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+  // useEffect(() => {
+  //   const verifyUsersToken = async () => {
+  //     try {
+  //       const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
+  //         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+  //       });
 
-        if (!isEmailVerified.data.isEmailVerified) {
-          navigate("/");
-        }
+  //       if (!isEmailVerified.data.isEmailVerified) {
+  //         navigate("/");
+  //       }
 
-        setAuthorize(true);
-      } catch (err) {
-        navigate("/");
-      }
-    };
+  //       setAuthorize(true);
+  //     } catch (err) {
+  //       navigate("/");
+  //     }
+  //   };
 
-    verifyUsersToken();
-  }, []);
+  //   verifyUsersToken();
+  // }, []);
 
-  if (!authorize) {
-    return <LoadingPage />;
-  }
+  // if (!authorize) {
+  //   return <LoadingPage />;
+  // }
 
   return (
     <Routes>
