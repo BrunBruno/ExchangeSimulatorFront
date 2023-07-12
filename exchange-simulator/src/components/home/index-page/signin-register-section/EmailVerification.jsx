@@ -4,10 +4,13 @@ import axios from "axios";
 import baseUrl from "../../../Shared/Url";
 
 import classes from "./SigninRegister.module.scss";
+import { useNavigate } from "react-router-dom";
 
 function EmailVerification(props) {
   const codeRef = useRef(null);
   const mainErrRef = useRef(null);
+
+  const navigate = useNavigate();
 
   // verify code
   const verify = async (event) => {
@@ -37,7 +40,7 @@ function EmailVerification(props) {
         }
       );
 
-      console.log("Verification was successfull.");
+      navigate("/hub");
     } catch (err) {
       console.log(err);
 

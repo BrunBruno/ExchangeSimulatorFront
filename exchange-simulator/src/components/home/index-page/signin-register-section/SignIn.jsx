@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import baseUrl from "../../../Shared/Url";
@@ -9,6 +10,8 @@ function SignIn(props) {
   const emailErrRef = useRef(null);
   const passwordErrRef = useRef(null);
   const mainErrRef = useRef(null);
+
+  const navigate = useNavigate();
 
   // Login user
   const loginUser = async (event) => {
@@ -46,14 +49,14 @@ function SignIn(props) {
       const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
       localStorage.setItem("token", response.data.token);
 
-      console.log("Logged in");
-
       const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
       if (!isEmailVerified.data.isEmailVerified) {
         props.handleEmailVerificationPopUp(true);
+      } else {
+        navigate("/hub");
       }
     } catch (err) {
       console.log(err);
