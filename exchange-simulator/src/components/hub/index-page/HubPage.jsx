@@ -6,14 +6,17 @@ import Intro from "./intro-section/Intro";
 import Review from "./review-section/Review";
 import Tutorial from "./tutorial-section/Tutorial";
 import Ranking from "./ranking-section/Ranking";
+import { useRef } from "react";
 
 function HubPage() {
+  const containerRef = useRef(null);
+
   return (
-    <div className={classes.container}>
+    <div ref={containerRef} className={classes.container}>
       <Header />
       <Intro />
       <Games />
-      <Review />
+      <Review containerRef={containerRef} />
       <Tutorial />
       <Ranking />
     </div>

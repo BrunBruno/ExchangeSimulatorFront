@@ -61,6 +61,10 @@
       );
     }
 
+    &:nth-child(4n + 2) {
+      padding-left: 2rem;
+    }
+
     &__content {
       width: 100%;
       height: 100%;

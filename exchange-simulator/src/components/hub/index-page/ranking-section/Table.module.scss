@@ -41,6 +41,12 @@
         display: flex;
         justify-content: space-evenly;
         padding: 1rem;
+
+        &:hover {
+          background-color: $grey-color0;
+          color: $grey-color9;
+        }
+
         span {
           width: 25%;
           font-size: 2rem;
