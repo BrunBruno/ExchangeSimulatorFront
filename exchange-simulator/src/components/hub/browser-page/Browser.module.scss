@@ -2,50 +2,90 @@
 
 .browser {
   width: 100%;
+  height: 100vh;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  margin-top: 5rem;
-  margin-bottom: 5rem;
+  grid-template-columns: 20% 80%;
 
-  &__details {
-    height: 60rem;
-    margin: 2rem;
-    padding: 2rem;
-    border-radius: 2rem;
+  &__search {
+    background-color: $grey-color9;
+    border-right: solid 0.5rem $grey-color8;
+    padding: 1rem;
+    padding-top: 10rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-bottom: solid 0.5rem $main-color0;
-    background-color: $main-color9;
-    background-image: repeating-conic-gradient(
-      from 0deg at 20% 60%,
-      #0000 20%,
-      $main-color5 40%
-    );
+    gap: 1rem;
+
+    h2 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 2px #000;
+      user-select: none;
+    }
+
+    input {
+      @include mainInput;
+      font-size: 2rem;
+      width: 100%;
+    }
+  }
+
+  &__cards {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 92% 8%;
+    padding-top: 6rem;
+
+    ul {
+      list-style-type: none;
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2rem;
+      padding: 2rem;
+    }
+
+    .pagination {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: $grey-color9;
+      z-index: 2;
+
+      button {
+        @include mainButton;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+      }
+
+      .currentPage {
+        @include seconadryButton;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+      }
+
+      p {
+        @include mainButton;
+        font-size: 0.8rem;
+        padding: 0.5rem;
+        height: 100%;
+        aspect-ratio: 1/1;
+        background-color: #0000;
+        &:hover {
+          background-color: #0000;
+          cursor: default;
+          border-color: #0000;
+        }
+      }
+    }
   }
 }
-
-// &:nth-child(1) {
-//     background-color: $main-color7;
-//     background-image: repeating-conic-gradient(
-//       from 0deg at 80% 20%,
-//       #0000 20%,
-//       $main-color3 40%
-//     );
-//   }
-//   &:nth-child(3) {
-//     background-color: $main-color9;
-//     background-image: repeating-conic-gradient(
-//       from 0deg at 20% 60%,
-//       #0000 20%,
-//       $main-color5 40%
-//     );
-//   }
-//   &:nth-child(4) {
-//     background-color: $main-color4;
-//     background-image: repeating-conic-gradient(
-//       from 0deg at 70% 40%,
-//       #0000 20%,
-//       $main-color8 40%
-//     );
-//   }
