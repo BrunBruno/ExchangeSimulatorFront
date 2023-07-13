@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import classes from "./Header.module.scss";
 
 import Logo from "../../Shared/Logo";
+import { useEffect, useRef } from "react";
 
-function Header() {
+function Header(props) {
+  const headerRef = useRef(null);
+
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -15,8 +18,21 @@ function Header() {
     navigate("/");
   };
 
+  useEffect(() => {
+    props.containerRef.current.addEventListener("scroll", () => {
+      if (props.containerRef.current.scrollTop === 0) {
+        headerRef.current.classList.add(classes["header-trans"]);
+      } else {
+        headerRef.current.classList.remove(classes["header-trans"]);
+      }
+    });
+  }, []);
+
   return (
-    <header className={classes.header}>
+    <header
+      ref={headerRef}
+      className={`${classes.header} ${classes["header-trans"]}`}
+    >
       <div onClick={() => navigate("/hub")} className={classes["header__logo"]}>
         <Logo />
       </div>

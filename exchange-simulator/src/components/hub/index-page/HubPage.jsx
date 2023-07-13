@@ -14,7 +14,7 @@ function HubPage() {
 
   return (
     <div ref={containerRef} className={classes.container}>
-      {/* <Header /> */}
+      <Header containerRef={containerRef} />
       <Intro />
       <Games />
       <Review containerRef={containerRef} />

@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./Review.module.scss";
 
 function Review(props) {
-  // const imageUrl = windowWidth < 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
-
   const contentRef = useRef(null);
   const reviewRef = useRef(null);
   const reviewBackgroundRef = useRef(null);
@@ -57,7 +55,7 @@ function Review(props) {
       <img
         ref={reviewBackgroundRef}
         className={classes["review__background"]}
-        src={`../../../../../public/images/bg.jpg`}
+        src={`../../../../../public/images/review-bg.jpg`}
         style={{
           transform: `translateY(${translateY}px)`,
           top: `${offsetTop}px`,

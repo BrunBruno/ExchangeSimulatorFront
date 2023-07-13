@@ -5,161 +5,99 @@
   width: 100%;
   height: 100vh;
   overflow: overlay;
+  background-image: linear-gradient(to right, rgba(#000, 1), rgba(#000, 0.2)),
+    url("../../../../public/images/create-bg.jpg");
+  background-size: auto 100%;
+  background-position: right;
+  background-repeat: no-repeat;
 
   &::-webkit-scrollbar {
     background-color: #0000;
     width: 0;
   }
 
-  // create widnow
-  .create-container {
-    width: 100%;
+  // content
+  &__content {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    padding: 8rem 4rem;
+    padding-bottom: 0;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    background-color: rgba($main-color9, 0.4);
+    border-right: solid 0.5rem $main-color7;
 
-    // content
-    &__content {
-      width: 80%;
-      background-color: rgba($main-color9, 0.5);
-      padding: 4rem;
-      border-radius: 4rem;
-      border: solid 0.5rem $main-color0;
-      display: flex;
-      margin-bottom: 10rem;
-      margin-top: 10rem;
-
-      // clumn
-      &__column {
-        width: 50%;
-
-        &:nth-child(1) {
-          border-right: solid 0.5rem $main-color0;
-        }
-
-        &:nth-child(2) {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        h1 {
-          font-size: 5rem;
-          border-bottom: solid 0.5rem $main-color7;
-          width: fit-content;
-          height: fit-content;
-          text-shadow: 2px 2px #000;
-        }
-
-        .intro {
-          padding: 2rem;
-          font-size: 1.2rem;
-          color: $grey-color3;
-          text-align: justify;
-          text-shadow: 1px 1px #000;
-
-          p {
-            padding: 0;
-          }
-
-          ul {
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-
-            li {
-              color: $grey-color4;
-              span {
-                font-weight: bold;
-                color: $main-color3;
-              }
-            }
-          }
-        }
-
-        .error-box {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 80%;
-          height: fit-content;
-          background-color: rgba($main-color0, 0.9);
-          border-radius: 2rem;
-          padding: 2rem;
-          border: solid 0.2rem $danger-color;
-          overflow: hidden;
-          color: $danger-color;
-          font-size: 2rem;
-          transition: all 0.3s;
-
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        .success {
-          border: solid 0.2rem $success-color;
-          color: $success-color;
-        }
-
-        .create-coin {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 80%;
-          height: 80%;
-          background-color: rgba($main-color9, 0.9);
-          border-radius: 2rem;
-          padding: 4rem;
-          border: solid 0.2rem $main-color0;
-          overflow: hidden;
-          transition: all 0.3s;
-        }
-
-        .hidden {
-          width: 0;
-          height: 0;
-          padding: 0;
-          border: 0;
-        }
-      }
-      // end column
+    h1 {
+      font-size: 5rem;
+      border-bottom: solid 0.5rem $main-color7;
+      width: fit-content;
+      height: fit-content;
+      text-shadow: 2px 2px #000;
     }
-    // end content
+
+    @mixin popup {
+      position: absolute;
+      z-index: 20;
+      top: 50%;
+      left: 150%;
+      transform: translate(-50%, -50%);
+      width: 80%;
+      border-radius: 2rem;
+      padding: 4rem;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+
+    .error-box {
+      @include popup;
+      background-color: rgba($main-color0, 0.9);
+      border: solid 0.2rem $danger-color;
+
+      color: $danger-color;
+      font-size: 2rem;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .success {
+      border: solid 0.2rem $success-color;
+      color: $success-color;
+    }
+
+    .create-coin {
+      @include popup;
+      background-color: rgba($main-color9, 0.9);
+      border: solid 0.2rem $main-color0;
+    }
+
+    .hidden {
+      width: 0;
+      height: 0;
+      padding: 0;
+      border: 0;
+    }
   }
-  // end create widown
+  // end content
 }
 // end container
 
 @media (max-width: 800px) {
   .container {
-    .create-container {
-      &__content {
-        flex-direction: column;
-        width: 98%;
-        padding: 2rem;
-        margin-bottom: 15rem;
-        margin-top: 15rem;
+    &__content {
+      width: 100%;
+      height: 100%;
+      padding: 16rem 4rem;
+      border: none;
 
-        &__column {
-          width: 100%;
+      .error-box {
+        left: 50%;
+      }
 
-          &:nth-child(1) {
-            border: none;
-            border-bottom: solid 0.5rem $main-color0;
-          }
-          &:nth-child(2) {
-            padding-top: 4rem;
-          }
-
-          .intro {
-            font-size: 2rem;
-          }
-        }
+      .create-coin {
+        left: 50%;
       }
     }
   }

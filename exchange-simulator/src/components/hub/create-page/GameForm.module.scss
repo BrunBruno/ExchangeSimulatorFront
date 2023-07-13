@@ -4,64 +4,65 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  width: 90%;
+  // gap: 2rem;
+  padding: 2rem 0;
 
   // row
   .row {
     width: 100%;
     display: flex;
-    flex-direction: column;
+    gap: 4rem;
+    padding: 1rem;
 
     span {
       font-size: 2rem;
       white-space: nowrap;
     }
 
-    textarea {
-      @include mainInput;
-      text-align: left;
-      resize: none;
+    &__col {
+      width: 50%;
 
-      &::-webkit-scrollbar {
-        background-color: #0000;
+      input {
+        @include mainInput;
+        width: 100%;
+      }
+
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+
+      input[type="datetime-local"] {
+        user-select: none;
+      }
+
+      input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+        display: none;
       }
     }
 
-    // start row split
-    .row-split {
+    &__block {
       width: 100%;
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        @include mainInput;
+        text-align: left;
+        resize: none;
+
+        &::-webkit-scrollbar {
+          background-color: #0000;
+        }
+      }
+    }
+
+    &__list {
+      width: 100%;
+      display: flex;
       flex-direction: row;
-      justify-content: space-between;
-      padding: 1rem 0;
-      gap: 3rem;
-
-      &__block {
-        width: 50%;
-
-        input {
-          @include mainInput;
-          width: 100%;
-        }
-
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-          -webkit-appearance: none;
-        }
-
-        input[type="datetime-local"] {
-          user-select: none;
-        }
-
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-          display: none;
-        }
-      }
-
-      input[type="radio"] {
-        display: none;
-      }
+      justify-content: space-evenly;
+      padding: 1rem;
 
       .radio {
         display: inline-block;
@@ -74,7 +75,11 @@
           border-radius: 1rem;
           padding: 0.5rem 1rem;
           border: solid 0.2rem $main-color0;
-          font-size: 1.5rem;
+          font-size: 2rem;
+        }
+
+        input[type="radio"] {
+          display: none;
         }
 
         input[type="radio"]:checked ~ span {
@@ -83,19 +88,9 @@
           background-color: $main-color0;
         }
       }
-    }
-    // end row split
-
-    // list row
-    .list-row {
-      width: 100%;
-      display: flex;
-      flex-direction: row;
-      padding: 1rem 0;
-      gap: 5rem;
 
       .list {
-        width: 100%;
+        width: 80%;
         height: 5rem;
         padding: 1rem;
         border-left: solid 0.2rem $main-color0;
@@ -138,6 +133,7 @@
       }
 
       .add-button {
+        width: 5%;
         position: relative;
         aspect-ratio: 1/1;
         border-radius: 100%;
@@ -161,12 +157,40 @@
         }
       }
     }
-    // end list row
 
     // confirm button
     button {
-      @include mainButton;
-      margin: auto;
+      @include actionButton;
+      position: absolute;
+      top: 50%;
+      left: 150%;
+      transform: translate(-50%, -50%);
+      font-size: 5rem;
+      border-width: 1rem;
+      transition: all 0.3s;
+      animation: buttonAnime 2s infinite;
+
+      &:hover {
+        border-width: 1rem;
+        border-color: #992617;
+        color: #992617;
+        background-color: $grey-color0;
+        filter: invert(1);
+      }
+    }
+
+    @keyframes buttonAnime {
+      0% {
+        box-shadow: 0 0 1rem 0rem #fff;
+      }
+
+      50% {
+        box-shadow: 0 0 1rem 1rem #fff;
+      }
+
+      100% {
+        box-shadow: 0 0 1rem 0rem #fff;
+      }
     }
   }
   // end row
@@ -176,10 +200,11 @@
 @media (max-width: 800px) {
   .form {
     .row {
+      position: relative;
       button {
-        @include mainButton;
+        left: 50%;
         font-size: 4rem;
-        margin: auto;
+        border-width: 0.5rem;
       }
     }
   }

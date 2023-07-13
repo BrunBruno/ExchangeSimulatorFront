@@ -1,0 +1,107 @@
+@import "../../../Variables.scss";
+
+.intro {
+  position: absolute;
+  top: 10rem;
+  right: 0;
+  width: 40%;
+  height: 52rem;
+  font-size: 1.2rem;
+  color: $grey-color3;
+  text-align: justify;
+  text-shadow: 1px 1px #000;
+  display: grid;
+  grid-template-columns: 0% 4% 96%;
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
+  transition: all 0.3s;
+
+  .hide {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s;
+    background-color: $grey-color8;
+    pointer-events: all;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    padding: 0 2rem;
+    background-color: $grey-color9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    pointer-events: all;
+
+    p {
+      padding: 0;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      li {
+        color: $grey-color4;
+        font-size: 1.4rem;
+        span {
+          font-weight: bold;
+          color: $main-color3;
+        }
+      }
+    }
+  }
+}
+
+.hidden-conetnt {
+  grid-template-columns: 96% 4% 0%;
+  transition: all 0.3s;
+
+  .intro__content {
+    overflow: hidden;
+  }
+
+  .hide {
+    background-color: #0000;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $grey-color8;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .intro {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .intro {
+    width: 100%;
+    top: 25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .intro {
+    width: 100%;
+  }
+}
+
+@media (max-width: 400px) {
+  .intro {
+    height: 70rem;
+  }
+}
