@@ -2,14 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import classes from "./Review.module.scss";
 
 function Review(props) {
-  const windowWidth = window.innerWidth;
-  const imageUrl = windowWidth < 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
+  // const imageUrl = windowWidth < 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
 
   const contentRef = useRef(null);
   const reviewRef = useRef(null);
   const reviewBackgroundRef = useRef(null);
 
-  const [scrollY, setScrollY] = useState(0);
   const [translateY, setTranslateY] = useState(0);
   const [offsetTop, setOffsetTop] = useState(0);
 
@@ -31,8 +29,22 @@ function Review(props) {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = props.containerRef.current.scrollTop;
-      setScrollY(scrollPosition);
+      const windowWidth = window.innerWidth;
+      let scrollMultiplier = 0.125 * Math.ceil(windowWidth / 100);
+
+      const backgroundHeight = reviewBackgroundRef.current.clientHeight;
+      const containerHeight = reviewRef.current.clientHeight;
+
+      const newOffsetTop = -(backgroundHeight - containerHeight) / 2;
+      setOffsetTop(newOffsetTop);
+
+      const windowHeight = window.innerHeight;
+      const { y } = reviewRef.current.getBoundingClientRect();
+      const position =
+        (-(y - windowHeight / 2) - containerHeight / 2) * scrollMultiplier;
+
+      console.log("scroll", scrollMultiplier);
+      setTranslateY(position);
     };
 
     if (props.containerRef.current) {
@@ -40,33 +52,12 @@ function Review(props) {
     }
   }, []);
 
-  useEffect(() => {
-    const backgroundHeight = reviewBackgroundRef.current.clientHeight;
-    const containerHeight = reviewRef.current.clientHeight;
-
-    const newOffsetTop = -(backgroundHeight - containerHeight) / 2;
-    setOffsetTop(newOffsetTop);
-
-    const windowHeight = window.innerHeight;
-    const { y } = reviewRef.current.getBoundingClientRect();
-    const position = (y - windowHeight / 2) / 5;
-
-    let newTranslateY;
-    if (position >= 0) {
-      newTranslateY = Math.min(position, -offsetTop - 1);
-    } else {
-      newTranslateY = Math.max(position, offsetTop + 1);
-    }
-
-    setTranslateY(newTranslateY);
-  }, [scrollY]);
-
   return (
     <div ref={reviewRef} className={classes.review}>
       <img
         ref={reviewBackgroundRef}
         className={classes["review__background"]}
-        src={`../../../../../public/images/${imageUrl}`}
+        src={`../../../../../public/images/bg.jpg`}
         style={{
           transform: `translateY(${translateY}px)`,
           top: `${offsetTop}px`,

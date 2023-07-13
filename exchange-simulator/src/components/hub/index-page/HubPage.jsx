@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import classes from "./HubPage.module.scss";
 
 import Games from "./games-section/Games";
@@ -6,14 +8,13 @@ import Intro from "./intro-section/Intro";
 import Review from "./review-section/Review";
 import Tutorial from "./tutorial-section/Tutorial";
 import Ranking from "./ranking-section/Ranking";
-import { useRef } from "react";
 
 function HubPage() {
   const containerRef = useRef(null);
 
   return (
     <div ref={containerRef} className={classes.container}>
-      <Header />
+      {/* <Header /> */}
       <Intro />
       <Games />
       <Review containerRef={containerRef} />
