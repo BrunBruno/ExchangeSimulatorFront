@@ -63,6 +63,8 @@
       );
       padding-bottom: 1rem;
       height: 100%;
+      overflow: hidden;
+      transition: all 3s;
 
       &__content {
         position: relative;
@@ -86,7 +88,15 @@
           bottom: 0;
           right: 0;
           margin: 2rem;
+          transition: right 1s;
         }
+      }
+    }
+
+    .hidden-card {
+      opacity: 0;
+      button {
+        right: -50%;
       }
     }
   }

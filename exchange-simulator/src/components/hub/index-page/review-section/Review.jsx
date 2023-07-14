@@ -41,7 +41,6 @@ function Review(props) {
       const position =
         (-(y - windowHeight / 2) - containerHeight / 2) * scrollMultiplier;
 
-      console.log("scroll", scrollMultiplier);
       setTranslateY(position);
     };
 

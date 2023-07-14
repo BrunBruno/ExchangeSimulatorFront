@@ -24,23 +24,31 @@ function Games() {
 
   const navigate = useNavigate();
   const titleRef = useRef(null);
+  const cardsRefs = useRef([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        titleRef.current.classList.remove(classes["hidden-title"]);
-      }
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (entry.target === titleRef.current) {
+            titleRef.current.classList.remove(classes["hidden-title"]);
+          } else {
+            entry.target.classList.remove(classes["hidden-card"]);
+          }
+          observer.unobserve(entry.target);
+        }
+      });
     });
 
     if (titleRef.current) {
       observer.observe(titleRef.current);
     }
 
-    return () => {
-      if (titleRef.current) {
-        observer.unobserve(titleRef.current);
-      }
-    };
+    if (cardsRefs.current) {
+      cardsRefs.current.forEach((element) => {
+        observer.observe(element);
+      });
+    }
   }, []);
 
   return (
@@ -53,8 +61,12 @@ function Games() {
       </div>
       <div className={classes.grid}>
         {cards.map((card, index) => (
-          <div key={index} className={classes["grid__card"]}>
-            <div key={index} className={classes["grid__card__content"]}>
+          <div
+            key={index}
+            ref={(el) => (cardsRefs.current[index] = el)}
+            className={`${classes["grid__card"]} ${classes["hidden-card"]}`}
+          >
+            <div className={classes["grid__card__content"]}>
               <h3>{card.title}</h3>
               <p>{card.description}</p>
               <button

@@ -4,7 +4,6 @@
 .form {
   display: flex;
   flex-direction: column;
-  // gap: 2rem;
   padding: 2rem 0;
 
   // row
@@ -199,8 +198,18 @@
 
 @media (max-width: 800px) {
   .form {
+    gap: 2rem;
     .row {
       position: relative;
+
+      span {
+        font-size: 3rem;
+      }
+
+      input {
+        font-size: 3rem;
+      }
+
       button {
         left: 50%;
         font-size: 4rem;

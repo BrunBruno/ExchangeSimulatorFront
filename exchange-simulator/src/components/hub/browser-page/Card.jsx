@@ -19,7 +19,8 @@ function Card(props) {
     ];
     const randomIndex = Math.floor(Math.random() * styles.length);
     setRandomStyle(classes[styles[randomIndex]]);
-  });
+  }, []);
+
   return (
     <div ref={props.cardRef} className={classes.card}>
       <div className={`${classes["card__content"]} ${randomStyle}`}>

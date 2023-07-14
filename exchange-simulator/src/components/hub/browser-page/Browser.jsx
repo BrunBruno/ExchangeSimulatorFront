@@ -7,7 +7,6 @@ import cardclasses from "./Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Card from "./Card";
-import Details from "./Details";
 import Header from "../header-shared/Header";
 
 function Browser() {
@@ -18,20 +17,25 @@ function Browser() {
   const [gameList, setGameList] = useState([]);
   const [filteredGameList, setFilteredGameList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [displayError, setDisplayError] = useState(false);
 
   useEffect(() => {
     const onLoadGames = async () => {
       try {
-        const games = await axios.get(`${baseUrl}/game/available-games`, {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const games = await axios.get(
+          `${baseUrl}/game/${location.state.title
+            .toLowerCase()
+            .replace(" ", "-")}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         setGameList(games.data);
       } catch (err) {
-        //
-        console.log(err);
+        setDisplayError(true);
       }
     };
 
@@ -45,7 +49,7 @@ function Browser() {
     setFilteredGameList(gameList);
   }, [gameList]);
 
-  const gamesPerPage = 6;
+  const gamesPerPage = 2;
   const indexOfLastGame = currentPage * gamesPerPage;
   const indexOfFirstGame = indexOfLastGame - gamesPerPage;
   const totalPages = Math.ceil(filteredGameList.length / gamesPerPage);
@@ -150,16 +154,30 @@ function Browser() {
           <input type="text" placeholder="Search" onChange={onFliterGames} />
         </div>
         <div className={classes["browser__cards"]}>
-          <ul>
-            {currentGames.map((game, index) => (
-              <Card
-                key={index}
-                name={game.name}
-                owner={game.ownerName}
-                cardRef={(el) => (cardsRefs.current[index] = el)}
-              />
-            ))}
-          </ul>
+          {displayError ? (
+            <div>
+              <div className={classes.error}>Connection error.</div>
+            </div>
+          ) : (
+            <>
+              {currentGames.length === 0 ? (
+                <div>
+                  <div className={classes.error}>No games found.</div>
+                </div>
+              ) : (
+                <ul>
+                  {currentGames.map((game, index) => (
+                    <Card
+                      key={index}
+                      name={game.name}
+                      owner={game.ownerName}
+                      cardRef={(el) => (cardsRefs.current[index] = el)}
+                    />
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
           <div className={classes.pagination}>
             <button
               disabled={currentPage === 1}

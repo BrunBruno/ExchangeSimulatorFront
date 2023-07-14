@@ -8,6 +8,7 @@ import Intro from "./intro-section/Intro";
 import Review from "./review-section/Review";
 import Tutorial from "./tutorial-section/Tutorial";
 import Ranking from "./ranking-section/Ranking";
+import Footer from "./footer/Footer";
 
 function HubPage() {
   const containerRef = useRef(null);
@@ -20,6 +21,7 @@ function HubPage() {
       <Review containerRef={containerRef} />
       <Tutorial />
       <Ranking />
+      <Footer containerRef={containerRef} />
     </div>
   );
 }

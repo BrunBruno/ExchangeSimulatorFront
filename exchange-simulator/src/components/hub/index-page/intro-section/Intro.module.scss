@@ -31,11 +31,24 @@
 
         &:nth-child(1) {
           transform: translateZ(2rem);
+          animation: light1 3s;
         }
+
+        @keyframes light1 {
+          0% {
+            filter: invert(1);
+          }
+          100% {
+            filter: invert(0);
+          }
+        }
+
         &:nth-child(2) {
           transform: translateZ(-2rem);
           filter: invert(1);
+          animation: light2 3s;
         }
+
         &:nth-child(3) {
           transform: rotateX(90deg) translateZ(-15rem);
           background-image: radial-gradient(
@@ -47,6 +60,16 @@
           );
           border-radius: 100%;
           filter: blur(5rem);
+          animation: light2 3s;
+        }
+
+        @keyframes light2 {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
         }
       }
     }
@@ -110,6 +133,7 @@
 
     .hidden-intro {
       height: 0;
+      opacity: 0;
       transition: all 0.5s;
     }
   }

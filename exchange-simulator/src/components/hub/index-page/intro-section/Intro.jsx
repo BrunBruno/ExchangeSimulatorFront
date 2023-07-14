@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import classes from "./Intro.module.scss";
-import Bar from "../bar-section/Bar";
+import Bar from "./Bar";
 import Logo from "../../../Shared/Logo";
 
 function Intro() {
