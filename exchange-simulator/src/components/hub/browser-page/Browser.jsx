@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import classes from "./Browser.module.scss";
@@ -7,9 +7,17 @@ import cardclasses from "./Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Card from "./Card";
+import Details from "./Details";
 import Header from "../header-shared/Header";
 
 function Browser() {
+  const gamesPerPage = 6;
+  const GameSortOption = {
+    Date: 0,
+    Name: 1,
+    Owner: 2,
+  };
+
   const containerRef = useRef(null);
   const cardsRefs = useRef([]);
 
@@ -17,73 +25,85 @@ function Browser() {
 
   const [gameList, setGameList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const [displayError, setDisplayError] = useState(false);
+  const [totalGames, setTotalGams] = useState(0);
+  const [selectedGame, setSelectedGame] = useState(false);
+
+  const [currentName, setCurrentName] = useState("");
+  const [currentOwner, setCurrentOwner] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentSortOption, setCurrentSortOption] = useState(
+    GameSortOption.Date
+  );
+
+  const GetData = useCallback(async () => {
+    try {
+      const games = await axios.get(
+        `${baseUrl}/game/${location.state.title
+          .toLowerCase()
+          .replace(
+            " ",
+            "-"
+          )}?gameName=${currentName}&ownerName=${currentOwner}&pageNumber=${currentPage}&sortOption=${currentSortOption}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setGameList(games.data.items);
+      setTotalPages(games.data.totalPages);
+      setTotalGams(games.data.totalItemsCount);
+
+      pageChangeAnimation();
+    } catch (err) {
+      console.log(err);
+      setDisplayError(true);
+    }
+  }, [currentName, currentOwner, currentPage, currentSortOption]);
 
   useEffect(() => {
-    const GetData = async (input = "", page = 1) => {
-      try {
-        const games = await axios.get(
-          `${baseUrl}/game/${location.state.title
-            .toLowerCase()
-            .replace(
-              " ",
-              "-"
-            )}?gameName=${input}&ownerName=${input}&pageNumber=${page}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        setGameList(games.data.items);
-        setTotalPages(games.data.totalPages);
-        setCurrentPage(page);
-      } catch (err) {
-        console.log(err);
-        setDisplayError(true);
-      }
-    };
-
     GetData();
-  }, []);
-
-  // const indexOfLastGame = currentPage * gamesPerPage;
-  // const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  // const totalPages = Math.ceil(filteredGameList.length / gamesPerPage);
-  // const currentGames = filteredGameList.slice(
-  //   indexOfFirstGame,
-  //   indexOfLastGame
-  // );
+  }, [GetData]);
 
   const onPageChange = (pageNumber) => {
-    GetData((page = pageNumber));
-    // setTimeout(() => {
-    //   cardsRefs.current.forEach((element) => {
-    //     if (element) {
-    //       element.classList.add(cardclasses.hidden);
-    //     }
-    //   });
-    // }, 100);
-    // setTimeout(() => {
-    //   cardsRefs.current.forEach((element, index) => {
-    //     setTimeout(() => {
-    //       if (element) {
-    //         element.classList.remove(cardclasses.hidden);
-    //       }
-    //     }, 50 * Math.floor(Math.random() * gamesPerPage) + 1);
-    //   });
-    // }, 100);
+    setCurrentPage(pageNumber);
   };
 
-  const onFliterGames = async (event) => {
-    GetData((input = event.target.value.toLowerCase()));
-    // const filteredGames = gameList.filter((game) =>
-    //   game.name.toLowerCase().includes(event.target.value.toLowerCase())
-    // );
-    // setFilteredGameList(filteredGames);
-    // onPageChange(1);
+  const onSearchByName = (event) => {
+    setCurrentName(event.target.value.toLowerCase());
+  };
+
+  const onSearchByAuthor = (event) => {
+    setCurrentOwner(event.target.value.toLowerCase());
+  };
+
+  const onSelectSortType = (event) => {
+    setCurrentSortOption(parseInt(event.target.value, 10));
+  };
+
+  const onSelectGame = (index) => {
+    setSelectedGame(gameList[index]);
+  };
+
+  const pageChangeAnimation = () => {
+    setTimeout(() => {
+      cardsRefs.current.forEach((element) => {
+        if (element) {
+          element.classList.add(cardclasses.hidden);
+        }
+      });
+    }, 100);
+    setTimeout(() => {
+      cardsRefs.current.forEach((element, index) => {
+        setTimeout(() => {
+          if (element) {
+            element.classList.remove(cardclasses.hidden);
+          }
+        }, 50 * Math.floor(Math.random() * gamesPerPage) + 1);
+      });
+    }, 100);
   };
 
   const renderPageButtons = (array) => {
@@ -151,7 +171,46 @@ function Browser() {
       <div className={classes.browser}>
         <div className={classes["browser__search"]}>
           <h2>{location.state.title}</h2>
-          <input type="text" placeholder="Search" onChange={onFliterGames} />
+          <input
+            type="text"
+            placeholder="Game Name"
+            onChange={onSearchByName}
+          />
+          <input type="text" placeholder="Author" onChange={onSearchByAuthor} />
+          <div className={classes.radios}>
+            <label>
+              <input
+                type="radio"
+                value={GameSortOption.Date}
+                checked={currentSortOption === GameSortOption.Date}
+                onChange={onSelectSortType}
+                name="sortOption"
+              />
+              <span>Date</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                value={GameSortOption.Name}
+                checked={currentSortOption === GameSortOption.Name}
+                onChange={onSelectSortType}
+                name="sortOption"
+              />
+              <span>Name</span>
+            </label>
+            <label>
+              <input
+                type="radio"
+                value={GameSortOption.Owner}
+                checked={currentSortOption === GameSortOption.Owner}
+                onChange={onSelectSortType}
+                name="sortOption"
+              />
+              <span>Owner</span>
+            </label>
+          </div>
+          <p>{totalGames} games found.</p>
+          {selectedGame ? <Details game={selectedGame} /> : ""}
         </div>
         <div className={classes["browser__cards"]}>
           {displayError ? (
@@ -171,7 +230,10 @@ function Browser() {
                       key={index}
                       name={game.name}
                       owner={game.ownerName}
+                      createdAt={game.createdAt}
                       cardRef={(el) => (cardsRefs.current[index] = el)}
+                      index={index}
+                      onSelectGame={onSelectGame}
                     />
                   ))}
                 </ul>

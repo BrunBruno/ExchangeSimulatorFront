@@ -27,6 +27,39 @@
       font-size: 2rem;
       width: 100%;
     }
+
+    p {
+      font-size: 2rem;
+    }
+    .radios {
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+
+      label {
+        display: inline-block;
+        cursor: pointer;
+        user-select: none;
+
+        input[type="radio"] {
+          display: none;
+        }
+
+        span {
+          display: inline-block;
+          border-radius: 1rem;
+          padding: 0.5rem 1rem;
+          border: solid 0.2rem $grey-color0;
+          font-size: 2rem;
+        }
+
+        input[type="radio"]:checked ~ span {
+          color: $grey-color9;
+          border: solid 0.2rem $grey-color9;
+          background-color: $grey-color0;
+        }
+      }
+    }
   }
 
   &__cards {
