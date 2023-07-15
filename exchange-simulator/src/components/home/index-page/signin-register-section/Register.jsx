@@ -79,28 +79,32 @@ function Register(props) {
 
     try {
       // Register new user
-      const registerResponse = await axios.post(
-        `${baseUrl}/user/register`,
-        userData
-      );
+      await axios.post(`${baseUrl}/user/register`, userData);
 
       const logUserData = {
         email: event.target.email.value,
         password: event.target.password.value,
       };
 
-      // Log in new user
-      const signinResponse = await axios.post(
-        `${baseUrl}/user/sign-in`,
-        logUserData
-      );
-      localStorage.setItem("token", signinResponse.data.token);
+      // log in new user
+      const response = await axios.post(`${baseUrl}/user/sign-in`, logUserData);
 
+      // set token
+      localStorage.setItem("token", response.data.token);
+
+      // get user info
+      const user = await axios.get(`${baseUrl}/user`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      // set user info
+      localStorage.setItem("userInfo", JSON.stringify(user.data));
+
+      // go to email verification
       props.handleEmailVerificationPopUp(true);
-      console.log("Account was created");
     } catch (err) {
-      console.log(err);
-
       // Display backend exeptions
       if (err.response && err.response.data) {
         emailErrRef.current.classList.add(classes.error);
@@ -112,7 +116,7 @@ function Register(props) {
     }
   };
 
-  // Clear errors
+  // clear errors
   const clearErrors = () => {
     emailErrRef.current.innerHTML = "";
     userNameErrRef.current.innerHTML = "";
@@ -160,17 +164,25 @@ function Register(props) {
           </div>
           <div>
             <span>Nick Name</span>
-            <input type="text" name="userName"></input>
+            <input type="text" name="userName" autoComplete="userName"></input>
             <span ref={userNameErrRef}></span>
           </div>
           <div>
             <span>Password</span>
-            <input type="password" name="password"></input>
+            <input
+              type="password"
+              name="password"
+              autoComplete="new-password"
+            ></input>
             <span ref={passwordErrRef}></span>
           </div>
           <div>
             <span>Confirm Password</span>
-            <input type="password" name="confirmPassword"></input>
+            <input
+              type="password"
+              name="confirmPassword"
+              autoComplete="new-password"
+            ></input>
           </div>
           <div className={classes.buttons}>
             <button type="submit">Register</button>

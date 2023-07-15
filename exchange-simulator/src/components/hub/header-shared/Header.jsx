@@ -47,7 +47,7 @@ function Header(props) {
       <div className={classes["header__account"]}>
         <ul>
           <li>
-            {userInfo.imageUrl === null ? (
+            {userInfo === null || userInfo.imageUrl === null ? (
               <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <circle fill="none" stroke="#e3fafc" cx="12" cy="7" r="5" />
                 <path

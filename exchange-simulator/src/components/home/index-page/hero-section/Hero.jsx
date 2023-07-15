@@ -49,7 +49,7 @@ function Hero(props) {
         <div className={classes["hero__content__intro"]}>
           <h1>
             <div>Welcome to</div>
-            <div>Exchnage Simulatore</div>
+            <div>Exchange Simulator</div>
           </h1>
           <h2>
             Immerse yourself in the dynamic realm of financial markets through

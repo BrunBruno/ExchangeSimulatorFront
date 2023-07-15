@@ -47,24 +47,31 @@ function SignIn(props) {
     try {
       // Log in user
       const response = await axios.post(`${baseUrl}/user/sign-in`, userData);
+
+      // set token
       localStorage.setItem("token", response.data.token);
 
+      // users email verification check
       const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
       if (!isEmailVerified.data.isEmailVerified) {
+        // go to email verification
         props.handleEmailVerificationPopUp(true);
       } else {
         try {
+          // get user info
           const user = await axios.get(`${baseUrl}/user`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           });
 
+          // set user info
           localStorage.setItem("userInfo", JSON.stringify(user.data));
 
+          // go to hub page
           navigate("/hub");
         } catch (err) {
           // Display backend exeptions
@@ -89,6 +96,7 @@ function SignIn(props) {
     }
   };
 
+  // clear errors
   const clearErrors = () => {
     emailErrRef.current.innerHTML = "";
     passwordErrRef.current.innerHTML = "";
@@ -127,13 +135,17 @@ function SignIn(props) {
           </div>
           <div>
             <span>Email</span>
-            <input type="text" name="email"></input>
+            <input type="text" name="email" autoComplete="userName"></input>
             <span ref={emailErrRef}></span>
           </div>
 
           <div>
             <span>Password</span>
-            <input type="password" name="password"></input>
+            <input
+              type="password"
+              name="password"
+              autoComplete="current-password"
+            ></input>
             <span ref={passwordErrRef}></span>
           </div>
 

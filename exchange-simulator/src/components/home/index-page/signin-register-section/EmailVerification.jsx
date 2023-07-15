@@ -1,10 +1,10 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import baseUrl from "../../../Shared/Url";
 
 import classes from "./SigninRegister.module.scss";
-import { useNavigate } from "react-router-dom";
 
 function EmailVerification(props) {
   const codeRef = useRef(null);
@@ -32,14 +32,11 @@ function EmailVerification(props) {
 
     try {
       // Verify code
-      const response = await axios.put(
-        `${baseUrl}/user/verify-email`,
-        verificationCode,
-        {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        }
-      );
+      await axios.put(`${baseUrl}/user/verify-email`, verificationCode, {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      });
 
+      // go to hub page
       navigate("/hub");
     } catch (err) {
       console.log(err);
@@ -59,12 +56,14 @@ function EmailVerification(props) {
   const regenerateCode = async () => {
     try {
       // Generate new code and delete previous
-      const response = await axios.post(`${baseUrl}/user/regenerate-code`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.post(
+        `${baseUrl}/user/regenerate-code`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
     } catch (err) {
-      console.log(err);
-
       // Display backend exeptions
       if (err.response && err.response.data) {
         codeRef.current.classList.add(classes.error);
@@ -115,7 +114,6 @@ function EmailVerification(props) {
             <input type="text" name="code"></input>
             <span ref={codeRef}></span>
           </div>
-
           <div className={classes.buttons}>
             <button type="button" onClick={regenerateCode}>
               Resend code

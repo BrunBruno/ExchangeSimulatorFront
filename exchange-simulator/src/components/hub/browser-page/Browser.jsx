@@ -15,17 +15,20 @@ function Browser() {
   const location = useLocation();
 
   const [gameList, setGameList] = useState([]);
-  const [filteredGameList, setFilteredGameList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [displayError, setDisplayError] = useState(false);
 
   useEffect(() => {
-    const onLoadGames = async () => {
+    const GetData = async (input = "", page = 1) => {
       try {
         const games = await axios.get(
           `${baseUrl}/game/${location.state.title
             .toLowerCase()
-            .replace(" ", "-")}`,
+            .replace(
+              " ",
+              "-"
+            )}?gameName=${input}&ownerName=${input}&pageNumber=${page}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,57 +36,53 @@ function Browser() {
           }
         );
 
-        setGameList(games.data);
+        setGameList(games.data.items);
+        setTotalPages(games.data.totalPages);
+        setCurrentPage(page);
       } catch (err) {
+        console.log(err);
         setDisplayError(true);
       }
     };
 
-    onLoadGames();
-    setTimeout(() => {
-      onPageChange(1);
-    }, 100);
+    GetData();
   }, []);
 
-  useEffect(() => {
-    setFilteredGameList(gameList);
-  }, [gameList]);
-
-  const gamesPerPage = 2;
-  const indexOfLastGame = currentPage * gamesPerPage;
-  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  const totalPages = Math.ceil(filteredGameList.length / gamesPerPage);
-  const currentGames = filteredGameList.slice(
-    indexOfFirstGame,
-    indexOfLastGame
-  );
+  // const indexOfLastGame = currentPage * gamesPerPage;
+  // const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  // const totalPages = Math.ceil(filteredGameList.length / gamesPerPage);
+  // const currentGames = filteredGameList.slice(
+  //   indexOfFirstGame,
+  //   indexOfLastGame
+  // );
 
   const onPageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    setTimeout(() => {
-      cardsRefs.current.forEach((element) => {
-        if (element) {
-          element.classList.add(cardclasses.hidden);
-        }
-      });
-    }, 100);
-    setTimeout(() => {
-      cardsRefs.current.forEach((element, index) => {
-        setTimeout(() => {
-          if (element) {
-            element.classList.remove(cardclasses.hidden);
-          }
-        }, 50 * Math.floor(Math.random() * gamesPerPage) + 1);
-      });
-    }, 100);
+    GetData((page = pageNumber));
+    // setTimeout(() => {
+    //   cardsRefs.current.forEach((element) => {
+    //     if (element) {
+    //       element.classList.add(cardclasses.hidden);
+    //     }
+    //   });
+    // }, 100);
+    // setTimeout(() => {
+    //   cardsRefs.current.forEach((element, index) => {
+    //     setTimeout(() => {
+    //       if (element) {
+    //         element.classList.remove(cardclasses.hidden);
+    //       }
+    //     }, 50 * Math.floor(Math.random() * gamesPerPage) + 1);
+    //   });
+    // }, 100);
   };
 
-  const onFliterGames = (event) => {
-    const filteredGames = gameList.filter((game) =>
-      game.name.toLowerCase().includes(event.target.value.toLowerCase())
-    );
-    setFilteredGameList(filteredGames);
-    onPageChange(1);
+  const onFliterGames = async (event) => {
+    GetData((input = event.target.value.toLowerCase()));
+    // const filteredGames = gameList.filter((game) =>
+    //   game.name.toLowerCase().includes(event.target.value.toLowerCase())
+    // );
+    // setFilteredGameList(filteredGames);
+    // onPageChange(1);
   };
 
   const renderPageButtons = (array) => {
@@ -160,13 +159,13 @@ function Browser() {
             </div>
           ) : (
             <>
-              {currentGames.length === 0 ? (
+              {gameList.length === 0 ? (
                 <div>
                   <div className={classes.error}>No games found.</div>
                 </div>
               ) : (
                 <ul>
-                  {currentGames.map((game, index) => (
+                  {gameList.map((game, index) => (
                     <Card
                       key={index}
                       name={game.name}
