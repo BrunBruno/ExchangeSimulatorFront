@@ -10,7 +10,7 @@ function Footer(props) {
       const windowHeight = window.innerHeight;
       const { y } = footerRef.current.getBoundingClientRect();
       const font = -(y - windowHeight);
-      console.log(font);
+
       if (font > 0) {
         setFooterForSize(Math.log(font) * 20);
       }

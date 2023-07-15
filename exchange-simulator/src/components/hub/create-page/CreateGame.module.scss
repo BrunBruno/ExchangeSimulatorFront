@@ -62,11 +62,6 @@
       }
     }
 
-    .success {
-      border: solid 0.2rem $success-color;
-      color: $success-color;
-    }
-
     .create-coin {
       @include popup;
       background-color: rgba($main-color9, 0.9);

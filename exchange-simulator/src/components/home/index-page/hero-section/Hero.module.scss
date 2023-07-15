@@ -57,6 +57,12 @@
 
       // register button container
       .action {
+        p {
+          text-align: center;
+          width: 100%;
+          font-size: 3rem;
+        }
+
         button {
           @include actionButton;
           font-size: 3rem;
@@ -77,6 +83,7 @@
     align-items: end;
     z-index: -1;
     padding-bottom: 10%;
+    animation: cubeStart 3s;
 
     // cube
     &__figure {
@@ -150,6 +157,15 @@
     }
   }
   // end cube container
+
+  @keyframes cubeStart {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 }
 // end hero section
 

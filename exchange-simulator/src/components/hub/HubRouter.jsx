@@ -15,18 +15,38 @@ function HubRouter() {
 
   useEffect(() => {
     const verifyUsersToken = async () => {
-      try {
-        const isEmailVerified = await axios.get(`${baseUrl}/user/is-verified`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
+      const token = localStorage.getItem("token");
 
-        if (!isEmailVerified.data.isEmailVerified) {
-          navigate("/");
+      if (token) {
+        try {
+          const isEmailVerified = await axios.get(
+            `${baseUrl}/user/is-verified`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!isEmailVerified.data.isEmailVerified) {
+            navigate("/", {
+              state: {
+                popup: "Please verify email.",
+                openEmailVerification: true,
+              },
+            });
+          }
+
+          setAuthorize(true);
+        } catch (err) {
+          navigate("/", {
+            state: { popup: "Connection error." },
+          });
         }
-
-        setAuthorize(true);
-      } catch (err) {
-        navigate("/");
+      } else {
+        navigate("/", {
+          state: { popup: "Please sign in." },
+        });
       }
     };
 

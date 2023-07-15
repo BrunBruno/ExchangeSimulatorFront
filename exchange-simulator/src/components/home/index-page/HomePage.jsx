@@ -1,4 +1,5 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 import classes from "./HomePage.module.scss";
 import srclasses from "./signin-register-section/SigninRegister.module.scss";
@@ -10,12 +11,47 @@ import Register from "./signin-register-section/Register";
 import EmailVerification from "./signin-register-section/EmailVerification";
 
 function HomePage() {
+  const location = useLocation();
+
   const signInPageRef = useRef(null);
   const registerPageRef = useRef(null);
   const emailVerificationPageRef = useRef(null);
+  const infoPpupRef = useRef(null);
 
   const [signInPageOn, setSignInPageOn] = useState(false);
   const [registerPageOn, setRegisterPageOn] = useState(false);
+  const [userIsPresent, setUserIspresent] = useState(false);
+
+  useEffect(() => {
+    if (location.state && location.state.popup) {
+      infoPpupRef.current.classList.remove(classes["hidden-popup"]);
+      infoPpupRef.current.innerHTML = location.state.popup;
+      setTimeout(() => {
+        infoPpupRef.current.classList.add(classes["hidden-popup"]);
+        setTimeout(() => {
+          infoPpupRef.current.innerHTML = "";
+        }, 2000);
+      }, 3000);
+
+      if (location.state.openEmailVerification) {
+        handleEmailVerificationPopUp(true);
+      }
+
+      const updatedState = { ...location.state };
+      delete updatedState.popup;
+
+      window.history.replaceState(updatedState, "", location.pathname);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      setUserIspresent(true);
+    } else {
+      setUserIspresent(false);
+    }
+  }, []);
 
   // handle login modal
   const handleSignInPopUp = () => {
@@ -85,7 +121,15 @@ function HomePage() {
         popupRef={emailVerificationPageRef}
       />
 
-      <Hero handleRegisterPopUp={handleRegisterPopUp} />
+      <Hero
+        handleRegisterPopUp={handleRegisterPopUp}
+        userIsPresent={userIsPresent}
+      />
+
+      <div
+        ref={infoPpupRef}
+        className={`${classes.popup} ${classes["hidden-popup"]}`}
+      ></div>
     </div>
   );
 }

@@ -143,13 +143,9 @@ function CreateGame() {
         },
       });
 
-      errorMenuRef.current.classList.remove(classes["hidden"]);
-      errorMenuRef.current.classList.add(classes["success"]);
-      setErrorMessage("Game created.");
-
-      setTimeout(() => {
-        navigate("/hub");
-      }, 3000);
+      navigate("/hub", {
+        state: { popup: "Game created." },
+      });
     } catch (err) {
       if (err.response && err.response.data) {
         errorMenuRef.current.classList.remove(classes["hidden"]);

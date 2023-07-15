@@ -6,11 +6,21 @@ function GameForm(props) {
       <div className={classes.row}>
         <div className={classes["row__col"]}>
           <span>Game Name</span>
-          <input type="text" placeholder="New Game" name="gameName" />
+          <input
+            type="text"
+            placeholder="New Game"
+            name="gameName"
+            autoComplete="gameName"
+          />
         </div>
         <div className={classes["row__col"]}>
           <span>Game Password</span>
-          <input type="password" placeholder="" name="password" />
+          <input
+            type="password"
+            placeholder=""
+            name="password"
+            autoComplete="password"
+          />
         </div>
       </div>
       <div className={classes.row}>

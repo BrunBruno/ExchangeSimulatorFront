@@ -12,6 +12,7 @@ import Header from "../header-shared/Header";
 function Browser() {
   const containerRef = useRef(null);
   const cardsRefs = useRef([]);
+
   const location = useLocation();
 
   const [gameList, setGameList] = useState([]);
