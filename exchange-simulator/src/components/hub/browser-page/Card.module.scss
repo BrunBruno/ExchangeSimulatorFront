@@ -49,17 +49,33 @@
         }
       }
     }
-    .buttons {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      margin: 2rem;
-      display: flex;
-      gap: 2rem;
 
-      button {
-        @include actionButton;
-        background-color: rgba(#000, 0.5);
+    .form {
+      padding: 2rem;
+      p {
+        font-size: 2rem;
+      }
+
+      input {
+        @include mainInput;
+      }
+
+      .hidden-input {
+        display: none;
+      }
+
+      .buttons {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 2rem;
+        display: flex;
+        gap: 2rem;
+
+        button {
+          @include actionButton;
+          background-color: rgba(#000, 0.5);
+        }
       }
     }
   }

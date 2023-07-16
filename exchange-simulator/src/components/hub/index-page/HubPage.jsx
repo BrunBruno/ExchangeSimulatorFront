@@ -18,7 +18,7 @@ function HubPage() {
   const infoPpupRef = useRef(null);
 
   useEffect(() => {
-    if (location.state && location.state.popup) {
+    if (location.state && location.state.popup && infoPpupRef.current) {
       infoPpupRef.current.classList.remove(classes["hidden-popup"]);
       infoPpupRef.current.innerHTML = location.state.popup;
       setTimeout(() => {

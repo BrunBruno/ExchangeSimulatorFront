@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
 import classes from "./Card.module.scss";
+import baseUrl from "../../Shared/Url";
+import axios from "axios";
 
 function Card(props) {
   const [randomStyle, setRandomStyle] = useState("");
@@ -21,6 +23,25 @@ function Card(props) {
     setRandomStyle(classes[styles[randomIndex]]);
   }, []);
 
+  const onJoinGame = async (event) => {
+    event.preventDefault();
+
+    try {
+      const joinPlayer = {
+        gameName: event.target.gameName.value,
+        password: event.target.gamePassword.value,
+      };
+
+      await axios.post(`${baseUrl}/game/join-game`, joinPlayer, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div ref={props.cardRef} className={classes.card}>
       <div className={`${classes["card__content"]} ${randomStyle}`}>
@@ -39,16 +60,27 @@ function Card(props) {
             <span>{new Date(props.createdAt).toDateString()}</span>
           </div>
         </div>
-        <div className={classes.buttons}>
-          <button>Join</button>
-          <button
-            onClick={() => {
-              props.onSelectGame(props.index);
-            }}
-          >
-            Select
-          </button>
-        </div>
+        <form className={classes.form} onSubmit={onJoinGame}>
+          <p>Enter password:</p>
+          <input type="password" name="gamePassword" />
+          <input
+            type="text"
+            name="gameName"
+            defaultValue={props.name}
+            className={classes["hidden-input"]}
+          />
+          <div className={classes.buttons}>
+            <button type="submit">Join</button>
+            <button
+              type="button"
+              onClick={() => {
+                props.onSelectGame(props.index);
+              }}
+            >
+              Select
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
