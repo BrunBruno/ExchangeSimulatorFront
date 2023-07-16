@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import baseUrl from "../../Shared/Url";
 
 import classes from "./Card.module.scss";
-import baseUrl from "../../Shared/Url";
-import axios from "axios";
 
 function Card(props) {
+  const navigate = useNavigate();
+
   const [randomStyle, setRandomStyle] = useState("");
 
   useEffect(() => {
@@ -42,6 +45,18 @@ function Card(props) {
     }
   };
 
+  const onReJoinGame = async (event) => {
+    // transfer to game
+  };
+
+  const handleSubmit = (event) => {
+    if (props.join === 1) {
+      onJoinGame(event);
+    } else if (props.join === 2) {
+      onReJoinGame(event);
+    }
+  };
+
   return (
     <div ref={props.cardRef} className={classes.card}>
       <div className={`${classes["card__content"]} ${randomStyle}`}>
@@ -60,9 +75,13 @@ function Card(props) {
             <span>{new Date(props.createdAt).toDateString()}</span>
           </div>
         </div>
-        <form className={classes.form} onSubmit={onJoinGame}>
-          <p>Enter password:</p>
-          <input type="password" name="gamePassword" />
+        <form className={classes.form} onSubmit={handleSubmit}>
+          {props.join === 1 && (
+            <div>
+              <p>Enter password:</p>
+              <input type="password" name="gamePassword" />
+            </div>
+          )}
           <input
             type="text"
             name="gameName"
@@ -70,7 +89,8 @@ function Card(props) {
             className={classes["hidden-input"]}
           />
           <div className={classes.buttons}>
-            <button type="submit">Join</button>
+            {props.join === 1 && <button type="submit">Join</button>}
+            {props.join === 2 && <button type="submit">Re-Join</button>}
             <button
               type="button"
               onClick={() => {

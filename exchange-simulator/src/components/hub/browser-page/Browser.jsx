@@ -17,6 +17,16 @@ function Browser() {
     Name: 1,
     Owner: 2,
   };
+  const gamesTypes = {
+    current: "current-games",
+    available: "available-games",
+    previous: "previous-games",
+  };
+  const joiningOptions = {
+    no: 0,
+    join: 1,
+    rejoin: 2,
+  };
 
   const containerRef = useRef(null);
   const cardsRefs = useRef([]);
@@ -36,32 +46,35 @@ function Browser() {
     GameSortOption.Date
   );
 
+  const [gamesType, setGamesType] = useState(null);
+
+  useEffect(() => {
+    setGamesType(location.state.title.toLowerCase().replace(" ", "-"));
+  }, [location.state.title]);
+
   const GetData = useCallback(async () => {
-    try {
-      const games = await axios.get(
-        `${baseUrl}/game/${location.state.title
-          .toLowerCase()
-          .replace(
-            " ",
-            "-"
-          )}?gameName=${currentName}&ownerName=${currentOwner}&pageNumber=${currentPage}&sortOption=${currentSortOption}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+    if (gamesType !== null) {
+      try {
+        const games = await axios.get(
+          `${baseUrl}/game/${gamesType}?gameName=${currentName}&ownerName=${currentOwner}&pageNumber=${currentPage}&sortOption=${currentSortOption}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
-      setGameList(games.data.items);
-      setTotalPages(games.data.totalPages);
-      setTotalGams(games.data.totalItemsCount);
+        setGameList(games.data.items);
+        setTotalPages(games.data.totalPages);
+        setTotalGams(games.data.totalItemsCount);
 
-      pageChangeAnimation();
-    } catch (err) {
-      console.log(err);
-      setDisplayError(true);
+        pageChangeAnimation();
+      } catch (err) {
+        console.log(err);
+        setDisplayError(true);
+      }
     }
-  }, [currentName, currentOwner, currentPage, currentSortOption]);
+  }, [gamesType, currentName, currentOwner, currentPage, currentSortOption]);
 
   useEffect(() => {
     GetData();
@@ -225,17 +238,30 @@ function Browser() {
                 </div>
               ) : (
                 <ul>
-                  {gameList.map((game, index) => (
-                    <Card
-                      key={index}
-                      name={game.name}
-                      owner={game.ownerName}
-                      createdAt={game.createdAt}
-                      cardRef={(el) => (cardsRefs.current[index] = el)}
-                      index={index}
-                      onSelectGame={onSelectGame}
-                    />
-                  ))}
+                  {gameList.map((game, index) => {
+                    let joinOption;
+
+                    if (gamesType === gamesTypes.current) {
+                      joinOption = joiningOptions.rejoin;
+                    } else if (gamesType === gamesTypes.available) {
+                      joinOption = joiningOptions.join;
+                    } else if (gamesType === gamesTypes.previous) {
+                      joinOption = joiningOptions.no;
+                    }
+
+                    return (
+                      <Card
+                        key={index}
+                        name={game.name}
+                        owner={game.ownerName}
+                        createdAt={game.createdAt}
+                        cardRef={(el) => (cardsRefs.current[index] = el)}
+                        index={index}
+                        onSelectGame={onSelectGame}
+                        join={joinOption}
+                      />
+                    );
+                  })}
                 </ul>
               )}
             </>
