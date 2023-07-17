@@ -25,7 +25,6 @@ function Details(props) {
         <span>Available spots:</span>
         <p>{props.game.availableSpots}</p>
       </div>
-      <button>Join Now</button>
     </div>
   );
 }

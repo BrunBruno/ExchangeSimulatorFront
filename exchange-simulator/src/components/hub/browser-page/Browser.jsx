@@ -222,7 +222,11 @@ function Browser() {
               <span>Owner</span>
             </label>
           </div>
-          <p>{totalGames} games found.</p>
+          {totalGames === 1 ? (
+            <p>{totalGames} game found.</p>
+          ) : (
+            <p>{totalGames} games found.</p>
+          )}
           {selectedGame ? <Details game={selectedGame} /> : ""}
         </div>
         <div className={classes["browser__cards"]}>

@@ -34,45 +34,22 @@
       &:nth-child(1) {
         border-top-left-radius: 3rem;
         border-bottom-left-radius: 3rem;
-
-        &:hover {
-          span {
-            height: 100%;
-          }
-        }
-      }
-
-      &:nth-child(2) {
-        &:hover {
-          span {
-            height: 100%;
-          }
-        }
-      }
-
-      &:nth-child(3) {
-        &:hover {
-          span {
-            height: 100%;
-          }
-        }
       }
 
       &:nth-child(4) {
         border-top-right-radius: 3rem;
         border-bottom-right-radius: 3rem;
-
-        &:hover {
-          span {
-            height: 100%;
-          }
-        }
       }
 
       &:hover {
         cursor: pointer;
         background-color: $grey-color8;
         transition: all 0.1s;
+
+        span {
+          height: 100%;
+          white-space: normal;
+        }
       }
 
       &:active {

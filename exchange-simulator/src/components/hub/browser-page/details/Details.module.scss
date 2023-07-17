@@ -36,9 +36,4 @@
       font-size: 1.6rem;
     }
   }
-
-  button {
-    @include actionButton;
-    width: 80%;
-  }
 }

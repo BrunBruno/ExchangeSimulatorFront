@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import baseUrl from "../../../Shared/Url";
@@ -7,6 +7,8 @@ import classes from "./Card.module.scss";
 
 function Card(props) {
   const navigate = useNavigate();
+
+  const passwordErrRef = useRef(null);
 
   const [randomStyle, setRandomStyle] = useState("");
 
@@ -41,7 +43,7 @@ function Card(props) {
         },
       });
     } catch (err) {
-      console.log(err);
+      passwordErrRef.current.classList.remove(classes["hidden-error"]);
     }
   };
 
@@ -80,6 +82,12 @@ function Card(props) {
             <div>
               <p>Enter password:</p>
               <input type="password" name="gamePassword" />
+              <p
+                ref={passwordErrRef}
+                className={`${classes["password-error"]} ${classes["hidden-error"]}`}
+              >
+                Incorrect password.
+              </p>
             </div>
           )}
           <input

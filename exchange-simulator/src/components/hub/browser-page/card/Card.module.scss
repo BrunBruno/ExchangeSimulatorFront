@@ -59,6 +59,14 @@
         font-size: 1.6rem;
       }
 
+      .password-error {
+        color: $danger-color;
+      }
+
+      .hidden-error {
+        display: none;
+      }
+
       input {
         @include mainInput;
         font-size: 1.2rem;
