@@ -3,11 +3,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import classes from "./Browser.module.scss";
-import cardclasses from "./Card.module.scss";
+import cardclasses from "./Card/Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
-import Card from "./Card";
-import Details from "./Details";
+import Card from "./Card/Card";
+import Details from "./Details/Details";
 import Header from "../header-shared/Header";
 
 function Browser() {

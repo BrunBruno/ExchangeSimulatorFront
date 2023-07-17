@@ -2,20 +2,16 @@
 
 // form modal
 .form-page {
-  position: absolute;
+  @include absoluteCenter;
+  @include roundedBlock(4rem, 4rem);
   z-index: 10;
   width: 40%;
   height: 80%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   background-color: rgba($main-color9, 0.9);
-  border-radius: 4rem;
-  padding: 4rem;
   border: solid 0.5rem $grey-color0;
   visibility: visible;
-  transition: all 0.3s;
   overflow: hidden;
+  transition: all 0.3s;
 
   // from
   form {
@@ -30,18 +26,14 @@
     }
 
     .x {
+      @include flexBlock(row, 0, center, center);
+      @include circleBlock(3rem);
       position: absolute;
-      width: 3rem;
-      aspect-ratio: 1 / 1;
+      top: 0;
+      right: 0;
       background-color: $main-color0;
       color: $main-color9;
       border: solid 1px $main-color9;
-      border-radius: 100%;
-      top: 0;
-      right: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
 
       &:hover {
         cursor: pointer;
@@ -55,21 +47,14 @@
 
     // inputs, errors and buttons container
     .form-container {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
+      @include absoluteCenter;
+      @include flexBlock(column, 2rem, start, center);
 
       // form row
       div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
+        @include flexBlock(column, 0, start, start);
         position: relative;
+        width: 100%;
 
         span {
           font-size: 2rem;
@@ -86,36 +71,33 @@
         }
 
         .main-error {
+          @include roundedBlock(1rem, 0.3rem 0.6rem);
+          width: fit-content;
           background-color: $main-color0;
           color: $danger-color;
           font-size: 1.6rem;
-          padding: 0.3rem 0.6rem;
-          margin: 1rem;
-          border-radius: 1rem;
-          width: fit-content;
-          z-index: 0;
           margin: auto;
+          z-index: 0;
         }
 
         .error {
+          @include roundedBlock(1rem, 0.3rem 0.6rem);
           position: relative;
+          width: fit-content;
           background-color: $main-color0;
           color: $danger-color;
           font-size: 1.6rem;
-          padding: 0.3rem 0.6rem;
           margin: 1rem;
-          border-radius: 1rem;
           border-top-right-radius: 0;
-          width: fit-content;
           z-index: 0;
 
           &::after {
             content: "";
             position: absolute;
-            z-index: -2;
-            background-color: #0000;
             top: -2.4rem;
             right: 0;
+            z-index: -2;
+            background-color: #0000;
             height: 2.4rem;
             width: 2.4rem;
             border-bottom-right-radius: 1.2rem;
@@ -131,10 +113,8 @@
 
       // buttons container
       .buttons {
+        @include flexBlock(column, 1rem, start, end);
         width: 100%;
-        display: flex;
-        align-items: end;
-        gap: 1rem;
       }
     }
     // end container
@@ -183,5 +163,4 @@
   height: 0;
   padding: 0;
   visibility: hidden;
-  transition: all 0.3s;
 }

@@ -6,20 +6,20 @@ import classes from "./CreateGame.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Header from "../header-shared/Header";
-import CoinForm from "./CoinForm";
-import GameForm from "./GameForm";
-import Tip from "./Tip";
+import CoinForm from "./coin-form/CoinForm";
+import GameForm from "./game-form/GameForm";
+import Tip from "./tip-section/Tip";
 
 function CreateGame() {
-  const [coinList, setCoinList] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const containerRef = useRef();
   const coinMenuRef = useRef(null);
   const errorMenuRef = useRef(null);
   const coinListRef = useRef(null);
 
-  const navigate = useNavigate();
+  const [coinList, setCoinList] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const handleScroll = (event) => {

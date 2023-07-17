@@ -40,6 +40,7 @@ function Tip() {
     <div
       ref={introRef}
       className={`${classes.intro} ${classes["hidden-conetnt"]}`}
+      onMouseEnter={onHideContent}
     >
       <div></div>
       <div className={classes.hide} onClick={onChangeContent}>

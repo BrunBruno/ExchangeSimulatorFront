@@ -1,5 +1,6 @@
 @import "../../../../Variables.scss";
 
+// table
 .table {
   width: 100%;
   height: 100%;
@@ -8,17 +9,16 @@
   grid-template-rows: 9% 91%;
   overflow: hidden;
 
+  // table header
   &__header {
     width: 100%;
     height: 100%;
 
     ul {
+      @include flexBlock(row, 0, space-evenly, center);
       list-style-type: none;
       width: 100%;
       height: 100%;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
       border-bottom: solid 0.3rem $grey-color0;
 
       li {
@@ -28,11 +28,14 @@
       }
     }
   }
+  // end table header
 
+  // table conatnet
   &__content {
     width: 100%;
     height: 100%;
 
+    // table list
     ul {
       list-style-type: none;
       width: 100%;
@@ -43,8 +46,7 @@
       grid-template-rows: repeat(10, 1fr);
 
       li {
-        display: flex;
-        justify-content: space-evenly;
+        @include flexBlock(row, 0, space-evenly, center);
         padding: 1rem;
         transition: transform 0.3s;
 
@@ -69,11 +71,16 @@
         transform: translateX(100%);
       }
     }
+    // end table list
   }
+  // end table content
 }
+// end table
 
+// mobile layout
 @media (max-width: 800px) {
   .table {
     max-height: 50rem;
   }
 }
+// end mobile layout

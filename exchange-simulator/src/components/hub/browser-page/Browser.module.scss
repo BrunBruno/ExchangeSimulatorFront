@@ -1,20 +1,16 @@
 @import "../../../Variables.scss";
 
 .browser {
-  width: 100%;
-  height: 100vh;
+  @include container;
   display: grid;
   grid-template-columns: 20% 80%;
 
   &__search {
+    @include flexBlock(column, 1rem, start, center);
     background-color: $grey-color9;
     border-right: solid 0.5rem $grey-color8;
     padding: 1rem;
     padding-top: 10rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
 
     h2 {
       font-size: 3rem;
@@ -31,14 +27,14 @@
     p {
       font-size: 2rem;
     }
+
     .radios {
+      @include flexBlock(row, 0, space-evenly, center);
       width: 100%;
-      display: flex;
-      justify-content: space-evenly;
 
       label {
-        display: inline-block;
         cursor: pointer;
+        display: inline-block;
         user-select: none;
 
         input[type="radio"] {
@@ -46,9 +42,8 @@
         }
 
         span {
+          @include roundedBlock(1rem, 0.5rem 1rem);
           display: inline-block;
-          border-radius: 1rem;
-          padding: 0.5rem 1rem;
           border: solid 0.2rem $grey-color0;
           font-size: 2rem;
         }
@@ -73,14 +68,10 @@
 
     div {
       .error {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 2rem;
+        @include absoluteCenter;
+        @include roundedBlock(2rem, 2rem);
         font-size: 4rem;
         background-color: $main-color7;
-        border-radius: 2rem;
         border: solid 0.5rem $main-color0;
       }
     }
@@ -96,11 +87,8 @@
     }
 
     .pagination {
+      @include flexBlock(row, 1rem, center, center);
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
       padding: 1rem;
       background-color: $grey-color9;
       z-index: 2;
@@ -130,6 +118,7 @@
         height: 100%;
         aspect-ratio: 1/1;
         background-color: #0000;
+
         &:hover {
           background-color: #0000;
           cursor: default;

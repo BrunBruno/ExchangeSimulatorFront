@@ -12,9 +12,9 @@ function Bar() {
           <BarIcons name="plus" />
           <span>Create Game</span>
         </li>
-        <li>
-          <BarIcons name="friend" />
-          <span>Invite Friend</span>
+        <li onClick={() => navigate("/hub/manage")}>
+          <BarIcons name="games" />
+          <span>Your Games</span>
         </li>
         <li>
           <BarIcons name="account" />

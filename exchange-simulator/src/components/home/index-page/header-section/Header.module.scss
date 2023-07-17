@@ -2,14 +2,13 @@
 
 // header
 .header {
+  @include flexBlock(row, 0, space-evenly, start);
   position: fixed;
   z-index: 8;
   top: 0;
   left: 0;
   width: 100%;
   padding: 2% 0;
-  display: flex;
-  justify-content: space-evenly;
 
   // header logo
   &__logo {
@@ -37,8 +36,7 @@
     z-index: inherit;
 
     ul {
-      display: flex;
-      gap: 2rem;
+      @include flexBlock(row, 2rem, start, start);
       list-style-type: none;
       user-select: none;
       z-index: inherit;
@@ -54,6 +52,7 @@
 
         &:hover {
           cursor: pointer;
+
           &::after {
             width: 100%;
           }

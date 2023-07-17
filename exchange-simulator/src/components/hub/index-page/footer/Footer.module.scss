@@ -1,11 +1,9 @@
 @import "../../../../Variables.scss";
 
 .footer {
+  @include flexBlock(row, 0, center, center);
   width: 100%;
   background-color: #000;
   border-top: solid 0.5rem $grey-color0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding-bottom: 10rem;
 }

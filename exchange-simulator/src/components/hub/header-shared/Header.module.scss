@@ -2,14 +2,12 @@
 
 // header section
 .header {
+  @include flexBlock(row, 5rem, start, center);
   position: fixed;
   top: 0;
   z-index: 100;
   width: 100%;
   padding: 1rem 1rem;
-  display: flex;
-  align-items: center;
-  gap: 5rem;
   font-size: 1.2rem;
   background-color: rgba($main-color9, 0.9);
   transition: all 0.3s;
@@ -31,11 +29,10 @@
     overflow: hidden;
 
     ul {
+      @include flexBlock(row, 1rem, start, center);
       height: 100%;
       list-style-type: none;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+
       li {
         white-space: nowrap;
         padding: 0.5rem;
@@ -64,17 +61,14 @@
   // account section
   &__account {
     ul {
+      @include flexBlock(row, 1rem, start, center);
       height: 100%;
       list-style-type: none;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+
       li {
+        @include flexBlock(row, 0.5rem, start, center);
         position: relative;
         white-space: nowrap;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
 
         &::after {
           content: "";
@@ -89,6 +83,7 @@
 
         &:hover {
           cursor: pointer;
+
           &::after {
             width: 100%;
           }
@@ -99,9 +94,7 @@
         }
 
         img {
-          height: 2rem;
-          width: 2rem;
-          border-radius: 100%;
+          @include circleBlock(2rem);
         }
       }
     }
@@ -110,12 +103,14 @@
 }
 // end header section
 
+// header on top of page
 .header-trans {
   background-color: #000;
   padding: 2rem 1rem;
   transition: all 0.3s;
 }
 
+// mobile layout
 @media (max-width: 600px) {
   .header {
     font-size: 3rem;
@@ -142,3 +137,4 @@
     }
   }
 }
+// end mobile layout

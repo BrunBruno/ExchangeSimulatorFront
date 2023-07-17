@@ -1,12 +1,11 @@
 @import "../../../../Variables.scss";
 
 .tutorial {
+  @include flexBlock(column, 0, start, start);
   position: relative;
   width: 100%;
   height: 100rem;
   background-color: #000;
-  display: flex;
-  flex-direction: column;
   padding: 10rem 0;
   box-sizing: border-box;
   border-bottom-right-radius: 5rem;

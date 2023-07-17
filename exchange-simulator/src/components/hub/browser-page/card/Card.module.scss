@@ -1,0 +1,123 @@
+@import "../../../../Variables.scss";
+
+// card
+.card {
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  border-bottom: solid 0.5rem $main-color0;
+  overflow: hidden;
+  transition: opacity 1s, transform 0.3s;
+
+  &:hover {
+    transform: translateY(-2%);
+  }
+
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 2rem;
+    background-color: #000;
+
+    .text {
+      @include flexBlock(row, 2rem, start, center);
+      position: relative;
+      background-color: rgba(#000, 0.5);
+      padding: 2rem;
+
+      svg {
+        width: 4rem;
+      }
+
+      div {
+        width: 100%;
+
+        h2 {
+          font-size: 3rem;
+        }
+
+        p {
+          font-size: 1.5rem;
+        }
+
+        span {
+          position: absolute;
+          top: 0;
+          right: 0;
+          background-color: rgba($grey-color7, 0.5);
+          padding: 0.5rem 1rem;
+          border-bottom-left-radius: 1rem;
+        }
+      }
+    }
+
+    .form {
+      padding: 2rem;
+
+      p {
+        font-size: 1.6rem;
+      }
+
+      input {
+        @include mainInput;
+        font-size: 1.2rem;
+      }
+
+      .hidden-input {
+        display: none;
+      }
+
+      .buttons {
+        @include flexBlock(row, 2rem, start, start);
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 2rem;
+
+        button {
+          @include actionButton;
+          background-color: rgba(#000, 0.5);
+        }
+      }
+    }
+  }
+
+  @mixin content-style($color, $x, $y) {
+    background-image: repeating-conic-gradient(
+      from 0deg at $x $y,
+      #0000 20%,
+      $color 40%
+    );
+  }
+
+  $colors: (
+    0: $main-color0,
+    1: $main-color1,
+    2: $main-color2,
+    3: $main-color3,
+    4: $main-color4,
+    5: $main-color5,
+    6: $main-color6,
+    7: $main-color7,
+    8: $main-color8,
+    9: $main-color9,
+  );
+
+  @function random-percentage() {
+    $random: random(100);
+    @return percentage($random / 100);
+  }
+
+  @each $key, $value in $colors {
+    .content-style-#{$key} {
+      @include content-style($value, random-percentage(), random-percentage());
+    }
+  }
+}
+// end card
+
+.hidden {
+  opacity: 0.1;
+  transition: all 0s;
+}

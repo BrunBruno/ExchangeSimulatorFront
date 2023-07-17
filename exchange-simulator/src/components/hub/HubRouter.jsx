@@ -8,6 +8,7 @@ import CreateGame from "./create-page/CreateGame";
 import HubPage from "./index-page/HubPage";
 import Browser from "./browser-page/Browser";
 import LoadingPage from "../Shared/LoadingPage";
+import Manage from "./manage-page/Manage";
 
 function HubRouter() {
   const [authorize, setAuthorize] = useState(false);
@@ -61,6 +62,7 @@ function HubRouter() {
     <Routes>
       <Route path="/" element={<HubPage />} />
       <Route path="/create" element={<CreateGame />} />
+      <Route path="/manage" element={<Manage />} />
       <Route path="/current-games" element={<Browser />} />
       <Route path="/available-games" element={<Browser />} />
       <Route path="/previous-games" element={<Browser />} />

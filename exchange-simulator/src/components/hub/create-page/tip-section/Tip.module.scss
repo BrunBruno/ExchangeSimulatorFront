@@ -1,5 +1,6 @@
-@import "../../../Variables.scss";
+@import "../../../../Variables.scss";
 
+// intro container
 .intro {
   position: absolute;
   top: 10rem;
@@ -18,10 +19,8 @@
   transition: all 0.3s;
 
   .hide {
+    @include flexBlock(row, 0, center, center);
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     transition: all 0.1s;
     background-color: $grey-color8;
     pointer-events: all;
@@ -31,13 +30,12 @@
     }
   }
 
+  // intro content
   &__content {
+    @include flexBlock(column, 0, center, start);
     width: 100%;
     padding: 0 2rem;
     background-color: $grey-color9;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     pointer-events: all;
 
     p {
@@ -46,14 +44,13 @@
     }
 
     ul {
+      @include flexBlock(column, 0.5rem, start, start);
       padding: 1rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
 
       li {
         color: $grey-color4;
         font-size: 1.4rem;
+
         span {
           font-weight: bold;
           color: $main-color3;
@@ -61,8 +58,11 @@
       }
     }
   }
+  // end intro content
 }
+// end intro container
 
+// hidden content
 .hidden-conetnt {
   grid-template-columns: 96% 4% 0%;
   transition: all 0.3s;
@@ -80,7 +80,9 @@
     }
   }
 }
+// end hidden content
 
+// mobile layouts
 @media (max-width: 1200px) {
   .intro {
     width: 50%;
@@ -105,3 +107,4 @@
     height: 70rem;
   }
 }
+// end mobile layouts

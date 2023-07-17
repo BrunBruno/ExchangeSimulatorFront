@@ -4,16 +4,14 @@
 .intro {
   width: 100%;
   height: 50rem;
+  margin-top: 16rem;
   display: flex;
-  margin-top: 10rem;
 
   // logo container
   &__logo {
+    @include flexBlock(row, 0, center, center);
     width: 40%;
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     .figure {
       position: relative;
@@ -96,6 +94,7 @@
 
     // introduction section
     .introduction {
+      @include flexBlock(column, 2rem, start, start);
       position: absolute;
       right: 0;
       bottom: -50%;
@@ -105,9 +104,6 @@
       background-image: linear-gradient(45deg, #0000 80%, $main-color9 90%);
       border-top-left-radius: 10rem;
       padding: 5rem 10rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
       overflow: hidden;
       transition: all 0.5s;
 
@@ -140,21 +136,26 @@
   // end content container
 }
 
-@media (max-width: 600px) {
+// mobile layout
+@media (max-width: 800px) {
   .intro {
+    position: relative;
     flex-direction: column;
     height: 60rem;
+    z-index: 0;
 
     &__logo {
-      height: 0;
-      width: 0;
+      @include absoluteCenter;
+      z-index: -5;
+      opacity: 0.3;
     }
 
     &__content {
       width: 100%;
+      z-index: inherit;
+
       .introduction {
         width: 100%;
-        padding: 5rem;
 
         p {
           font-size: 2.2rem;
@@ -163,3 +164,5 @@
     }
   }
 }
+
+// end mobile layout

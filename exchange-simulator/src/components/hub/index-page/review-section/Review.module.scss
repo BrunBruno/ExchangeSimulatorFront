@@ -1,3 +1,5 @@
+@import "../../../../Variables.scss";
+
 // review contaner
 .review {
   position: relative;
@@ -6,6 +8,7 @@
   padding-top: 40%;
   overflow: hidden;
 
+  // section background
   &__background {
     position: absolute;
     z-index: -1;
@@ -15,16 +18,13 @@
     transform-style: preserve-3d;
   }
 
+  // section conatnet
   &__content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include absoluteCenter;
+    @include roundedBlock(2rem, 2rem);
     width: 50%;
     height: 50%;
     background-color: rgba(#000, 0.9);
-    border-radius: 2rem;
-    padding: 2rem;
     transition: all 1s;
   }
 

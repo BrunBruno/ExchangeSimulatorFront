@@ -1,24 +1,24 @@
 @import "../../../../Variables.scss";
 
+// ranking conatiner
 .ranking {
+  @include flexBlock(row, 0, center, center);
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-bottom: 10rem;
 
+  // ranking conatnet
   &__content {
     width: 80%;
     height: 80%;
     display: flex;
 
+    // column
     &__column {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      @include flexBlock(column, 0, start, center);
       padding: 2rem;
 
+      // table
       &:nth-child(1) {
         position: relative;
         width: 70%;
@@ -42,23 +42,24 @@
           filter: blur(1rem);
         }
       }
+      // end table
 
+      // header
       &:nth-child(2) {
         width: 30%;
 
+        // section title
         h2 {
+          @include flexBlock(column, 2rem, center, center);
           font-size: 5rem;
           padding: 10rem 0;
           text-align: center;
           text-shadow: 5px 5px #000;
           transform: translateX(0%);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 2rem;
           user-select: none;
           transition: all 0.3s;
 
+          // animated svg
           svg {
             width: 60%;
 
@@ -81,6 +82,7 @@
                   fill: $main-color0;
                 }
               }
+
               &:nth-child(2) {
                 animation: iconAnimation2 5s infinite;
               }
@@ -99,9 +101,11 @@
                   fill: $main-color0;
                 }
               }
+
               &:nth-child(3) {
                 animation: iconAnimation3 5s infinite;
               }
+
               @keyframes iconAnimation3 {
                 0% {
                   fill: $main-color9;
@@ -115,16 +119,23 @@
               }
             }
           }
+          // end animated svg
         }
+        // end section title
 
         .hidden-title {
           transform: translateX(200%);
         }
       }
+      // end header
     }
+    // end column
   }
+  // end ranking conatant
 }
+// end ranking conatiner
 
+// mobile layout
 @media (max-width: 800px) {
   .ranking {
     height: fit-content;
@@ -155,3 +166,4 @@
     }
   }
 }
+// end mobile layout

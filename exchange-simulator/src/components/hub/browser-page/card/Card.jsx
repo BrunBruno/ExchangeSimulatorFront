@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import baseUrl from "../../Shared/Url";
+import baseUrl from "../../../Shared/Url";
 
 import classes from "./Card.module.scss";
 
