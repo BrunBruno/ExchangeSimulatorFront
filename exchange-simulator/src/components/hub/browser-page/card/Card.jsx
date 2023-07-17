@@ -48,7 +48,9 @@ function Card(props) {
   };
 
   const onReJoinGame = async (event) => {
+    event.preventDefault();
     // transfer to game
+    console.log("re-join");
   };
 
   const handleSubmit = (event) => {
@@ -99,14 +101,6 @@ function Card(props) {
           <div className={classes.buttons}>
             {props.join === 1 && <button type="submit">Join</button>}
             {props.join === 2 && <button type="submit">Re-Join</button>}
-            <button
-              type="button"
-              onClick={() => {
-                props.onSelectGame(props.index);
-              }}
-            >
-              Select
-            </button>
           </div>
         </form>
       </div>

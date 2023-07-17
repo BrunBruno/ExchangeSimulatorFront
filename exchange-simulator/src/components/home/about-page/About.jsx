@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 import classes from "./About.module.scss";
 
 import Content from "./content-section/Content";
+import Privacy from "./content-section/Privacy";
+import Terms from "./content-section/Terms";
+import Introduction from "./content-section/Introduction";
+import Objectives from "./content-section/Objectives";
 
 function About() {
   const options = [
-    { title: "Introduction" },
-    { title: "Objectives" },
-    { title: "Terms" },
-    { title: "Privacy" },
+    { title: "Introduction", component: <Introduction /> },
+    { title: "Objectives", component: <Objectives /> },
+    { title: "Terms", component: <Terms /> },
+    { title: "Privacy", component: <Privacy /> },
   ];
 
   const navigate = useNavigate();
@@ -74,7 +78,7 @@ function About() {
       </div>
       <div className={classes["container__column"]}>
         <div className={classes["container__column__content"]}>
-          <Content option={options[selectedContent]} />
+          {options[selectedContent].component}
         </div>
       </div>
     </div>

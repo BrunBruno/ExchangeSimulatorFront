@@ -7,7 +7,6 @@ import cardclasses from "./Card/Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Card from "./Card/Card";
-import Details from "./Details/Details";
 import Header from "../header-shared/Header";
 
 function Browser() {
@@ -37,7 +36,6 @@ function Browser() {
   const [totalPages, setTotalPages] = useState(0);
   const [displayError, setDisplayError] = useState(false);
   const [totalGames, setTotalGams] = useState(0);
-  const [selectedGame, setSelectedGame] = useState(false);
 
   const [currentName, setCurrentName] = useState("");
   const [currentOwner, setCurrentOwner] = useState("");
@@ -94,10 +92,6 @@ function Browser() {
 
   const onSelectSortType = (event) => {
     setCurrentSortOption(parseInt(event.target.value, 10));
-  };
-
-  const onSelectGame = (index) => {
-    setSelectedGame(gameList[index]);
   };
 
   const pageChangeAnimation = () => {
@@ -184,6 +178,7 @@ function Browser() {
       <div className={classes.browser}>
         <div className={classes["browser__search"]}>
           <h2>{location.state.title}</h2>
+
           <input
             type="text"
             placeholder="Game Name"
@@ -227,7 +222,6 @@ function Browser() {
           ) : (
             <p>{totalGames} games found.</p>
           )}
-          {selectedGame ? <Details game={selectedGame} /> : ""}
         </div>
         <div className={classes["browser__cards"]}>
           {displayError ? (
@@ -261,7 +255,6 @@ function Browser() {
                         createdAt={game.createdAt}
                         cardRef={(el) => (cardsRefs.current[index] = el)}
                         index={index}
-                        onSelectGame={onSelectGame}
                         join={joinOption}
                       />
                     );

@@ -36,16 +36,29 @@
     width: 60%;
     margin-left: 10rem;
     font-size: 8rem;
-    border-bottom: solid 1rem $main-color7;
+
     user-select: none;
     white-space: nowrap;
     overflow: hidden;
     transition: all 1s;
+    animation: titleAnimation 10s infinite;
   }
 
   .hidden-title {
     width: 0;
     transition: all 1s;
+  }
+
+  @keyframes titleAnimation {
+    0% {
+      border-bottom: solid 1rem $main-color5;
+    }
+    50% {
+      border-bottom: solid 1rem $main-color9;
+    }
+    100% {
+      border-bottom: solid 1rem $main-color5;
+    }
   }
 
   .grid {
@@ -54,6 +67,7 @@
     padding: 5rem;
     gap: 5rem;
 
+    // cards
     &__card {
       background-image: linear-gradient(
         to right,
@@ -66,6 +80,7 @@
       overflow: hidden;
       transition: all 3s;
 
+      // cards content
       &__content {
         position: relative;
         background-color: #000;
@@ -89,9 +104,31 @@
           right: 0;
           margin: 2rem;
           transition: right 1s;
+          box-shadow: 0.2rem 0 1rem $main-color0;
+          animation: buttonsAnimation 10s infinite;
+        }
+
+        @keyframes buttonsAnimation {
+          0% {
+            box-shadow: 0.2rem 0 1rem $main-color0 $main-color0;
+          }
+          25% {
+            box-shadow: 0 0.2rem 1rem $main-color0;
+          }
+          50% {
+            box-shadow: -0.2rem 0 1rem $main-color0;
+          }
+          75% {
+            box-shadow: 0 -0.2rem 1rem $main-color0;
+          }
+          100% {
+            box-shadow: 0.2rem 0 1rem $main-color0;
+          }
         }
       }
+      // end cards content
     }
+    // end cards
 
     .hidden-card {
       opacity: 0;

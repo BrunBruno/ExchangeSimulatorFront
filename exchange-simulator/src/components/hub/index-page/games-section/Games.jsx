@@ -8,17 +8,17 @@ function Games() {
     {
       title: "Current Games",
       description:
-        "Search for your ongoing games. You can always quit game and rejoin it whenever you want to.",
+        "Search for your ongoing games. You can always quit the game and rejoin it whenever you want to.",
     },
     {
       title: "Available Games",
       description:
-        "Find out new games, that your friends or other users have started. Search for free enter games or one that you have password to and join now!",
+        "Discover new games that your friends or other users have started. Search for free-entry games or ones that require a password, and join now!",
     },
     {
       title: "Previous Games",
       description:
-        "Inspect your previous games for better performace in the future. Analize you latest strategies and take lessons form your and other mistakes.",
+        "Inspect your previous games for better performance in the future. Analyze your latest strategies and learn from your mistakes as well as others.",
     },
   ];
 
