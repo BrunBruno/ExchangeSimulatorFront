@@ -92,16 +92,6 @@ function Register(props) {
       // set token
       localStorage.setItem("token", response.data.token);
 
-      // get user info
-      const user = await axios.get(`${baseUrl}/user`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      // set user info
-      localStorage.setItem("userInfo", JSON.stringify(user.data));
-
       // go to email verification
       props.handleEmailVerificationPopUp(true);
     } catch (err) {

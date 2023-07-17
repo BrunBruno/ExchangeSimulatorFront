@@ -38,6 +38,16 @@ function HubRouter() {
             });
           }
 
+          // get user info
+          const user = await axios.get(`${baseUrl}/user`, {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+
+          // set user info
+          localStorage.setItem("userInfo", JSON.stringify(user.data));
+
           setAuthorize(true);
         } catch (err) {
           navigate("/", {

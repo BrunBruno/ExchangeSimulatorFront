@@ -60,29 +60,8 @@ function SignIn(props) {
         // go to email verification
         props.handleEmailVerificationPopUp(true);
       } else {
-        try {
-          // get user info
-          const user = await axios.get(`${baseUrl}/user`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
-
-          // set user info
-          localStorage.setItem("userInfo", JSON.stringify(user.data));
-
-          // go to hub page
-          navigate("/hub");
-        } catch (err) {
-          // Display backend exeptions
-          if (err.response && err.response.data) {
-            emailErrRef.current.classList.add(classes.error);
-            emailErrRef.current.innerHTML = err.response.data;
-          } else {
-            mainErrRef.current.classList.add(classes["main-error"]);
-            mainErrRef.current.innerHTML = "Connection error.";
-          }
-        }
+        // go to hub page
+        navigate("/hub");
       }
     } catch (err) {
       // Display backend exeptions
