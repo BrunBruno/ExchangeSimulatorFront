@@ -18,6 +18,7 @@ function Manage() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalGames, setTotalGams] = useState(0);
 
+  // search options
   const [currentName, setCurrentName] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSortOption, setCurrentSortOption] = useState(
@@ -57,6 +58,10 @@ function Manage() {
 
   const onSelectSortType = (event) => {
     setCurrentSortOption(parseInt(event.target.value, 10));
+  };
+
+  const onSelectGame = (game) => {
+    setSelectedGame(game);
   };
 
   const renderPageButtons = (array) => {
@@ -166,7 +171,12 @@ function Manage() {
           </div>
           <ul>
             {gameList.map((game, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                onClick={() => {
+                  onSelectGame(game);
+                }}
+              >
                 <span>{game.name}</span>
                 <span>{game.availableSpots}</span>
                 <span>{gamesStatus[game.status]}</span>
@@ -198,14 +208,14 @@ function Manage() {
         </div>
       </div>
       <div className={classes["manage__details"]}>
-        {selectedGame !== null ? (
+        {selectedGame === null ? (
           <div className={classes.info}>
             <h3>Hello</h3>
             <p>No game selected.</p>
             <p>Please select game to manage it.</p>
           </div>
         ) : (
-          <Details />
+          <Details game={selectedGame} />
         )}
       </div>
     </div>

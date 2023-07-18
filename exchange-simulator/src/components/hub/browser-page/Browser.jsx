@@ -33,10 +33,12 @@ function Browser() {
   const location = useLocation();
 
   const [gameList, setGameList] = useState([]);
+  const [selectedGame, setSelectedGame] = useState(null);
   const [totalPages, setTotalPages] = useState(0);
-  const [displayError, setDisplayError] = useState(false);
   const [totalGames, setTotalGams] = useState(0);
+  const [displayError, setDisplayError] = useState(false);
 
+  // search options
   const [currentName, setCurrentName] = useState("");
   const [currentOwner, setCurrentOwner] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -92,6 +94,10 @@ function Browser() {
 
   const onSelectSortType = (event) => {
     setCurrentSortOption(parseInt(event.target.value, 10));
+  };
+
+  const onSelectGame = (game) => {
+    setSelectedGame(game);
   };
 
   const pageChangeAnimation = () => {
@@ -177,7 +183,7 @@ function Browser() {
       <Header containerRef={containerRef} />
       <div className={classes.browser}>
         <div className={classes["browser__search"]}>
-          <h2>{location.state.title}</h2>
+          <h2>{location.state.title.replace("-", " ").toUpperCase()}</h2>
 
           <input
             type="text"
@@ -222,6 +228,36 @@ function Browser() {
           ) : (
             <p>{totalGames} games found.</p>
           )}
+          {selectedGame === null ? (
+            ""
+          ) : (
+            <div className={classes["browser__search__details"]}>
+              <p>
+                <span>Game: </span>
+                {selectedGame.name}
+              </p>
+              <p>
+                <span>Creator: </span>
+                {selectedGame.ownerName}
+              </p>
+              <p>
+                <span>Description: </span>
+                {selectedGame.description}
+              </p>
+              <p>
+                <span>Available spots: </span>
+                {selectedGame.availableSpots}
+              </p>
+              <p>
+                <span>Created At: </span>
+                {new Date(selectedGame.createdAt).toLocaleDateString()}
+              </p>
+              <p>
+                <span>Ends At: </span>
+                {new Date(selectedGame.endGame).toLocaleDateString()}
+              </p>
+            </div>
+          )}
         </div>
         <div className={classes["browser__cards"]}>
           {displayError ? (
@@ -250,12 +286,11 @@ function Browser() {
                     return (
                       <Card
                         key={index}
-                        name={game.name}
-                        owner={game.ownerName}
-                        createdAt={game.createdAt}
+                        game={game}
                         cardRef={(el) => (cardsRefs.current[index] = el)}
                         index={index}
                         join={joinOption}
+                        onSelectGame={onSelectGame}
                       />
                     );
                   })}

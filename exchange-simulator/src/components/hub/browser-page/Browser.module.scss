@@ -29,6 +29,7 @@
       font-size: 2rem;
     }
 
+    //radios
     .radios {
       @include flexBlock(row, 0, space-evenly, center);
       width: 100%;
@@ -54,6 +55,21 @@
           border: solid 0.2rem $grey-color9;
           background-color: $grey-color0;
         }
+      }
+    }
+    // end radois
+
+    &__details {
+      @include flexBlock(column, 0.5rem, start, start);
+      width: 100%;
+      padding: 1rem;
+
+      span {
+        color: $main-color5;
+      }
+
+      p {
+        font-size: 1.6rem;
       }
     }
   }

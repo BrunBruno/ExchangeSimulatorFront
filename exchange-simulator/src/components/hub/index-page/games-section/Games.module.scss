@@ -36,29 +36,31 @@
     width: 60%;
     margin-left: 10rem;
     font-size: 8rem;
-
     user-select: none;
     white-space: nowrap;
     overflow: hidden;
     transition: all 1s;
-    animation: titleAnimation 10s infinite;
+    border-bottom: solid 1rem;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+      to left,
+      $main-color0,
+      $main-color5,
+      $main-color9
+    );
+    background-image: linear-gradient(
+      to left,
+      $main-color0,
+      $main-color5,
+      $main-color9
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .hidden-title {
     width: 0;
     transition: all 1s;
-  }
-
-  @keyframes titleAnimation {
-    0% {
-      border-bottom: solid 1rem $main-color5;
-    }
-    50% {
-      border-bottom: solid 1rem $main-color9;
-    }
-    100% {
-      border-bottom: solid 1rem $main-color5;
-    }
   }
 
   .grid {
@@ -104,26 +106,6 @@
           right: 0;
           margin: 2rem;
           transition: right 1s;
-          box-shadow: 0.2rem 0 1rem $main-color0;
-          animation: buttonsAnimation 10s infinite;
-        }
-
-        @keyframes buttonsAnimation {
-          0% {
-            box-shadow: 0.2rem 0 1rem $main-color0 $main-color0;
-          }
-          25% {
-            box-shadow: 0 0.2rem 1rem $main-color0;
-          }
-          50% {
-            box-shadow: -0.2rem 0 1rem $main-color0;
-          }
-          75% {
-            box-shadow: 0 -0.2rem 1rem $main-color0;
-          }
-          100% {
-            box-shadow: 0.2rem 0 1rem $main-color0;
-          }
         }
       }
       // end cards content

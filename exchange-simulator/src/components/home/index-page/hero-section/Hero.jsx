@@ -67,7 +67,7 @@ function Hero(props) {
                 . It's good to see you!
               </p>
             ) : (
-              <button onClick={props.handleRegisterPopUp}>
+              <button onClick={props.handleRegisterModal}>
                 <ul>
                   <li>Register Now</li>
                   <li>

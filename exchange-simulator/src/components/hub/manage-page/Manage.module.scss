@@ -1,23 +1,26 @@
 @import "../../../Variables.scss";
 
 .manage {
-  width: 100%;
-  height: 100vh;
+  @include container;
   display: grid;
   grid-template-columns: 40% 60%;
 
   &__games {
+    // @include flexBlock(column, 0, start, start);
+    height: 100vh;
     background-color: $grey-color9;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 32% 60% 8%;
+    grid-template-rows: 34% 60% 6%;
     border-right: solid 0.5rem $grey-color8;
-    padding-top: 10rem;
 
+    // search bar row
     &__bar {
-      @include flexBlock(column, 2rem, center, center);
+      @include flexBlock(column, 1rem, center, center);
+      width: 100%;
       border-bottom: solid 0.5rem $grey-color8;
       padding: 2rem;
+      padding-top: 8rem;
 
       h2 {
         font-size: 3rem;
@@ -36,9 +39,10 @@
         text-align: center;
       }
 
+      // radios
       .radios {
         @include flexBlock(row, 0, space-evenly, center);
-        width: 60%;
+        width: 40%;
 
         label {
           cursor: pointer;
@@ -63,19 +67,20 @@
           }
         }
       }
+      // end radios
     }
+    // end search bar row
 
+    // games list
     &__list {
+      @include flexBlock(column, 1rem, start, center);
+      width: 100%;
       padding: 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
       border-bottom: solid 0.5rem $grey-color8;
 
       &__header {
+        @include flexBlock(row, 0, space-evenly, start);
         width: 100%;
-        display: flex;
-        justify-content: space-evenly;
 
         span {
           width: 25%;
@@ -87,11 +92,11 @@
       ul {
         @include flexBlock(column, 2rem, start, center);
         width: 100%;
-        height: 100%;
         list-style-type: none;
         overflow-y: scroll;
         overflow-x: hidden;
         padding: 0.5rem;
+
         &::-webkit-scrollbar {
           background-color: #0000;
           width: 1rem;
@@ -135,7 +140,9 @@
         }
       }
     }
+    // end list
 
+    // pagination
     .pagination {
       @include flexBlock(row, 1rem, center, center);
       width: 100%;
@@ -176,6 +183,7 @@
         }
       }
     }
+    // end pagination
   }
 
   &__details {

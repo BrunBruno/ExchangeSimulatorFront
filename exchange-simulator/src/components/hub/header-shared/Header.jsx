@@ -38,10 +38,37 @@ function Header(props) {
       </div>
       <div className={classes["header__nav"]}>
         <ul>
-          <li>acction 1</li>
-          <li>acction 2</li>
-          <li>acction 3</li>
-          <li>acction 4</li>
+          <li onClick={() => navigate("/hub")}>Home</li>
+          <li onClick={() => navigate("/hub/create")}>Create</li>
+          <li onClick={() => navigate("/hub/manage")}>Manage</li>
+          <li
+            onClick={() => {
+              navigate("/hub/current-games", {
+                state: { title: "current-games" },
+              });
+            }}
+          >
+            Rejoin
+          </li>
+          <li
+            onClick={() =>
+              navigate("/hub/available-games", {
+                state: { title: "available-games" },
+              })
+            }
+          >
+            Search
+          </li>
+          <li
+            onClick={() =>
+              navigate("/hub/previous-games", {
+                state: { title: "previous-games" },
+              })
+            }
+          >
+            Inspect
+          </li>
+          <li onClick={() => navigate("/hub/ranking")}>Ranking</li>
         </ul>
       </div>
       <div className={classes["header__account"]}>
