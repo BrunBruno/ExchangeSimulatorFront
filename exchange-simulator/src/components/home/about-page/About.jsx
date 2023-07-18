@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import classes from "./About.module.scss";
 
-import Content from "./content-section/Content";
 import Privacy from "./content-section/Privacy";
 import Terms from "./content-section/Terms";
 import Introduction from "./content-section/Introduction";
