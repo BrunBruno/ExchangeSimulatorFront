@@ -13,19 +13,19 @@ import EmailVerification from "./signin-register-section/EmailVerification";
 function HomePage() {
   const location = useLocation();
 
-  const signInPageRef = useRef(null);
-  const registerPageRef = useRef(null);
-  const emailVerificationPageRef = useRef(null);
+  const signInModalRef = useRef(null);
+  const registerModalRef = useRef(null);
+  const emailVerificationModalRef = useRef(null);
   const infoPpupRef = useRef(null);
 
-  const [signInPageOn, setSignInPageOn] = useState(false);
-  const [registerPageOn, setRegisterPageOn] = useState(false);
+  const [signInModalOn, setSignInModalOn] = useState(false);
+  const [registerModalOn, setRegisterModalOn] = useState(false);
   const [userIsPresent, setUserIspresent] = useState(false);
 
-  useEffect(() => {
-    if (location.state && location.state.popup) {
+  const handlePopUp = (message) => {
+    if (infoPpupRef.current) {
       infoPpupRef.current.classList.remove(classes["hidden-popup"]);
-      infoPpupRef.current.innerHTML = location.state.popup;
+      infoPpupRef.current.innerHTML = message;
       setTimeout(() => {
         infoPpupRef.current.classList.add(classes["hidden-popup"]);
         setTimeout(() => {
@@ -33,14 +33,20 @@ function HomePage() {
         }, 2000);
       }, 3000);
 
-      if (location.state.openEmailVerification) {
-        handleEmailVerificationPopUp(true);
+      if (location.state && location.state.openEmailVerification) {
+        handleEmailVerificationModal(true);
       }
 
       const updatedState = { ...location.state };
       delete updatedState.popup;
 
       window.history.replaceState(updatedState, "", location.pathname);
+    }
+  };
+
+  useEffect(() => {
+    if (location.state && location.state.popup) {
+      handlePopUp(location.state.popup);
     }
   }, [location.state]);
 
@@ -54,75 +60,78 @@ function HomePage() {
   }, []);
 
   // handle login modal
-  const handleSignInPopUp = () => {
-    if (!registerPageOn) {
-      setSignInPageOn(!signInPageOn);
+  const handleSignInModal = () => {
+    if (!registerModalOn) {
+      setSignInModalOn(!signInModalOn);
 
-      if (signInPageRef.current.classList.contains(srclasses.hidden)) {
-        signInPageRef.current.classList.remove(srclasses.hidden);
+      if (signInModalRef.current.classList.contains(srclasses.hidden)) {
+        signInModalRef.current.classList.remove(srclasses.hidden);
       } else {
-        signInPageRef.current.classList.add(srclasses.hidden);
+        signInModalRef.current.classList.add(srclasses.hidden);
       }
     }
   };
 
   // handel register modal
-  const handleRegisterPopUp = () => {
-    if (!signInPageOn) {
-      setRegisterPageOn(!registerPageOn);
+  const handleRegisterModal = () => {
+    if (!signInModalOn) {
+      setRegisterModalOn(!registerModalOn);
 
-      if (registerPageRef.current.classList.contains(srclasses.hidden)) {
-        registerPageRef.current.classList.remove(srclasses.hidden);
+      if (registerModalRef.current.classList.contains(srclasses.hidden)) {
+        registerModalRef.current.classList.remove(srclasses.hidden);
       } else {
-        registerPageRef.current.classList.add(srclasses.hidden);
+        registerModalRef.current.classList.add(srclasses.hidden);
       }
     }
   };
 
   // handle verification modal
-  const handleEmailVerificationPopUp = (isOpen) => {
+  const handleEmailVerificationModal = (isOpen) => {
     if (isOpen) {
-      if (!signInPageRef.current.classList.contains(srclasses.hidden)) {
-        signInPageRef.current.classList.add(srclasses.hidden);
+      if (!signInModalRef.current.classList.contains(srclasses.hidden)) {
+        signInModalRef.current.classList.add(srclasses.hidden);
       }
-      if (!registerPageRef.current.classList.contains(srclasses.hidden)) {
-        registerPageRef.current.classList.add(srclasses.hidden);
+      if (!registerModalRef.current.classList.contains(srclasses.hidden)) {
+        registerModalRef.current.classList.add(srclasses.hidden);
       }
-      emailVerificationPageRef.current.classList.remove(srclasses.hidden);
+      emailVerificationModalRef.current.classList.remove(srclasses.hidden);
     } else {
-      setSignInPageOn(false);
-      setRegisterPageOn(false);
-      emailVerificationPageRef.current.classList.add(srclasses.hidden);
+      setSignInModalOn(false);
+      setRegisterModalOn(false);
+      emailVerificationModalRef.current.classList.add(srclasses.hidden);
     }
   };
 
   return (
     <div className={classes.container}>
       <Header
-        handleSignInPopUp={handleSignInPopUp}
-        handleRegisterPopUp={handleRegisterPopUp}
+        handleSignInModal={handleSignInModal}
+        handleRegisterModal={handleRegisterModal}
       />
 
-      {(signInPageOn || registerPageOn) && (
+      {(signInModalOn || registerModalOn) && (
         <div className={classes["form-bg"]}></div>
       )}
       <SignIn
-        handleSignInPopUp={handleSignInPopUp}
-        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
-        popupRef={signInPageRef}
+        handleSignInModal={handleSignInModal}
+        handleEmailVerificationModal={handleEmailVerificationModal}
+        modalRef={signInModalRef}
+        handlePopUp={handlePopUp}
       />
       <Register
-        handleRegisterPopUp={handleRegisterPopUp}
-        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
-        popupRef={registerPageRef}
+        handleRegisterModal={handleRegisterModal}
+        handleEmailVerificationModal={handleEmailVerificationModal}
+        modalRef={registerModalRef}
+        handlePopUp={handlePopUp}
       />
       <EmailVerification
-        handleEmailVerificationPopUp={handleEmailVerificationPopUp}
-        popupRef={emailVerificationPageRef}
+        handleEmailVerificationModal={handleEmailVerificationModal}
+        modalRef={emailVerificationModalRef}
+        handlePopUp={handlePopUp}
       />
 
       <Hero
-        handleRegisterPopUp={handleRegisterPopUp}
+        handleRegisterModal={handleRegisterModal}
         userIsPresent={userIsPresent}
       />
 

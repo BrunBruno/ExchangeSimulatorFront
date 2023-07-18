@@ -84,7 +84,7 @@
         margin: 2rem;
 
         button {
-          @include actionButton;
+          @include actionButton(0);
           background-color: rgba(#000, 0.5);
         }
       }

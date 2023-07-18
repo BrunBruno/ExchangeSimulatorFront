@@ -1,15 +1,14 @@
 import { useRef } from "react";
+import axios from "axios";
 
 import baseUrl from "../../../Shared/Url";
 
 import classes from "./SigninRegister.module.scss";
-import axios from "axios";
 
 function Register(props) {
   const emailErrRef = useRef(null);
   const userNameErrRef = useRef(null);
   const passwordErrRef = useRef(null);
-  const mainErrRef = useRef(null);
 
   // Register user
   const registerUser = async (event) => {
@@ -93,15 +92,17 @@ function Register(props) {
       localStorage.setItem("token", response.data.token);
 
       // go to email verification
-      props.handleEmailVerificationPopUp(true);
+      props.handleEmailVerificationModal(true);
+
+      // display pop up
+      props.handlePopUp("Account created.");
     } catch (err) {
       // Display backend exeptions
       if (err.response && err.response.data) {
         emailErrRef.current.classList.add(classes.error);
         emailErrRef.current.innerHTML = err.response.data;
       } else {
-        mainErrRef.current.classList.add(classes["main-error"]);
-        mainErrRef.current.innerHTML = "Connection error.";
+        props.handlePopUp("Connection error.");
       }
     }
   };
@@ -111,23 +112,21 @@ function Register(props) {
     emailErrRef.current.innerHTML = "";
     userNameErrRef.current.innerHTML = "";
     passwordErrRef.current.innerHTML = "";
-    mainErrRef.current.innerHTML = "";
     emailErrRef.current.classList.remove(classes.error);
     userNameErrRef.current.classList.remove(classes.error);
     passwordErrRef.current.classList.remove(classes.error);
-    mainErrRef.current.classList.remove(classes["main-error"]);
   };
 
   return (
     <div
-      ref={props.popupRef}
+      ref={props.modalRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
       <form onSubmit={registerUser}>
         <div
           className={classes.x}
           onClick={() => {
-            props.handleRegisterPopUp();
+            props.handleRegisterModal();
             clearErrors();
           }}
         >
@@ -145,9 +144,6 @@ function Register(props) {
         <h2>Register</h2>
         <div className={classes["form-container"]}>
           <div>
-            <span ref={mainErrRef}></span>
-          </div>
-          <div>
             <span>Email</span>
             <input type="text" name="email"></input>
             <span ref={emailErrRef}></span>
@@ -159,11 +155,7 @@ function Register(props) {
           </div>
           <div>
             <span>Password</span>
-            <input
-              type="password"
-              name="password"
-              autoComplete="new-password"
-            ></input>
+            <input type="password" name="password" autoComplete=""></input>
             <span ref={passwordErrRef}></span>
           </div>
           <div>
@@ -171,7 +163,7 @@ function Register(props) {
             <input
               type="password"
               name="confirmPassword"
-              autoComplete="new-password"
+              autoComplete=""
             ></input>
           </div>
           <div className={classes.buttons}>

@@ -9,7 +9,6 @@ import classes from "./SigninRegister.module.scss";
 function SignIn(props) {
   const emailErrRef = useRef(null);
   const passwordErrRef = useRef(null);
-  const mainErrRef = useRef(null);
 
   const navigate = useNavigate();
 
@@ -58,7 +57,8 @@ function SignIn(props) {
 
       if (!isEmailVerified.data.isEmailVerified) {
         // go to email verification
-        props.handleEmailVerificationPopUp(true);
+        props.handleEmailVerificationModal(true);
+        props.handlePopUp("Please verify email.");
       } else {
         // go to hub page
         navigate("/hub");
@@ -69,8 +69,7 @@ function SignIn(props) {
         emailErrRef.current.classList.add(classes.error);
         emailErrRef.current.innerHTML = err.response.data;
       } else {
-        mainErrRef.current.classList.add(classes["main-error"]);
-        mainErrRef.current.innerHTML = "Connection error.";
+        props.handlePopUp("Connection error.");
       }
     }
   };
@@ -85,14 +84,14 @@ function SignIn(props) {
 
   return (
     <div
-      ref={props.popupRef}
+      ref={props.modalRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
       <form onSubmit={loginUser}>
         <div
           className={classes.x}
           onClick={() => {
-            props.handleSignInPopUp();
+            props.handleSignInModal();
             clearErrors();
           }}
         >
@@ -110,21 +109,14 @@ function SignIn(props) {
         <h2>Sign In</h2>
         <div className={classes["form-container"]}>
           <div>
-            <span ref={mainErrRef}></span>
-          </div>
-          <div>
             <span>Email</span>
-            <input type="text" name="email" autoComplete="userName"></input>
+            <input type="text" name="email" autoComplete=""></input>
             <span ref={emailErrRef}></span>
           </div>
 
           <div>
             <span>Password</span>
-            <input
-              type="password"
-              name="password"
-              autoComplete="current-password"
-            ></input>
+            <input type="password" name="password" autoComplete=""></input>
             <span ref={passwordErrRef}></span>
           </div>
 

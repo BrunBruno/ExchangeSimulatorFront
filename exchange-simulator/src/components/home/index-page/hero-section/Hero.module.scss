@@ -42,23 +42,29 @@
         }
       }
 
-      h2 {
+      p {
         color: $grey-color5;
         text-align: justify;
         text-shadow: 1px 1x $grey-color9;
-        user-select: none;
+        font-size: 1.5rem;
       }
 
       // register button container
       .action {
+        width: 100%;
+
         p {
           text-align: center;
           width: 100%;
           font-size: 3rem;
+
+          span {
+            color: $main-color5;
+          }
         }
 
         button {
-          @include actionButton;
+          @include actionButton(10%);
           font-size: 3rem;
         }
       }

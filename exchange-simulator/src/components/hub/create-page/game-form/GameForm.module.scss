@@ -146,7 +146,7 @@
     // confirm button
     button {
       @include absoluteCenter;
-      @include actionButton;
+      @include actionButton(0);
       left: 150%;
       font-size: 5rem;
       border-width: 1rem;

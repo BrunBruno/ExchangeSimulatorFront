@@ -1,16 +1,14 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
 import baseUrl from "../../../Shared/Url";
 
 import classes from "./SigninRegister.module.scss";
 
 function EmailVerification(props) {
-  const codeRef = useRef(null);
-  const mainErrRef = useRef(null);
-
   const navigate = useNavigate();
+
+  const codeRef = useRef(null);
 
   // verify code
   const verify = async (event) => {
@@ -37,7 +35,11 @@ function EmailVerification(props) {
       });
 
       // go to hub page
-      navigate("/hub");
+      navigate("/hub", {
+        state: {
+          popup: "Email verified.",
+        },
+      });
     } catch (err) {
       console.log(err);
 
@@ -46,8 +48,7 @@ function EmailVerification(props) {
         codeRef.current.classList.add(classes.error);
         codeRef.current.innerHTML = err.response.data;
       } else {
-        mainErrRef.current.classList.add(classes["main-error"]);
-        mainErrRef.current.innerHTML = "Connection error.";
+        props.handlePopUp("Connection error.");
       }
     }
   };
@@ -63,28 +64,35 @@ function EmailVerification(props) {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
+
+      props.handlePopUp("Email resend.");
     } catch (err) {
       // Display backend exeptions
       if (err.response && err.response.data) {
         codeRef.current.classList.add(classes.error);
         codeRef.current.innerHTML = err.response.data;
       } else {
-        mainErrRef.current.classList.add(classes["main-error"]);
-        mainErrRef.current.innerHTML = "Connection error.";
+        props.handlePopUp("Connection error.");
       }
     }
   };
 
+  const clearErrors = () => {
+    codeRef.current.classList.remove(classes.error);
+    codeRef.current.innerHTML = "";
+  };
+
   return (
     <div
-      ref={props.popupRef}
+      ref={props.modalRef}
       className={`${classes["form-page"]} ${classes.hidden}`}
     >
       <form onSubmit={verify}>
         <div
           className={classes.x}
           onClick={() => {
-            props.handleEmailVerificationPopUp(false);
+            props.handleEmailVerificationModal(false);
+            clearErrors();
           }}
         >
           <svg
@@ -101,9 +109,6 @@ function EmailVerification(props) {
         <h2>Email Verification</h2>
         <div className={classes["form-container"]}>
           <div>
-            <span ref={mainErrRef}></span>
-          </div>
-          <div>
             <p>
               We sent you verification code to your email. Please enter the code
               to verify your accout.
@@ -111,12 +116,12 @@ function EmailVerification(props) {
           </div>
           <div>
             <span>Enter code</span>
-            <input type="text" name="code"></input>
+            <input type="number" name="code" autoComplete=""></input>
             <span ref={codeRef}></span>
           </div>
           <div className={classes.buttons}>
             <button type="button" onClick={regenerateCode}>
-              Resend code
+              Resend
             </button>
             <button type="submit">Verify</button>
           </div>

@@ -51,17 +51,20 @@ function Hero(props) {
             <div>Welcome to</div>
             <div>Exchange Simulator</div>
           </h1>
-          <h2>
+          <p>
             Immerse yourself in the dynamic realm of financial markets through
             our exchange simulator game webpage, where you can test your trading
             strategies, learn new techniques, and compete with fellow virtual
             traders.
-          </h2>
+          </p>
           <div className={classes.action}>
             {props.userIsPresent ? (
               <p>
-                Hi {JSON.parse(localStorage.getItem("userInfo")).userName}. It's
-                good to see you!
+                Hi{" "}
+                <span>
+                  {JSON.parse(localStorage.getItem("userInfo")).userName}
+                </span>
+                . It's good to see you!
               </p>
             ) : (
               <button onClick={props.handleRegisterPopUp}>

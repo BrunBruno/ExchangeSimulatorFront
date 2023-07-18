@@ -98,7 +98,7 @@
         }
 
         button {
-          @include actionButton;
+          @include actionButton(25%);
           position: absolute;
           bottom: 0;
           right: 0;

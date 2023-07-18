@@ -1,10 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 import classes from "./Header.module.scss";
 
 import Logo from "../../../Shared/Logo";
-import { useNavigate } from "react-router-dom";
 
 function Header(props) {
   const navigate = useNavigate();
+
   return (
     <header className={classes.header}>
       <div
@@ -33,14 +35,14 @@ function Header(props) {
           </li>
           <li
             onClick={() => {
-              props.handleRegisterPopUp();
+              props.handleRegisterModal();
             }}
           >
             Register
           </li>
           <li
             onClick={() => {
-              props.handleSignInPopUp();
+              props.handleSignInModal();
             }}
           >
             Sign In
