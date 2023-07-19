@@ -2,16 +2,29 @@
 
 // coin form conatiner
 .form {
-  @include flexBlock(column, 4rem, center, center);
   width: 100%;
   height: 100%;
-  margin: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
 
-  // row
-  .row {
-    width: 100%;
+  .grid {
+    &:first-child {
+      text-align: center;
+      width: 100%;
+      grid-column: 1 / -1;
+      font-size: 3rem;
 
-    div {
+      span {
+        color: $main-color2;
+      }
+    }
+    &:last-child {
+      @include flexBlock(row, 2rem, center, center);
+      grid-column: 1 / -1;
+    }
+
+    .row {
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -30,12 +43,6 @@
         -webkit-appearance: none;
       }
     }
-  }
-  // end row
-
-  // buttons
-  .button-container {
-    @include flexBlock(row, 4rem, center, center);
 
     button {
       &:nth-child(1) {
@@ -47,6 +54,5 @@
       }
     }
   }
-  // end buttons
 }
 // end coin form conatiner

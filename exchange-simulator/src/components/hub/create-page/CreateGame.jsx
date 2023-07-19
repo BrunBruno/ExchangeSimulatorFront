@@ -13,7 +13,7 @@ import Tip from "./tip-section/Tip";
 function CreateGame() {
   const navigate = useNavigate();
 
-  const containerRef = useRef();
+  const containerRef = useRef(null);
   const coinMenuRef = useRef(null);
   const errorMenuRef = useRef(null);
   const coinListRef = useRef(null);
@@ -80,7 +80,7 @@ function CreateGame() {
       password: event.target.password.value,
       money: event.target.amount.value,
       coins: coinList,
-      endGame: new Date(event.target.endDate.value),
+      duration: event.target.duration.value,
       numberOfPlayers: event.target.numberOfPlayers.value,
     };
 
@@ -100,28 +100,27 @@ function CreateGame() {
       return;
     }
 
-    if (game.money <= 0) {
+    if (game.money === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select amount of starting assets.");
+      return;
+    }
+
+    if (game.numberOfPlayers === "") {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please select number of players.");
+      return;
+    }
+
+    if (game.duration === "") {
+      errorMenuRef.current.classList.remove(classes["hidden"]);
+      setErrorMessage("Please select duration of the game.");
       return;
     }
 
     if (game.coins.length === 0) {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please fill some coins.");
-      return;
-    }
-
-    const currentDate = new Date();
-    if (game.endGame === "" || currentDate > game.endGame) {
-      errorMenuRef.current.classList.remove(classes["hidden"]);
-      setErrorMessage("Please enter correct end date.");
-      return;
-    }
-
-    if (game.numberOfPlayers <= 0) {
-      errorMenuRef.current.classList.remove(classes["hidden"]);
-      setErrorMessage("Please select correct number of players.");
       return;
     }
 

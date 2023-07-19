@@ -14,7 +14,6 @@
     @include flexBlock(column, 0, start, start);
     position: relative;
     width: 50%;
-    height: 100%;
     padding: 8rem 4rem;
     padding-bottom: 0;
     background-color: rgba($main-color9, 0.4);
@@ -28,19 +27,14 @@
       text-shadow: 2px 2px #000;
     }
 
-    @mixin popup {
+    .error-box {
       @include absoluteCenter;
-      left: 150%;
       z-index: 20;
       width: 80%;
       border-radius: 2rem;
       padding: 4rem;
       overflow: hidden;
       transition: all 0.3s;
-    }
-
-    .error-box {
-      @include popup;
       background-color: rgba($main-color0, 0.9);
       border: solid 0.2rem $danger-color;
 
@@ -53,7 +47,15 @@
     }
 
     .create-coin {
-      @include popup;
+      @include roundedBlock(2rem, 2rem);
+      position: fixed;
+      top: 50%;
+      left: 25%;
+      transform: translate(-50%, -50%);
+      z-index: 20;
+      width: calc(80% / 2);
+      margin: auto;
+      overflow: hidden;
       background-color: rgba($main-color9, 0.9);
       border: solid 0.2rem $main-color0;
     }
@@ -73,7 +75,6 @@
   .container {
     &__content {
       width: 100%;
-      height: 100%;
       padding: 16rem 4rem;
       border: none;
 
@@ -83,6 +84,7 @@
 
       .create-coin {
         left: 50%;
+        width: 80%;
       }
     }
   }

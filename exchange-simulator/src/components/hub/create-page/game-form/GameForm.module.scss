@@ -3,12 +3,12 @@
 // form
 .form {
   @include flexBlock(column, 0, space-evenly, center);
+  width: 100%;
   padding: 2rem 0;
-  height: 100%;
 
   // row
   .row {
-    @include flexBlock(row, 4rem, start, start);
+    @include flexBlock(column, 2rem, start, start);
     width: 100%;
     padding: 1rem;
 
@@ -17,41 +17,19 @@
       white-space: nowrap;
     }
 
-    &__col {
+    input {
+      @include mainInput;
       width: 50%;
-
-      input {
-        @include mainInput;
-        width: 100%;
-      }
-
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-      }
-
-      input[type="datetime-local"] {
-        user-select: none;
-      }
-
-      input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-        display: none;
-      }
     }
 
-    &__block {
+    textarea {
+      @include mainInput;
       width: 100%;
-      display: flex;
-      flex-direction: column;
+      text-align: left;
+      resize: none;
 
-      textarea {
-        @include mainInput;
-        text-align: left;
-        resize: none;
-
-        &::-webkit-scrollbar {
-          background-color: #0000;
-        }
+      &::-webkit-scrollbar {
+        background-color: #0000;
       }
     }
 
@@ -65,6 +43,7 @@
         display: inline-block;
         align-self: flex-end;
         user-select: none;
+        width: 25%;
 
         span {
           @include roundedBlock(1rem, 0.5rem 1rem);
@@ -145,12 +124,12 @@
 
     // confirm button
     button {
-      @include absoluteCenter;
       @include actionButton(0);
-      left: 150%;
-      font-size: 5rem;
+      font-size: 3rem;
       border-width: 1rem;
+      margin: 2rem;
       transition: all 0.3s;
+      align-self: center;
       animation: buttonAnime 2s infinite;
 
       &:hover {
