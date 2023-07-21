@@ -2,57 +2,93 @@
 
 // coin form conatiner
 .form {
+  @include flexBlock(column, 2rem, center, center);
   width: 100%;
   height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
 
   .grid {
+    width: 100%;
+
     &:first-child {
+      position: relative;
       text-align: center;
       width: 100%;
-      grid-column: 1 / -1;
       font-size: 3rem;
 
       span {
         color: $main-color2;
       }
-    }
-    &:last-child {
-      @include flexBlock(row, 2rem, center, center);
-      grid-column: 1 / -1;
+
+      svg {
+        position: absolute;
+        height: 4rem;
+        right: 0;
+        top: 0;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
 
-    .row {
+    ul {
+      list-style-type: none;
       width: 100%;
-      display: flex;
-      flex-direction: column;
+      height: 30rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
 
-      span {
-        font-size: 2rem;
-        white-space: nowrap;
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
       }
 
-      input {
-        @include mainInput;
+      &::-webkit-scrollbar-thumb {
+        background-color: $main-color0;
+        border-radius: 1rem;
       }
 
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-      }
-    }
+      li {
+        @include flexBlock(row, 0, space-between, center);
+        width: 80%;
+        margin: auto;
+        margin-bottom: 1rem;
 
-    button {
-      &:nth-child(1) {
-        @include mainButton;
-      }
+        div {
+          @include flexBlock(row, 1rem, start, center);
 
-      &:nth-child(2) {
-        @include seconadryButton;
+          p {
+            font-size: 2rem;
+          }
+
+          input {
+            @include mainInput;
+            width: 10rem;
+          }
+
+          input[type="number"]::-webkit-inner-spin-button,
+          input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          img {
+            width: 5rem;
+            border-radius: 100%;
+          }
+        }
       }
     }
   }
 }
 // end coin form conatiner
+
+@media (max-width: 800px) {
+  .form {
+    .grid {
+      ul {
+        height: 50rem;
+      }
+    }
+  }
+}

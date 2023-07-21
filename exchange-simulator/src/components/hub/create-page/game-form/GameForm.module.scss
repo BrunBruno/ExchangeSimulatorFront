@@ -25,6 +25,7 @@
     textarea {
       @include mainInput;
       width: 100%;
+      height: calc(6 * 2rem);
       text-align: left;
       resize: none;
 
@@ -38,36 +39,11 @@
       width: 100%;
       padding: 1rem;
 
-      .radio {
-        cursor: pointer;
-        display: inline-block;
-        align-self: flex-end;
-        user-select: none;
-        width: 25%;
-
-        span {
-          @include roundedBlock(1rem, 0.5rem 1rem);
-          display: inline-block;
-          border: solid 0.2rem $main-color0;
-          font-size: 2rem;
-        }
-
-        input[type="radio"] {
-          display: none;
-        }
-
-        input[type="radio"]:checked ~ span {
-          color: $main-color9;
-          border: solid 0.2rem $main-color9;
-          background-color: $main-color0;
-        }
-      }
-
       .list {
         @include flexBlock(row, 1rem, start, center);
         @include roundedBlock(1rem, 1rem);
         width: 80%;
-        height: 5rem;
+        height: 8rem;
         border-left: solid 0.2rem $main-color0;
         border-right: solid 0.2rem $main-color0;
         overflow-x: scroll;
@@ -86,9 +62,14 @@
           color: $main-color9;
           white-space: nowrap;
           user-select: none;
+          font-size: 2rem;
+
+          img {
+            height: 3rem;
+          }
 
           svg {
-            height: 100%;
+            height: 50%;
 
             &:hover {
               cursor: pointer;
@@ -163,6 +144,7 @@
 @media (max-width: 800px) {
   .form {
     gap: 2rem;
+
     .row {
       position: relative;
 
@@ -172,6 +154,7 @@
 
       input {
         font-size: 3rem;
+        align-self: center;
       }
 
       button {

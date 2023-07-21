@@ -32,23 +32,40 @@ function CreateGame() {
     });
   }, []);
 
-  const onAddCoin = (event) => {
-    event.preventDefault();
-    const coin = {
-      name: event.target.coinName.value,
-      quantity: event.target.amount.value,
-    };
-
-    if (coin.name === "" || coin.quantity === "") {
+  const onAddCoin = (symbol, image, amount) => {
+    if (amount < 0) {
       return;
     }
 
-    const isCoinExist = coinList.some((item) => item.name === coin.name);
-    if (isCoinExist) {
-      return;
-    }
+    setCoinList((prevCoinList) => {
+      // Check if the coin already exists in the coinList
+      const existingCoinIndex = prevCoinList.findIndex(
+        (item) => item.name === symbol
+      );
 
-    setCoinList((prevCoinList) => [...prevCoinList, coin]);
+      if (existingCoinIndex !== -1) {
+        if (parseFloat(amount) === 0 || amount === "") {
+          const updatedCoinList = [...prevCoinList];
+          updatedCoinList.splice(existingCoinIndex, 1);
+          return updatedCoinList;
+        } else {
+          const updatedCoinList = [...prevCoinList];
+          updatedCoinList[existingCoinIndex].quantity = amount;
+          return updatedCoinList;
+        }
+      } else {
+        if (parseFloat(amount) !== 0 && amount !== "") {
+          const newCoin = {
+            name: symbol,
+            quantity: amount,
+            imageUrl: image,
+          };
+          return [...prevCoinList, newCoin];
+        } else {
+          return prevCoinList;
+        }
+      }
+    });
   };
 
   const onDeleteCoin = (index) => {
@@ -78,7 +95,7 @@ function CreateGame() {
       name: event.target.gameName.value,
       description: event.target.description.value,
       password: event.target.password.value,
-      money: event.target.amount.value,
+      money: event.target.money.value,
       coins: coinList,
       duration: event.target.duration.value,
       numberOfPlayers: event.target.numberOfPlayers.value,
@@ -92,12 +109,6 @@ function CreateGame() {
 
     if (game.description === "") {
       game.description = "No description.";
-    }
-
-    if (game.password === "") {
-      errorMenuRef.current.classList.remove(classes["hidden"]);
-      setErrorMessage("Please choose a password.");
-      return;
     }
 
     if (game.money === "") {

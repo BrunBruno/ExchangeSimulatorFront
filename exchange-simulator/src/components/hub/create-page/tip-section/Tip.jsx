@@ -73,9 +73,9 @@ function Tip() {
             determines the starting resources available to players.
           </li>
           <li>
-            <span>End Date:</span> Select the end date for your game. This sets
-            the duration or timeline for which the game will be active. The game
-            will automatically end after this date.
+            <span>Duration:</span> This sets the duration or timeline for which
+            the game will be active. The game will automatically end after this
+            time passed.
           </li>
           <li>
             <span>Number of Players:</span> Select how many players can join the

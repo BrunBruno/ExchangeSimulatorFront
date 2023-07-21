@@ -1,10 +1,32 @@
+import ComboBox from "../combobox/ComboBox";
 import classes from "./GameForm.module.scss";
 
 function GameForm(props) {
+  const moneyOptions = [
+    { value: 1000, text: "$1000" },
+    { value: 10000, text: "$10000" },
+    { value: 100000, text: "$100000" },
+    { value: 1000000, text: "$1000000" },
+  ];
+
+  const playersOptions = [
+    { value: 10, text: "10" },
+    { value: 100, text: "100" },
+    { value: 1000, text: "1000" },
+    { value: 10000, text: "10000" },
+  ];
+
+  const durationOptions = [
+    { value: 30, text: "30 min" },
+    { value: 60, text: "1 hour" },
+    { value: 1440, text: "1 day" },
+    { value: 10080, text: "1 week" },
+  ];
+
   return (
     <form onSubmit={props.onCreateNewGame} className={classes.form}>
       <div className={classes.row}>
-        <span>Game Name</span>
+        <span>Game name:</span>
         <input
           type="text"
           placeholder="New Game"
@@ -13,7 +35,7 @@ function GameForm(props) {
         />
       </div>
       <div className={classes.row}>
-        <span>Game Password</span>
+        <span>Game password (optional):</span>
         <input
           type="password"
           placeholder=""
@@ -22,88 +44,32 @@ function GameForm(props) {
         />
       </div>
       <div className={classes.row}>
-        <span>Description</span>
+        <span>Description (optional):</span>
         <textarea
           placeholder="This game is awesome"
           name="description"
         ></textarea>
       </div>
       <div className={classes.row}>
-        <span>Starting Money</span>
-        <div className={classes["row__list"]}>
-          <label className={classes.radio}>
-            <input type="radio" name="amount" value="1000" />
-            <span>$1 000</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="amount" value="10000" />
-            <span>$10 000</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="amount" value="100000" />
-            <span>$100 000</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="amount" value="1000000" />
-            <span>$1 000 000</span>
-          </label>
-        </div>
+        <span>Starting money:</span>
+        <ComboBox name={"money"} options={moneyOptions} />
       </div>
       <div className={classes.row}>
         <span>Total (max) number of players:</span>
-        <div className={classes["row__list"]}>
-          <label className={classes.radio}>
-            <input type="radio" name="numberOfPlayers" value="10" />
-            <span>10</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="numberOfPlayers" value="100" />
-            <span>100</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="numberOfPlayers" value="1000" />
-            <span>1 000</span>
-          </label>
-
-          <label className={classes.radio}>
-            <input type="radio" name="numberOfPlayers" value="10000" />
-            <span>10 000</span>
-          </label>
-        </div>
+        <ComboBox name={"numberOfPlayers"} options={playersOptions} />
       </div>
       <div className={classes.row}>
         <span>Duration of game:</span>
-        <div className={classes["row__list"]}>
-          <label className={classes.radio}>
-            <input type="radio" name="duration" value="30" />
-            <span>30 min</span>
-          </label>
-          <label className={classes.radio}>
-            <input type="radio" name="duration" value="60" />
-            <span>1 hous</span>
-          </label>
-          <label className={classes.radio}>
-            <input type="radio" name="duration" value="1440" />
-            <span>1 day</span>
-          </label>
-          <label className={classes.radio}>
-            <input type="radio" name="duration" value="10080" />
-            <span>1 week</span>
-          </label>
-        </div>
+        <ComboBox name={"duration"} options={durationOptions} />
       </div>
       <div className={classes.row}>
-        <span>Coins</span>
+        <span>Selected cons:</span>
         <div className={classes["row__list"]}>
           <div className={classes.list} ref={props.coinListRef}>
             {props.coinList.map((coin, index) => (
               <div key={index} className={classes.coin}>
-                {index + 1}. {coin.name}
+                <img src={coin.imageUrl} />
+                {coin.quantity} {coin.name}
                 <svg
                   viewBox="0 -0.5 25 25"
                   fill="none"

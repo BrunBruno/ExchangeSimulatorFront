@@ -1,0 +1,54 @@
+@import "../../../../Variables.scss";
+
+.combobox {
+  @include flexBlock(row, 0, start, center);
+  position: relative;
+  width: 100%;
+
+  ul {
+    @include flexBlock(row, 2rem, space-evenly, center);
+    @include roundedBlock(2rem, 2rem);
+    position: relative;
+    top: calc(-200% - 4rem);
+    position: absolute;
+    background-color: $grey-color8;
+    list-style-type: none;
+    border: solid 0.3rem $grey-color0;
+    z-index: 0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: calc(-2rem + -1px);
+      left: 25%;
+      height: 4rem;
+      width: 4rem;
+      background-color: $grey-color8;
+      transform: rotate(45deg);
+      border-bottom: solid 0.3rem $grey-color0;
+      border-right: solid 0.3rem $grey-color0;
+      box-sizing: border-box;
+      z-index: -1;
+    }
+
+    li {
+      @include roundedBlock(1rem, 0.5rem 1rem);
+      border: solid 0.2rem $main-color0;
+      font-size: 2rem;
+      user-select: none;
+
+      &:hover {
+        cursor: pointer;
+        color: $main-color9;
+        border: solid 0.2rem $main-color9;
+        background-color: $main-color0;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .combobox {
+    @include flexBlock(row, 0, center, center);
+  }
+}
