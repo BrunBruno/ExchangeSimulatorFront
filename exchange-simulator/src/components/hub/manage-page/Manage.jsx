@@ -6,7 +6,7 @@ import axios from "axios";
 import baseUrl from "../../Shared/Url";
 
 function Manage() {
-  const gamesStatus = ["active", "available", "finished"];
+  const gamesStatus = ["available", "active", "finished"];
   const GameSortOption = {
     Date: 0,
     Name: 1,
@@ -167,7 +167,7 @@ function Manage() {
             <span>Game Name</span>
             <span>Players</span>
             <span>Status</span>
-            <span>Ends At</span>
+            <span>Created At</span>
           </div>
           <ul>
             {gameList.map((game, index) => (
@@ -178,9 +178,9 @@ function Manage() {
                 }}
               >
                 <span>{game.name}</span>
-                <span>{game.availableSpots}</span>
+                <span>{game.playerCount}</span>
                 <span>{gamesStatus[game.status]}</span>
-                <span>{new Date(game.endGame).toLocaleDateString()}</span>
+                <span>{new Date(game.createdAt).toLocaleDateString()}</span>
               </li>
             ))}
           </ul>

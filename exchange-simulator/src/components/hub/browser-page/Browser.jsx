@@ -252,10 +252,6 @@ function Browser() {
                 <span>Created At: </span>
                 {new Date(selectedGame.createdAt).toLocaleDateString()}
               </p>
-              <p>
-                <span>Ends At: </span>
-                {new Date(selectedGame.endGame).toLocaleDateString()}
-              </p>
             </div>
           )}
         </div>

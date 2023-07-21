@@ -70,6 +70,9 @@
 
       p {
         font-size: 1.6rem;
+        max-height: 4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

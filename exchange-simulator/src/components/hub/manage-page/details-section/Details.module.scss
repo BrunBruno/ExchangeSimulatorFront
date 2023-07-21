@@ -61,6 +61,8 @@
           p {
             font-size: 1.8rem;
             align-self: start;
+            max-height: 4.6rem;
+            overflow: hidden;
 
             span {
               color: $main-color2;
@@ -157,6 +159,11 @@
 
               svg {
                 height: 5rem;
+              }
+
+              img {
+                height: 5rem;
+                border-radius: 100%;
               }
             }
           }
