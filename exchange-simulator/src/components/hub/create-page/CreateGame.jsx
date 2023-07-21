@@ -5,7 +5,7 @@ import axios from "axios";
 import classes from "./CreateGame.module.scss";
 
 import baseUrl from "../../Shared/Url";
-import Header from "../header-shared/Header";
+import Header from "../hub-shared/Header";
 import CoinForm from "./coin-form/CoinForm";
 import GameForm from "./game-form/GameForm";
 import Tip from "./tip-section/Tip";

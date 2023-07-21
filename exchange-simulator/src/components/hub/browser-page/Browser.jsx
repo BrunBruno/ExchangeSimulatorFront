@@ -7,7 +7,8 @@ import cardclasses from "./Card/Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Card from "./Card/Card";
-import Header from "../header-shared/Header";
+import Header from "../hub-shared/Header";
+import Pagination from "../hub-shared/Pagination";
 
 function Browser() {
   const gamesPerPage = 6;
@@ -109,7 +110,7 @@ function Browser() {
       });
     }, 100);
     setTimeout(() => {
-      cardsRefs.current.forEach((element, index) => {
+      cardsRefs.current.forEach((element) => {
         setTimeout(() => {
           if (element) {
             element.classList.remove(cardclasses.hidden);
@@ -117,65 +118,6 @@ function Browser() {
         }, 50 * Math.floor(Math.random() * gamesPerPage) + 1);
       });
     }, 100);
-  };
-
-  const renderPageButtons = (array) => {
-    const buttonsToShow = 3;
-    if (totalPages <= buttonsToShow) {
-      return array.map((pageNumber) => (
-        <button
-          key={pageNumber}
-          onClick={() => onPageChange(pageNumber)}
-          disabled={currentPage === pageNumber}
-          className={currentPage === pageNumber ? classes.currentPage : ""}
-        >
-          {pageNumber}
-        </button>
-      ));
-    } else {
-      const middlePage = Math.floor(buttonsToShow / 2);
-      let startPage = currentPage - middlePage;
-      let endPage = currentPage + middlePage;
-
-      if (startPage <= 1) {
-        startPage = 1;
-        endPage = buttonsToShow + 2;
-      } else if (endPage >= totalPages) {
-        endPage = totalPages;
-        startPage = totalPages - buttonsToShow - 1;
-      }
-
-      return (
-        <>
-          {startPage > 1 && (
-            <>
-              <button onClick={() => onPageChange(1)}>1</button>
-              {startPage >= 2 && <p>...</p>}
-            </>
-          )}
-
-          {array.slice(startPage - 1, endPage).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => onPageChange(pageNumber)}
-              disabled={currentPage === pageNumber}
-              className={currentPage === pageNumber ? classes.currentPage : ""}
-            >
-              {pageNumber}
-            </button>
-          ))}
-
-          {endPage < totalPages && (
-            <>
-              {endPage <= totalPages - 1 && <p>...</p>}
-              <button onClick={() => onPageChange(totalPages)}>
-                {totalPages}
-              </button>
-            </>
-          )}
-        </>
-      );
-    }
   };
 
   return (
@@ -294,27 +236,11 @@ function Browser() {
               )}
             </>
           )}
-          <div className={classes.pagination}>
-            <button
-              disabled={currentPage === 1}
-              onClick={() => onPageChange(currentPage - 1)}
-              className={classes.currentPage}
-            >
-              {"<"}
-            </button>
-
-            {renderPageButtons(
-              Array.from({ length: totalPages }, (_, index) => index + 1)
-            )}
-
-            <button
-              disabled={currentPage === totalPages}
-              onClick={() => onPageChange(currentPage + 1)}
-              className={classes.currentPage}
-            >
-              {">"}
-            </button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+          />
         </div>
       </div>
     </div>

@@ -89,7 +89,7 @@ function Card(props) {
           {props.join === 1 && (
             <div>
               <p>Enter password:</p>
-              <input type="password" name="gamePassword" />
+              <input type="password" name="gamePassword" autoComplete="" />
               <p
                 ref={passwordErrRef}
                 className={`${classes["password-error"]} ${classes["hidden-error"]}`}

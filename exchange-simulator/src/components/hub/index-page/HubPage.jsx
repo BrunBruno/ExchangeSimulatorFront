@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import classes from "./HubPage.module.scss";
 
 import Games from "./games-section/Games";
-import Header from "../header-shared/Header";
+import Header from "../hub-shared/Header";
 import Intro from "./intro-section/Intro";
 import Review from "./review-section/Review";
 import Tutorial from "./tutorial-section/Tutorial";
@@ -21,10 +21,15 @@ function HubPage() {
     if (location.state && location.state.popup && infoPpupRef.current) {
       infoPpupRef.current.classList.remove(classes["hidden-popup"]);
       infoPpupRef.current.innerHTML = location.state.popup;
+
       setTimeout(() => {
-        infoPpupRef.current.classList.add(classes["hidden-popup"]);
+        if (infoPpupRef.current) {
+          infoPpupRef.current.classList.add(classes["hidden-popup"]);
+        }
         setTimeout(() => {
-          infoPpupRef.current.innerHTML = "";
+          if (infoPpupRef.current) {
+            infoPpupRef.current.innerHTML = "";
+          }
         }, 2000);
       }, 3000);
 

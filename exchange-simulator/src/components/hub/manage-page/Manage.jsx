@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Header from "../header-shared/Header";
+import Header from "../hub-shared/Header";
 import classes from "./Manage.module.scss";
 import Details from "./details-section/Details";
 import axios from "axios";
 import baseUrl from "../../Shared/Url";
+import Pagination from "../hub-shared/Pagination";
 
 function Manage() {
   const gamesStatus = ["available", "active", "finished"];
@@ -62,65 +63,6 @@ function Manage() {
 
   const onSelectGame = (game) => {
     setSelectedGame(game);
-  };
-
-  const renderPageButtons = (array) => {
-    const buttonsToShow = 3;
-    if (totalPages <= buttonsToShow) {
-      return array.map((pageNumber) => (
-        <button
-          key={pageNumber}
-          onClick={() => onPageChange(pageNumber)}
-          disabled={currentPage === pageNumber}
-          className={currentPage === pageNumber ? classes.currentPage : ""}
-        >
-          {pageNumber}
-        </button>
-      ));
-    } else {
-      const middlePage = Math.floor(buttonsToShow / 2);
-      let startPage = currentPage - middlePage;
-      let endPage = currentPage + middlePage;
-
-      if (startPage <= 1) {
-        startPage = 1;
-        endPage = buttonsToShow + 2;
-      } else if (endPage >= totalPages) {
-        endPage = totalPages;
-        startPage = totalPages - buttonsToShow - 1;
-      }
-
-      return (
-        <>
-          {startPage > 1 && (
-            <>
-              <button onClick={() => onPageChange(1)}>1</button>
-              {startPage >= 2 && <p>...</p>}
-            </>
-          )}
-
-          {array.slice(startPage - 1, endPage).map((pageNumber) => (
-            <button
-              key={pageNumber}
-              onClick={() => onPageChange(pageNumber)}
-              disabled={currentPage === pageNumber}
-              className={currentPage === pageNumber ? classes.currentPage : ""}
-            >
-              {pageNumber}
-            </button>
-          ))}
-
-          {endPage < totalPages && (
-            <>
-              {endPage <= totalPages - 1 && <p>...</p>}
-              <button onClick={() => onPageChange(totalPages)}>
-                {totalPages}
-              </button>
-            </>
-          )}
-        </>
-      );
-    }
   };
 
   return (
@@ -185,27 +127,11 @@ function Manage() {
             ))}
           </ul>
         </div>
-        <div className={classes.pagination}>
-          <button
-            disabled={currentPage === 1}
-            onClick={() => onPageChange(currentPage - 1)}
-            className={classes.currentPage}
-          >
-            {"<"}
-          </button>
-
-          {renderPageButtons(
-            Array.from({ length: totalPages }, (_, index) => index + 1)
-          )}
-
-          <button
-            disabled={currentPage === totalPages}
-            onClick={() => onPageChange(currentPage + 1)}
-            className={classes.currentPage}
-          >
-            {">"}
-          </button>
-        </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
       <div className={classes["manage__details"]}>
         {selectedGame === null ? (
@@ -215,7 +141,7 @@ function Manage() {
             <p>Please select game to manage it.</p>
           </div>
         ) : (
-          <Details game={selectedGame} />
+          <Details key={selectedGame.name} game={selectedGame} />
         )}
       </div>
     </div>

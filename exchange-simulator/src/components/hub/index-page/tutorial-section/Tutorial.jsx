@@ -33,7 +33,7 @@ function Tutorial() {
         className={`${classes["tutorial__row"]} ${classes["hidden-row"]}`}
       >
         <div className={classes["tutorial__row__content"]}>
-          <h2>Step</h2>
+          <h2></h2>
         </div>
         <div className={classes.border}></div>
       </div>
@@ -47,7 +47,7 @@ function Tutorial() {
       >
         <div className={classes.border}></div>
         <div className={classes["tutorial__row__content"]}>
-          <h2>Step</h2>
+          <h2></h2>
         </div>
       </div>
       <div
@@ -59,7 +59,7 @@ function Tutorial() {
         className={`${classes["tutorial__row"]} ${classes["hidden-row"]}`}
       >
         <div className={classes["tutorial__row__content"]}>
-          <h2>Step</h2>
+          <h2></h2>
         </div>
         <div className={classes.border}></div>
       </div>

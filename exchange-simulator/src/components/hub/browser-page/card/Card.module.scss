@@ -34,7 +34,11 @@
         width: 100%;
 
         h2 {
+          width: 80%;
           font-size: 3rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         p {
@@ -76,17 +80,13 @@
         display: none;
       }
 
-      .buttons {
-        @include flexBlock(row, 2rem, start, start);
+      button {
+        @include actionButton(0);
         position: absolute;
         bottom: 0;
         right: 0;
         margin: 2rem;
-
-        button {
-          @include actionButton(0);
-          background-color: rgba(#000, 0.5);
-        }
+        background-color: rgba(#000, 0.5);
       }
     }
   }
@@ -128,4 +128,10 @@
 .hidden {
   opacity: 0.1;
   transition: all 0s;
+}
+
+@media (max-width: 800px) {
+  button {
+    font-size: 2rem;
+  }
 }
