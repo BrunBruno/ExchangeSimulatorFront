@@ -34,6 +34,15 @@ function EmailVerification(props) {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
 
+      // log in again user for token refresh
+      const response = await axios.post(
+        `${baseUrl}/user/sign-in`,
+        JSON.parse(localStorage.getItem("userTemp"))
+      );
+
+      // set token
+      localStorage.setItem("token", response.data.token);
+
       // go to hub page
       navigate("/hub", {
         state: {

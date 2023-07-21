@@ -85,6 +85,9 @@ function Register(props) {
         password: event.target.password.value,
       };
 
+      // save user details
+      localStorage.setItem("userTemp", JSON.stringify(logUserData));
+
       // log in new user
       const response = await axios.post(`${baseUrl}/user/sign-in`, logUserData);
 
