@@ -153,6 +153,7 @@ $success-color: #51cf66;
   position: relative;
   width: 100%;
   height: 100vh;
+  height: 100dvh !important;
   overflow: overlay;
   overflow-y: scroll;
   overflow-x: hidden;

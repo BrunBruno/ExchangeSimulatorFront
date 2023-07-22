@@ -29,6 +29,7 @@ function Browser() {
   };
 
   const containerRef = useRef(null);
+  const cardsConatinerRef = useRef(null);
   const cardsRefs = useRef([]);
 
   const location = useLocation();
@@ -83,6 +84,10 @@ function Browser() {
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+
+    if (cardsConatinerRef.current) {
+      cardsConatinerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   const onSearchByName = (event) => {
@@ -198,44 +203,49 @@ function Browser() {
           )}
         </div>
         <div className={classes["browser__cards"]}>
-          {displayError ? (
-            <div>
-              <div className={classes.error}>Connection error.</div>
-            </div>
-          ) : (
-            <>
-              {gameList.length === 0 ? (
-                <div>
-                  <div className={classes.error}>No games found.</div>
-                </div>
-              ) : (
-                <ul>
-                  {gameList.map((game, index) => {
-                    let joinOption;
+          <div
+            ref={cardsConatinerRef}
+            className={classes["browser__cards__container"]}
+          >
+            {displayError ? (
+              <div>
+                <div className={classes.error}>Connection error.</div>
+              </div>
+            ) : (
+              <>
+                {gameList.length === 0 ? (
+                  <div>
+                    <div className={classes.error}>No games found.</div>
+                  </div>
+                ) : (
+                  <ul>
+                    {gameList.map((game, index) => {
+                      let joinOption;
 
-                    if (gamesType === gamesTypes.current) {
-                      joinOption = joiningOptions.rejoin;
-                    } else if (gamesType === gamesTypes.available) {
-                      joinOption = joiningOptions.join;
-                    } else if (gamesType === gamesTypes.previous) {
-                      joinOption = joiningOptions.no;
-                    }
+                      if (gamesType === gamesTypes.current) {
+                        joinOption = joiningOptions.rejoin;
+                      } else if (gamesType === gamesTypes.available) {
+                        joinOption = joiningOptions.join;
+                      } else if (gamesType === gamesTypes.previous) {
+                        joinOption = joiningOptions.no;
+                      }
 
-                    return (
-                      <Card
-                        key={index}
-                        game={game}
-                        cardRef={(el) => (cardsRefs.current[index] = el)}
-                        index={index}
-                        join={joinOption}
-                        onSelectGame={onSelectGame}
-                      />
-                    );
-                  })}
-                </ul>
-              )}
-            </>
-          )}
+                      return (
+                        <Card
+                          key={index}
+                          game={game}
+                          cardRef={(el) => (cardsRefs.current[index] = el)}
+                          index={index}
+                          join={joinOption}
+                          onSelectGame={onSelectGame}
+                        />
+                      );
+                    })}
+                  </ul>
+                )}
+              </>
+            )}
+          </div>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
