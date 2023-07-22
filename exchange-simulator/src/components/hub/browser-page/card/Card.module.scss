@@ -59,21 +59,25 @@
     .form {
       padding: 2rem;
 
-      p {
-        font-size: 1.6rem;
-      }
+      div {
+        @include flexBlock(column, 0.5rem, start, start);
 
-      .password-error {
-        color: $danger-color;
-      }
+        p {
+          font-size: 1.6rem;
+        }
 
-      .hidden-error {
-        display: none;
-      }
+        .password-error {
+          color: $danger-color;
+        }
 
-      input {
-        @include mainInput;
-        font-size: 1.2rem;
+        .hidden-error {
+          display: none;
+        }
+
+        input {
+          @include mainInput;
+          font-size: 1.2rem;
+        }
       }
 
       .hidden-input {
@@ -100,20 +104,16 @@
   }
 
   $colors: (
-    0: $main-color0,
-    1: $main-color1,
-    2: $main-color2,
-    3: $main-color3,
-    4: $main-color4,
-    5: $main-color5,
-    6: $main-color6,
-    7: $main-color7,
-    8: $main-color8,
-    9: $main-color9,
+    1: $main-color4,
+    2: $main-color5,
+    3: $main-color6,
+    4: $main-color7,
+    5: $main-color8,
+    6: $main-color9,
   );
 
   @function random-percentage() {
-    $random: random(100);
+    $random: 10 + random(80);
     @return percentage($random / 100);
   }
 
@@ -133,5 +133,42 @@
 @media (max-width: 800px) {
   .card {
     height: 100%;
+
+    &__content {
+      .text {
+        div {
+          svg {
+            height: 6rem;
+          }
+          h2 {
+            font-size: 3.6rem;
+          }
+          p {
+            font-size: 2rem;
+          }
+          span {
+            font-size: 1.6rem;
+          }
+        }
+      }
+      .form {
+        div {
+          gap: 1rem;
+
+          p {
+            font-size: 2rem;
+          }
+          input {
+            font-size: 2rem;
+          }
+        }
+
+        button {
+          margin: 3rem;
+          font-size: 3.2rem;
+          padding: 1.2rem 2.4rem;
+        }
+      }
+    }
   }
 }

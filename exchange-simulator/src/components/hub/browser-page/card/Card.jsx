@@ -20,9 +20,6 @@ function Card(props) {
       "content-style-4",
       "content-style-5",
       "content-style-6",
-      "content-style-7",
-      "content-style-8",
-      "content-style-9",
     ];
     const randomIndex = Math.floor(Math.random() * styles.length);
     setRandomStyle(classes[styles[randomIndex]]);
