@@ -48,7 +48,7 @@
         }
 
         &:nth-child(3) {
-          transform: rotateX(90deg) translateZ(-15rem);
+          transform: rotateX(90deg) translateZ(-22vh);
           background-image: radial-gradient(
             circle,
             $main-color0,
@@ -154,6 +154,19 @@
 }
 
 // mobile layout
+
+@media (max-width: 1000px) {
+  .intro {
+    &__content {
+      .introduction {
+        h1 {
+          font-size: 4rem;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 800px) {
   .intro {
     position: relative;

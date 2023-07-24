@@ -49,6 +49,12 @@ function Games() {
         observer.observe(element);
       });
     }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
   }, []);
 
   return (

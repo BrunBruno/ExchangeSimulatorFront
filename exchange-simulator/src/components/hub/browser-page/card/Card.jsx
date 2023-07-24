@@ -51,6 +51,7 @@ function Card(props) {
   };
 
   const handleSubmit = (event) => {
+    console.log(props.game);
     if (props.join === 1) {
       onJoinGame(event);
     } else if (props.join === 2) {
@@ -98,7 +99,8 @@ function Card(props) {
           <input
             type="text"
             name="gameName"
-            defaultValue={props.game.name}
+            value={props.game.name}
+            onChange={() => {}}
             className={classes["hidden-input"]}
           />
           <div className={classes.buttons}>

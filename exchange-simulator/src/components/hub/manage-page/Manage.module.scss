@@ -8,7 +8,7 @@
   &__games {
     width: 100%;
     height: 100vh;
-    height: 100dvh !important;
+    height: 100dvh;
     background-color: $grey-color9;
     display: grid;
     grid-template-columns: 1fr;
@@ -80,23 +80,11 @@
       padding: 2rem;
       border-bottom: solid 0.5rem $grey-color8;
 
-      &__header {
-        @include flexBlock(row, 0, space-evenly, start);
-        width: 100%;
-
-        span {
-          width: 25%;
-          font-size: 2rem;
-          text-align: center;
-        }
-      }
-
       ul {
-        @include flexBlock(column, 2rem, start, center);
         width: 100%;
         list-style-type: none;
         overflow-y: scroll;
-        overflow-x: hidden;
+        overflow-x: auto;
         padding: 0.5rem;
 
         &::-webkit-scrollbar {
@@ -110,39 +98,11 @@
         }
 
         li {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          position: relative;
           width: 100%;
-          background-color: $main-color0;
-          padding: 1rem;
           border-radius: 1rem;
-          color: $grey-color9;
-
-          &:hover {
-            cursor: pointer;
-            background-color: $main-color9;
-            color: $main-color0;
-
-            span {
-              border-color: $main-color0;
-            }
-          }
-
-          span {
-            display: block;
-            width: 100%;
-            font-size: 1.6rem;
-            text-align: center;
-            border-right: solid 0.2rem $grey-color9;
-            overflow: hidden;
-            white-space: break-word;
-            word-break: normal;
-            text-overflow: ellipsis;
-
-            &:last-child {
-              border: none;
-            }
-          }
+          margin-bottom: 2rem;
+          overflow: hidden;
         }
       }
     }
@@ -182,6 +142,13 @@
     }
 
     &__details {
+      @include absoluteCenter;
+      height: 100dvh;
+      background-color: rgba(#000, 0.5);
+      z-index: 20;
+    }
+
+    .hidden {
       display: none;
     }
   }

@@ -5,14 +5,17 @@ import Details from "./details-section/Details";
 import axios from "axios";
 import baseUrl from "../../Shared/Url";
 import Pagination from "../hub-shared/Pagination";
+import Card from "./card/Card";
 
 function Manage() {
-  const gamesStatus = ["available", "active", "finished"];
+  const windowWidth = window.innerWidth;
   const GameSortOption = {
     Date: 0,
     Name: 1,
   };
+
   const containerRef = useRef(null);
+  const detailsRef = useRef(null);
 
   const [selectedGame, setSelectedGame] = useState(null);
   const [gameList, setGameList] = useState([]);
@@ -63,6 +66,20 @@ function Manage() {
 
   const onSelectGame = (game) => {
     setSelectedGame(game);
+
+    if (
+      detailsRef.current &&
+      detailsRef.current.classList.contains(classes.hidden)
+    ) {
+      detailsRef.current.classList.remove(classes.hidden);
+    }
+  };
+
+  const onCloseDetails = () => {
+    setSelectedGame(null);
+    if (detailsRef.current && windowWidth <= 800) {
+      detailsRef.current.classList.add(classes.hidden);
+    }
   };
 
   return (
@@ -105,12 +122,6 @@ function Manage() {
           )}
         </div>
         <div className={classes["manage__games__list"]}>
-          <div className={classes["manage__games__list__header"]}>
-            <span>Game Name</span>
-            <span>Players</span>
-            <span>Status</span>
-            <span>Created At</span>
-          </div>
           <ul>
             {gameList.map((game, index) => (
               <li
@@ -119,10 +130,11 @@ function Manage() {
                   onSelectGame(game);
                 }}
               >
-                <span>{game.name}</span>
+                {/* <span>{game.name}</span>
                 <span>{game.playerCount}</span>
                 <span>{gamesStatus[game.status]}</span>
-                <span>{new Date(game.createdAt).toLocaleDateString()}</span>
+                <span>{new Date(game.createdAt).toLocaleDateString()}</span> */}
+                <Card game={game} />
               </li>
             ))}
           </ul>
@@ -133,7 +145,12 @@ function Manage() {
           onPageChange={onPageChange}
         />
       </div>
-      <div className={classes["manage__details"]}>
+      <div
+        ref={detailsRef}
+        className={`${classes["manage__details"]} ${
+          windowWidth < 800 ? classes.hidden : ""
+        }`}
+      >
         {selectedGame === null ? (
           <div className={classes.info}>
             <h3>Hello</h3>
@@ -141,7 +158,11 @@ function Manage() {
             <p>Please select game to manage it.</p>
           </div>
         ) : (
-          <Details key={selectedGame.name} game={selectedGame} />
+          <Details
+            key={selectedGame.name}
+            game={selectedGame}
+            onCloseDetails={onCloseDetails}
+          />
         )}
       </div>
     </div>

@@ -19,6 +19,8 @@ function Review(props) {
   const [startsArray, setStartsArray] = useState([]);
   const [selectedStars, setSelectedStarts] = useState(0);
 
+  const bgImage =
+    window.innerWidth <= 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
   const countStarts = startsArray.filter((val) => val === 1).length;
 
   let color;
@@ -62,7 +64,7 @@ function Review(props) {
   useEffect(() => {
     const handleScroll = () => {
       const windowWidth = window.innerWidth;
-      let scrollMultiplier = 0.125 * Math.ceil(windowWidth / 100);
+      let scrollMultiplier = Math.min(2, 0.125 * Math.ceil(windowWidth / 100));
 
       const backgroundHeight = reviewBackgroundRef.current.clientHeight;
       const containerHeight = reviewRef.current.clientHeight;
@@ -81,6 +83,12 @@ function Review(props) {
     if (props.containerRef.current) {
       props.containerRef.current.addEventListener("scroll", handleScroll);
     }
+
+    return () => {
+      if (props.containerRef.current) {
+        props.containerRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -121,7 +129,7 @@ function Review(props) {
       <img
         ref={reviewBackgroundRef}
         className={classes["review__background"]}
-        src={`../../../../../public/images/review-bg.jpg`}
+        src={`../../../../../public/images/${bgImage}`}
         style={{
           transform: `translateY(${translateY}px)`,
           top: `${offsetTop}px`,

@@ -9,6 +9,7 @@ function Footer(props) {
     const handleScroll = () => {
       const windowWidth = window.innerWidth;
       const windowHeight = window.innerHeight;
+      const footerHeight = footerRef.current.clientHeight;
       const { y } = footerRef.current.getBoundingClientRect();
       const font = -(y - windowHeight);
 
@@ -17,11 +18,20 @@ function Footer(props) {
           5 * Math.log(font) * (1 / (1 + Math.exp(-(windowWidth / 1000))))
         );
       }
+      if (footerHeight < font + 20) {
+        props.containerRef.current.removeEventListener("scroll", handleScroll);
+      }
     };
 
     if (props.containerRef.current) {
       props.containerRef.current.addEventListener("scroll", handleScroll);
     }
+
+    return () => {
+      if (props.containerRef.current) {
+        props.containerRef.current.removeEventListener("scroll", handleScroll);
+      }
+    };
   }, []);
   return (
     <footer
