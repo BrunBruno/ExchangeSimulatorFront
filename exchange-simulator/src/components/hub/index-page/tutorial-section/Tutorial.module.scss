@@ -1,4 +1,4 @@
-@import "../../../../Variables.scss";
+@import "../../../Shared/Variables.scss";
 
 .tutorial {
   @include flexBlock(column, 0, start, start);

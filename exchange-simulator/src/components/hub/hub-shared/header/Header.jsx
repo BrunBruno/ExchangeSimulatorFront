@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 import classes from "./Header.module.scss";
 
-import Logo from "../../Shared/Logo";
+import Logo from "../../../Shared/Logo";
 import { useEffect, useRef } from "react";
 
 function Header(props) {

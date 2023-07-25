@@ -1,4 +1,4 @@
-@import "../../../Variables.scss";
+@import "../../../Shared/Variables.scss";
 
 .pagination {
   @include flexBlock(row, 1rem, center, center);

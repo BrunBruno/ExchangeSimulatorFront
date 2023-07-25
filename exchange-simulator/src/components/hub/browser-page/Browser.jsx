@@ -7,8 +7,8 @@ import cardclasses from "./Card/Card.module.scss";
 
 import baseUrl from "../../Shared/Url";
 import Card from "./Card/Card";
-import Header from "../hub-shared/Header";
-import Pagination from "../hub-shared/Pagination";
+import Header from "../hub-shared/header/Header";
+import Pagination from "../hub-shared/pagination/Pagination";
 
 function Browser() {
   const gamesPerPage = 6;

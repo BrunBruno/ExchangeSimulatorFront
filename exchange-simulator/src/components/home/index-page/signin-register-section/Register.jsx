@@ -17,8 +17,8 @@ function Register(props) {
 
     // Register user object
     const userData = {
-      email: event.target.email.value,
-      userName: event.target.userName.value,
+      email: event.target.email.value.trim(),
+      userName: event.target.userName.value.trim(),
       password: event.target.password.value,
       confirmPassword: event.target.confirmPassword.value,
     };
@@ -82,7 +82,7 @@ function Register(props) {
       await axios.post(`${baseUrl}/user/register`, userData);
 
       const logUserData = {
-        email: event.target.email.value,
+        email: event.target.email.value.trim(),
         password: event.target.password.value,
       };
 

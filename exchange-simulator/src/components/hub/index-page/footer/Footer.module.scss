@@ -1,4 +1,4 @@
-@import "../../../../Variables.scss";
+@import "../../../Shared/Variables.scss";
 
 .footer {
   @include flexBlock(column, 2rem, start, start);

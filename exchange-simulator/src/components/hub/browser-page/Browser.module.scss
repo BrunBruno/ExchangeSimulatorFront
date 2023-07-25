@@ -1,4 +1,4 @@
-@import "../../../Variables.scss";
+@import "../../Shared/Variables.scss";
 
 .browser {
   @include container;
@@ -161,6 +161,11 @@
 
 @media (max-width: 600px) {
   .browser {
+    &__search {
+      h2 {
+        font-size: 4rem;
+      }
+    }
     &__cards {
       &__container {
         overflow-y: scroll;

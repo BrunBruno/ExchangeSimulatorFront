@@ -39,6 +39,10 @@ function Card(props) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      navigate("/hub/current-games", {
+        state: { title: "Current Games" },
+      });
     } catch (err) {
       passwordErrRef.current.classList.remove(classes["hidden-error"]);
     }
@@ -85,7 +89,7 @@ function Card(props) {
         </div>
         <form className={classes.form} onSubmit={handleSubmit}>
           {props.join === 1 && (
-            <div>
+            <div className={classes["form__element"]}>
               <p>Enter password:</p>
               <input type="password" name="gamePassword" autoComplete="" />
               <p
@@ -94,6 +98,28 @@ function Card(props) {
               >
                 Incorrect password.
               </p>
+            </div>
+          )}
+          {props.join === 2 && props.game.status === 0 && (
+            <div className={classes["form__element"]}>
+              <p>Players:</p>
+              <div className={classes.indicator}>
+                <div
+                  className={classes["indicator__fill"]}
+                  style={{ width: `${props.game.playersRatio}%` }}
+                />
+              </div>
+            </div>
+          )}
+          {props.join === 2 && props.game.status === 1 && (
+            <div className={classes["form__element"]}>
+              <p>Time:</p>
+              <div className={classes.indicator}>
+                <div
+                  className={classes["indicator__fill"]}
+                  style={{ width: `${props.game.timeRatio}%` }}
+                />
+              </div>
             </div>
           )}
           <input
@@ -105,7 +131,12 @@ function Card(props) {
           />
           <div className={classes.buttons}>
             {props.join === 1 && <button type="submit">Join</button>}
-            {props.join === 2 && <button type="submit">Re-Join</button>}
+            {props.join === 2 && props.game.status === 0 && (
+              <div className={classes.waiting}>Waiting...</div>
+            )}
+            {props.join === 2 && props.game.status === 1 && (
+              <button type="submit">Enter!</button>
+            )}
           </div>
         </form>
       </div>

@@ -1,5 +1,6 @@
 import ComboBox from "../combobox/ComboBox";
 import classes from "./GameForm.module.scss";
+import Icons from "./Icons.";
 
 function GameForm(props) {
   const moneyOptions = [
@@ -26,7 +27,10 @@ function GameForm(props) {
   return (
     <form onSubmit={props.onCreateNewGame} className={classes.form}>
       <div className={classes.row}>
-        <span>Game name:</span>
+        <span>
+          <Icons name="name" />
+          Game name:
+        </span>
         <input
           type="text"
           placeholder="New Game"
@@ -35,7 +39,10 @@ function GameForm(props) {
         />
       </div>
       <div className={classes.row}>
-        <span>Game password (optional):</span>
+        <span>
+          <Icons name="password" />
+          Game password (optional):
+        </span>
         <input
           type="password"
           placeholder=""
@@ -44,26 +51,41 @@ function GameForm(props) {
         />
       </div>
       <div className={classes.row}>
-        <span>Description (optional):</span>
+        <span>
+          <Icons name="description" />
+          Description (optional):
+        </span>
         <textarea
           placeholder="This game is awesome"
           name="description"
         ></textarea>
       </div>
       <div className={classes.row}>
-        <span>Starting money:</span>
+        <span>
+          <Icons name="money" />
+          Starting money:
+        </span>
         <ComboBox name={"money"} options={moneyOptions} />
       </div>
       <div className={classes.row}>
-        <span>Total (max) number of players:</span>
+        <span>
+          <Icons name="players" />
+          Total (max) number of players:
+        </span>
         <ComboBox name={"numberOfPlayers"} options={playersOptions} />
       </div>
       <div className={classes.row}>
-        <span>Duration of game:</span>
+        <span>
+          <Icons name="time" />
+          Duration of game:
+        </span>
         <ComboBox name={"duration"} options={durationOptions} />
       </div>
       <div className={classes.row}>
-        <span>Selected cons:</span>
+        <span>
+          <Icons name="coins" />
+          Selected cons:
+        </span>
         <div className={classes["row__list"]}>
           <div className={classes.list} ref={props.coinListRef}>
             {props.coinList.map((coin, index) => (

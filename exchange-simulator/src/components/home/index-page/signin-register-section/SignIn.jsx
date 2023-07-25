@@ -19,7 +19,7 @@ function SignIn(props) {
 
     // Logging user object
     const userData = {
-      email: event.target.email.value,
+      email: event.target.email.value.trim(),
       password: event.target.password.value,
     };
 

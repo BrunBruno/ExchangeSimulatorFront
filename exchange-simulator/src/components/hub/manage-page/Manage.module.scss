@@ -1,4 +1,4 @@
-@import "../../../Variables.scss";
+@import "../../Shared/Variables.scss";
 
 .manage {
   @include container;
@@ -12,7 +12,7 @@
     background-color: $grey-color9;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 34% 60% 6%;
+    grid-template-rows: 40% 54% 6%;
     border-right: solid 0.5rem $grey-color8;
     overflow: hidden;
 
@@ -105,6 +105,13 @@
           overflow: hidden;
         }
       }
+
+      .nogames {
+        justify-self: center;
+        font-size: 2.2rem;
+        text-align: center;
+        color: $grey-color5;
+      }
     }
     // end list
   }
@@ -139,6 +146,7 @@
     grid-template-columns: 1fr;
 
     &__games {
+      grid-template-rows: 28% 66% 6%;
     }
 
     &__details {

@@ -1,4 +1,4 @@
-@import "../../../../Variables.scss";
+@import "../../../Shared/Variables.scss";
 
 // form
 .form {
@@ -13,8 +13,13 @@
     padding: 1rem;
 
     span {
+      @include flexBlock(row, 1rem, start, center);
       font-size: 2rem;
       white-space: nowrap;
+
+      svg {
+        height: 3rem;
+      }
     }
 
     input {

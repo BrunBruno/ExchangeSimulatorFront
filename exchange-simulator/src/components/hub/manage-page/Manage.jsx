@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import Header from "../hub-shared/Header";
-import classes from "./Manage.module.scss";
-import Details from "./details-section/Details";
 import axios from "axios";
+
+import classes from "./Manage.module.scss";
+
 import baseUrl from "../../Shared/Url";
-import Pagination from "../hub-shared/Pagination";
+import Header from "../hub-shared/header/Header";
+import Details from "./details-section/Details";
+import Pagination from "../hub-shared/pagination/Pagination";
 import Card from "./card/Card";
 
 function Manage() {
@@ -122,22 +124,26 @@ function Manage() {
           )}
         </div>
         <div className={classes["manage__games__list"]}>
-          <ul>
-            {gameList.map((game, index) => (
-              <li
-                key={index}
-                onClick={() => {
-                  onSelectGame(game);
-                }}
-              >
-                {/* <span>{game.name}</span>
-                <span>{game.playerCount}</span>
-                <span>{gamesStatus[game.status]}</span>
-                <span>{new Date(game.createdAt).toLocaleDateString()}</span> */}
-                <Card game={game} />
-              </li>
-            ))}
-          </ul>
+          {gameList.length > 0 ? (
+            <ul>
+              {gameList.map((game, index) => (
+                <li
+                  key={index}
+                  onClick={() => {
+                    onSelectGame(game);
+                  }}
+                >
+                  <Card game={game} />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className={classes.nogames}>
+              You do not have any games!
+              <br />
+              Please create one to manage it.
+            </div>
+          )}
         </div>
         <Pagination
           currentPage={currentPage}

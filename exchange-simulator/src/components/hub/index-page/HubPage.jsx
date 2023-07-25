@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import classes from "./HubPage.module.scss";
 
 import Games from "./games-section/Games";
-import Header from "../hub-shared/Header";
+import Header from "../hub-shared/header/Header";
 import Intro from "./intro-section/Intro";
 import Review from "./review-section/Review";
 import Tutorial from "./tutorial-section/Tutorial";

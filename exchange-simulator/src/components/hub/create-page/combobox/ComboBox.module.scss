@@ -1,4 +1,4 @@
-@import "../../../../Variables.scss";
+@import "../../../Shared/Variables.scss";
 
 .combobox {
   @include flexBlock(row, 0, start, center);
