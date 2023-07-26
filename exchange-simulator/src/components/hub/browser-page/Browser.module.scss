@@ -1,0 +1,205 @@
+@import "../../Shared/Variables.scss";
+
+.browser {
+  @include container;
+  display: grid;
+  grid-template-columns: 20% 80%;
+
+  // search column
+  &__search {
+    @include flexBlock(column, 1rem, start, center);
+    background-color: $grey-color9;
+    border-right: solid 0.5rem $grey-color8;
+    padding: 1rem;
+    padding-top: 10rem;
+
+    h2 {
+      font-size: 3rem;
+      text-shadow: 2px 2px 2px #000;
+      user-select: none;
+    }
+
+    input {
+      @include mainInput;
+      font-size: 2rem;
+      width: 100%;
+    }
+
+    p {
+      font-size: 2rem;
+    }
+
+    //radios
+    .radios {
+      @include flexBlock(row, 0, space-evenly, center);
+      width: 100%;
+
+      label {
+        cursor: pointer;
+        display: inline-block;
+        user-select: none;
+
+        input[type="radio"] {
+          display: none;
+        }
+
+        span {
+          @include roundedBlock(1rem, 0.5rem 1rem);
+          display: inline-block;
+          border: solid 0.2rem $grey-color0;
+          font-size: 2rem;
+        }
+
+        input[type="radio"]:checked ~ span {
+          color: $grey-color9;
+          border: solid 0.2rem $grey-color9;
+          background-color: $grey-color0;
+        }
+      }
+    }
+    // end radois
+
+    &__details {
+      @include flexBlock(column, 0.5rem, start, start);
+      width: 100%;
+      padding: 1rem;
+
+      span {
+        color: $main-color5;
+      }
+
+      p {
+        width: 100%;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        -webkit-box-lines: multiple;
+        font-size: 1.6rem;
+        line-height: 1.6;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-all;
+      }
+    }
+  }
+  // end search column
+
+  // cards section
+  &__cards {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 92% 8%;
+    padding-top: 6rem;
+
+    &__container {
+      width: 100%;
+      height: 100%;
+
+      div {
+        .error {
+          @include absoluteCenter;
+          @include roundedBlock(2rem, 2rem);
+          font-size: 4rem;
+          background-color: $main-color7;
+          border: solid 0.5rem $main-color0;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 2rem;
+      }
+    }
+  }
+  // end cards section
+}
+
+@media (max-width: 800px) {
+  .browser {
+    grid-template-columns: 1fr;
+    grid-template-rows: 34% 66%;
+
+    &__search {
+      border-right: none;
+      border-bottom: solid 0.5rem $grey-color8;
+      padding-bottom: 4rem;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $grey-color7;
+        border-radius: 1rem;
+      }
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      input {
+        width: fit-content;
+      }
+
+      .radios {
+        width: fit-content;
+        gap: 1rem;
+      }
+
+      &__details {
+        display: none;
+      }
+    }
+
+    &__cards {
+      padding-top: 0;
+
+      &__container {
+        overflow-y: scroll;
+
+        ul {
+          height: 150%;
+          grid-template-columns: repeat(2, 1fr);
+          grid-template-rows: repeat(3, 1fr);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .browser {
+    grid-template-rows: 30% 70%;
+    &__search {
+      justify-content: end;
+      h2 {
+        font-size: 5rem;
+      }
+    }
+    &__cards {
+      &__container {
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          background-color: #0000;
+          width: 0;
+        }
+
+        ul {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+}

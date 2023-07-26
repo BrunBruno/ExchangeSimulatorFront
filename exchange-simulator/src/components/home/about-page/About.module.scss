@@ -1,0 +1,129 @@
+@import "../../Shared/Variables.scss";
+
+// about container
+.container {
+  @include container;
+  background-color: $grey-color9;
+  display: flex;
+
+  &__column {
+    @include roundedBlock(1rem, 2rem);
+    border-bottom: solid 0.5rem $main-color5;
+    border-right: solid 0.5rem $main-color5;
+    margin: 2rem;
+    background-color: $grey-color8;
+
+    &:nth-child(1) {
+      width: 25%;
+    }
+    &:nth-child(2) {
+      width: 75%;
+    }
+
+    &__nav {
+      @include flexBlock(column, 0, space-between, start);
+      height: 100%;
+
+      ul {
+        @include flexBlock(column, 1rem, start, start);
+        list-style-type: none;
+        width: 100%;
+
+        li {
+          @include roundedBlock(0.5rem, 1rem);
+          @include flexBlock(row, 1rem, start, center);
+          width: 100%;
+          font-size: 2.2rem;
+          background-color: $main-color9;
+          border-bottom: solid 0.5rem $main-color7;
+          user-select: none;
+          white-space: nowrap;
+          overflow: hidden;
+
+          &:hover {
+            cursor: pointer;
+            background-color: $main-color8;
+          }
+
+          &:active {
+            margin-top: 0.5rem;
+            border-bottom: none;
+          }
+
+          svg {
+            @include squareBlock(2.2rem);
+          }
+        }
+      }
+    }
+
+    &__content {
+      height: 100%;
+      padding: 0 3rem;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: $main-color5;
+        border-radius: 1rem;
+      }
+    }
+  }
+}
+// end about container
+
+@media (max-width: 800px) {
+  .container {
+    flex-direction: column;
+    &__column {
+      margin: 1rem;
+
+      &:nth-child(1) {
+        width: calc(100% - 2rem);
+        margin-top: 4rem;
+      }
+
+      &:nth-child(2) {
+        width: calc(100% - 2rem);
+        height: 75%;
+      }
+
+      &__nav {
+        flex-direction: row;
+        gap: 1rem;
+
+        ul {
+          flex-direction: row;
+
+          &:nth-child(1) {
+            width: 80%;
+            li {
+              width: 25%;
+            }
+          }
+          &:nth-child(2) {
+            width: 20%;
+            li {
+              width: 100%;
+            }
+          }
+
+          li {
+            font-size: 1.4rem;
+            white-space: nowrap;
+            text-align: center;
+            justify-content: center;
+
+            svg {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}

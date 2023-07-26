@@ -1,0 +1,115 @@
+@import "../../../Shared/Variables.scss";
+
+// intro container
+.intro {
+  position: fixed;
+  top: 10rem;
+  right: 0;
+  width: 40%;
+  height: 52rem;
+  font-size: 1.2rem;
+  color: $grey-color3;
+  text-align: justify;
+  text-shadow: 1px 1px #000;
+  display: grid;
+  grid-template-columns: 0% 4% 96%;
+  overflow: hidden;
+  z-index: 10;
+  pointer-events: none;
+  transition: all 0.3s;
+
+  .hide {
+    @include flexBlock(row, 0, center, center);
+    width: 100%;
+    transition: all 0.1s;
+    background-color: $grey-color8;
+    pointer-events: all;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  // intro content
+  &__content {
+    @include flexBlock(column, 0, center, start);
+    width: 100%;
+    padding: 0 2rem;
+    background-color: $grey-color9;
+    pointer-events: all;
+
+    p {
+      padding: 0;
+      font-size: 1.6rem;
+    }
+
+    ul {
+      @include flexBlock(column, 0.5rem, start, start);
+      padding: 1rem;
+
+      li {
+        color: $grey-color4;
+        font-size: 1.4rem;
+
+        span {
+          font-weight: bold;
+          color: $main-color3;
+        }
+      }
+    }
+  }
+  // end intro content
+}
+// end intro container
+
+// hidden content
+.hidden-conetnt {
+  grid-template-columns: 96% 4% 0%;
+  transition: all 0.3s;
+
+  .intro__content {
+    overflow: hidden;
+  }
+
+  .hide {
+    background-color: #0000;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $grey-color8;
+    }
+  }
+}
+// end hidden content
+
+// mobile layouts
+@media (max-width: 1200px) {
+  .intro {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .intro {
+    width: 90%;
+    top: 25rem;
+    grid-template-columns: 0% 6% 94%;
+  }
+
+  .hidden-conetnt {
+    grid-template-columns: 94% 6% 0%;
+  }
+}
+
+@media (max-width: 400px) {
+  .intro {
+    height: 60rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .intro {
+    height: 100rem;
+  }
+}
+// end mobile layouts

@@ -1,0 +1,7 @@
+@import "../../Shared/Variables.scss";
+
+// hub page container
+.container {
+  @include container;
+  @include popup;
+}

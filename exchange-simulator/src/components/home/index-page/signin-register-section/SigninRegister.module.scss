@@ -1,0 +1,200 @@
+@import "../../../Shared/Variables.scss";
+
+// form modal
+.form-page {
+  @include absoluteCenter;
+  @include roundedBlock(4rem, 4rem);
+  z-index: 10;
+  width: 40%;
+  height: 80%;
+  background-color: rgba($main-color9, 0.9);
+  background-image: linear-gradient(
+    45deg,
+    #0000 30%,
+    rgba($main-color5, 0.5) 50%,
+    #0000 70%
+  );
+  border: solid 0.5rem $grey-color0;
+  visibility: visible;
+  overflow: hidden;
+  transition: all 0.3s;
+
+  // from
+  form {
+    position: relative;
+    height: 100%;
+
+    h2 {
+      font-size: 3rem;
+      padding-bottom: 0.3rem;
+      border-bottom: solid 0.3rem $grey-color0;
+      user-select: none;
+    }
+
+    .x {
+      @include flexBlock(row, 0, center, center);
+      @include circleBlock(3rem);
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: $main-color0;
+      color: $main-color9;
+      border: solid 1px $main-color9;
+
+      &:hover {
+        cursor: pointer;
+        background-color: $main-color1;
+      }
+
+      svg {
+        height: 100%;
+      }
+    }
+
+    // inputs, errors and buttons container
+    .form-container {
+      @include absoluteCenter;
+      @include flexBlock(column, 2rem, start, center);
+
+      // form row
+      div {
+        @include flexBlock(column, 0, start, start);
+        position: relative;
+        width: 100%;
+
+        span {
+          font-size: 2rem;
+          user-select: none;
+        }
+
+        p {
+          font-size: 1.6rem;
+        }
+
+        input {
+          @include mainInput;
+
+          &:focus ~ .arrow {
+            opacity: 1;
+          }
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+        }
+
+        .error {
+          @include roundedBlock(1rem, 0.3rem 0.6rem);
+          position: relative;
+          width: fit-content;
+          background-color: $main-color0;
+          color: $danger-color;
+          font-size: 1.6rem;
+          margin: 1rem;
+          border-top-right-radius: 0;
+          z-index: 0;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: -2.4rem;
+            right: 0;
+            z-index: -2;
+            background-color: #0000;
+            height: 2.4rem;
+            width: 2.4rem;
+            border-bottom-right-radius: 1.2rem;
+            box-shadow: 0.1px 1.2rem 0 0 $main-color0;
+          }
+        }
+
+        .arrow {
+          position: absolute;
+          top: 50%;
+          right: -3rem;
+          height: 2rem;
+          opacity: 0;
+        }
+
+        button {
+          @include mainButton;
+        }
+      }
+      // end form row
+
+      // buttons container
+      .buttons {
+        @include flexBlock(row, 1rem, end, end);
+        width: 100%;
+      }
+    }
+    // end container
+
+    .form-bg {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      opacity: 0.1;
+      z-index: -1;
+
+      svg {
+        height: 30rem;
+      }
+    }
+  }
+  // end from
+}
+// end form modal
+
+// mobil layout
+@media (max-width: 800px) {
+  .form-page {
+    width: 90%;
+
+    form {
+      h2 {
+        font-size: 6rem;
+      }
+      .x {
+        width: 4rem;
+      }
+      .form-container {
+        div {
+          span {
+            font-size: 3.6rem;
+          }
+
+          p {
+            font-size: 2.4rem;
+          }
+
+          input {
+            font-size: 3.6rem;
+          }
+
+          button {
+            font-size: 3.6rem;
+          }
+
+          .error {
+            font-size: 2.6rem;
+          }
+
+          .arrow {
+            height: 4rem;
+            right: -5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// hidden form modal
+.hidden {
+  width: 0;
+  height: 0;
+  padding: 0;
+  visibility: hidden;
+}

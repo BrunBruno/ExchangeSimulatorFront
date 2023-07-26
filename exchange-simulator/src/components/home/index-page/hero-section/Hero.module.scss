@@ -1,0 +1,213 @@
+@import "../../../Shared/Variables.scss";
+
+// hero section
+.hero {
+  @include container;
+  position: relative;
+  display: flex;
+
+  // hero content
+  &__content {
+    position: relative;
+    width: 60%;
+    height: 100%;
+
+    // introduction
+    &__intro {
+      @include absoluteCenter;
+      @include flexBlock(column, 5rem, start, start);
+      height: 50%;
+      width: 80%;
+      padding: 5rem;
+
+      h1 {
+        font-size: 5rem;
+        font-weight: 100;
+        letter-spacing: 0.2rem;
+        text-shadow: 2px 2px #000;
+        user-select: none;
+
+        div {
+          &:nth-child(1) {
+            padding: 0 0 0 3rem;
+          }
+          &:nth-child(2) {
+            padding: 0 0 2rem 3rem;
+            color: $main-color2;
+            border-bottom-left-radius: 5rem;
+            border: solid 0.5rem $grey-color0;
+            border-top: none;
+            border-right: none;
+          }
+        }
+      }
+
+      p {
+        color: $grey-color5;
+        text-align: justify;
+        text-shadow: 1px 1x $grey-color9;
+        font-size: 1.6rem;
+      }
+
+      // register button container
+      .action {
+        width: 100%;
+
+        p {
+          text-align: center;
+          width: 100%;
+          font-size: 3rem;
+
+          span {
+            color: $main-color5;
+          }
+        }
+
+        button {
+          @include actionButton(10%);
+          font-size: 3rem;
+        }
+      }
+      // end register button container
+    }
+    // end introduction
+  }
+  // end hero content
+
+  // cub container
+  &__f-container {
+    @include squareBlock(40%);
+    @include flexBlock(row, 0, center, end);
+    z-index: -1;
+    padding-bottom: 10%;
+    animation: cubeStart 3s;
+
+    // cube
+    &__figure {
+      @include squareBlock(40%);
+      position: relative;
+      z-index: -1;
+      transform-style: preserve-3d;
+      animation: rotateAnimation 10s infinite linear;
+
+      // cube wall
+      div {
+        @include flexBlock(row, 0, center, center);
+        position: absolute;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+
+        p {
+          position: absolute;
+          z-index: -1;
+
+          @mixin cubeWall($width, $height, $color, $opacity) {
+            background-color: rgba($color, $opacity);
+            width: $width;
+            height: $height;
+          }
+
+          &:nth-child(1) {
+            @include cubeWall(100%, 100%, $main-color5, 0.5);
+            transform: translateZ(10px);
+          }
+
+          &:nth-child(2) {
+            @include cubeWall(100%, 20px, $main-color0, 1);
+          }
+
+          &:nth-child(3) {
+            @include cubeWall(100%, 20px, $main-color0, 1);
+          }
+
+          &:nth-child(4) {
+            @include cubeWall(20px, 100%, $main-color0, 1);
+          }
+          &:nth-child(5) {
+            @include cubeWall(20px, 100%, $main-color0, 1);
+          }
+
+          &:nth-child(6) {
+            @include cubeWall(100%, 100%, $main-color5, 0.5);
+            transform: translateZ(-10px);
+          }
+        }
+      }
+      // end cube wall
+    }
+    // end cube
+
+    // cube animation
+    @keyframes rotateAnimation {
+      0% {
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+      100% {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+  }
+  // end cube container
+
+  @keyframes cubeStart {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+// end hero section
+
+// hero mobile layout
+@media (max-width: 800px) {
+  .hero {
+    flex-direction: column;
+    align-items: end;
+    &__content {
+      width: 100%;
+      &__intro {
+        width: 90%;
+        top: 60%;
+        h1 {
+          font-size: 6rem;
+        }
+        h2 {
+          font-size: 2.2rem;
+        }
+      }
+    }
+
+    &__f-container {
+      width: 60%;
+      padding-left: 15%;
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .hero {
+    &__f-container {
+      padding-bottom: 15%;
+    }
+  }
+}
+
+// hide cube on small devices
+@media (max-height: 600px) {
+  .hero {
+    &__content {
+      width: 100%;
+      &__intro {
+        top: 46%;
+      }
+    }
+    &__f-container {
+      display: none;
+    }
+  }
+}
+// end hero mobile layout

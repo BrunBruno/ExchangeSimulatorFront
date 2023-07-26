@@ -1,0 +1,199 @@
+@import "../../../Shared/Variables.scss";
+
+// intro container
+.intro {
+  width: 100%;
+  height: 50rem;
+  margin-top: 16rem;
+  display: flex;
+
+  // logo container
+  &__logo {
+    @include flexBlock(row, 0, center, center);
+    width: 40%;
+    height: 100%;
+
+    .figure {
+      position: relative;
+      width: 80%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transform: rotateX(-10deg) rotateY(30deg);
+      animation: logoAnimation 10s infinite;
+
+      div {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+
+        &:nth-child(1) {
+          transform: translateZ(2rem);
+          animation: light1 3s;
+        }
+
+        @keyframes light1 {
+          0% {
+            filter: invert(1);
+          }
+          100% {
+            filter: invert(0);
+          }
+        }
+
+        &:nth-child(2) {
+          transform: translateZ(-2rem);
+          filter: invert(1);
+          animation: light2 3s;
+        }
+
+        &:nth-child(3) {
+          transform: rotateX(90deg) translateZ(-22vh);
+          background-image: radial-gradient(
+            circle,
+            $main-color0,
+            $main-color7,
+            $main-color8,
+            $main-color9
+          );
+          border-radius: 100%;
+          filter: blur(5rem);
+          animation: light2 3s;
+        }
+
+        @keyframes light2 {
+          0% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
+        }
+      }
+    }
+
+    @keyframes logoAnimation {
+      0% {
+        transform: rotateX(-10deg) rotateY(0deg);
+      }
+      50% {
+        transform: rotateX(-10deg) rotateY(30deg);
+      }
+      100% {
+        transform: rotateX(-10deg) rotateY(0deg);
+      }
+    }
+  }
+  // end logo contatiner
+
+  // content container
+  &__content {
+    position: relative;
+    width: 60%;
+    height: 100%;
+
+    // introduction section
+    .introduction {
+      @include flexBlock(column, 2rem, start, start);
+      position: absolute;
+      right: 0;
+      bottom: -50%;
+      width: 90%;
+      height: 150%;
+      background-color: rgba($main-color9, 0.1);
+      background-image: linear-gradient(
+        45deg,
+        #0000 48%,
+        rgba($main-color9, 0.3) 50%,
+        #0000 52%
+      );
+      background-size: 1000% 1000%;
+      border-top-left-radius: 10rem;
+      padding: 5rem 10rem;
+      overflow: hidden;
+      transition: all 0.5s;
+      animation: bgAnimation 10s infinite;
+
+      h1 {
+        font-size: 5rem;
+        background: linear-gradient(
+          to right,
+          $main-color5,
+          $main-color3,
+          $main-color0
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      p {
+        font-size: 2rem;
+        color: $grey-color5;
+        text-align: justify;
+      }
+    }
+    // end introduction section
+
+    .hidden-intro {
+      height: 0;
+      opacity: 0;
+      transition: all 0.5s;
+    }
+
+    @keyframes bgAnimation {
+      0% {
+        background-position: 0%;
+      }
+
+      100% {
+        background-position: 100%;
+      }
+    }
+  }
+  // end content container
+}
+
+// mobile layout
+
+@media (max-width: 1000px) {
+  .intro {
+    &__content {
+      .introduction {
+        h1 {
+          font-size: 4rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .intro {
+    position: relative;
+    flex-direction: column;
+    height: 60rem;
+    z-index: 0;
+
+    &__logo {
+      @include absoluteCenter;
+      z-index: -5;
+      opacity: 0.1;
+      width: 80%;
+    }
+
+    &__content {
+      width: 100%;
+      z-index: inherit;
+
+      .introduction {
+        width: 100%;
+
+        p {
+          font-size: 2.2rem;
+        }
+      }
+    }
+  }
+}
+
+// end mobile layout

@@ -1,0 +1,169 @@
+@import "../../../Shared/Variables.scss";
+
+// ranking conatiner
+.ranking {
+  @include flexBlock(row, 0, center, center);
+  width: 100%;
+  height: 100%;
+  margin-bottom: 10rem;
+
+  // ranking conatnet
+  &__content {
+    width: 80%;
+    height: 80%;
+    display: flex;
+
+    // column
+    &__column {
+      @include flexBlock(column, 0, start, center);
+      padding: 2rem;
+
+      // table
+      &:nth-child(1) {
+        position: relative;
+        width: 70%;
+        background-image: linear-gradient(rgba(#000, 0.8), rgba(#000, 0.7)),
+          url("../../../../../public/images/ranking-bg.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-radius: 2rem;
+        border-bottom: solid 0.5rem $main-color0;
+
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -20%;
+          width: 100%;
+          height: 10%;
+          z-index: -1;
+          background-color: rgba($main-color9, 0.5);
+          border-radius: 100%;
+          filter: blur(1rem);
+        }
+      }
+      // end table
+
+      // header
+      &:nth-child(2) {
+        width: 30%;
+
+        // section title
+        h2 {
+          @include flexBlock(column, 2rem, center, center);
+          font-size: 5rem;
+          padding: 10rem 0;
+          text-align: center;
+          text-shadow: 5px 5px #000;
+          transform: translateX(0%);
+          user-select: none;
+          transition: all 0.3s;
+
+          // animated svg
+          svg {
+            width: 60%;
+
+            path {
+              &:nth-child(1) {
+                animation: iconAnimation1 5s infinite;
+              }
+
+              @keyframes iconAnimation1 {
+                0% {
+                  transform: translateX(0%);
+                  fill: $main-color0;
+                }
+                50% {
+                  transform: translateX(70%);
+                  fill: $main-color9;
+                }
+                100% {
+                  transform: translateX(0%);
+                  fill: $main-color0;
+                }
+              }
+
+              &:nth-child(2) {
+                animation: iconAnimation2 5s infinite;
+              }
+
+              @keyframes iconAnimation2 {
+                0% {
+                  transform: translateX(0%);
+                  fill: $main-color0;
+                }
+                50% {
+                  transform: translateX(-70%);
+                  fill: $main-color9;
+                }
+                100% {
+                  transform: translateX(0%);
+                  fill: $main-color0;
+                }
+              }
+
+              &:nth-child(3) {
+                animation: iconAnimation3 5s infinite;
+              }
+
+              @keyframes iconAnimation3 {
+                0% {
+                  fill: $main-color9;
+                }
+                50% {
+                  fill: $main-color0;
+                }
+                100% {
+                  fill: $main-color9;
+                }
+              }
+            }
+          }
+          // end animated svg
+        }
+        // end section title
+
+        .hidden-title {
+          transform: translateX(200%);
+        }
+      }
+      // end header
+    }
+    // end column
+  }
+  // end ranking conatant
+}
+// end ranking conatiner
+
+// mobile layout
+@media (max-width: 800px) {
+  .ranking {
+    height: fit-content;
+    &__content {
+      width: 100%;
+      height: 100%;
+      height: fit-content;
+      flex-direction: column-reverse;
+
+      &__column {
+        &:nth-child(1) {
+          width: 100%;
+        }
+        &:nth-child(2) {
+          width: 100%;
+
+          h2 {
+            flex-direction: row;
+            justify-content: center;
+
+            svg {
+              width: 20%;
+              transform: rotate(-90deg);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+// end mobile layout

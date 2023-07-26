@@ -1,0 +1,222 @@
+@import "../../Shared/Variables.scss";
+
+.manage {
+  @include container;
+  display: grid;
+  grid-template-columns: 40% 60%;
+
+  &__games {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    background-color: $grey-color9;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 40% 54% 6%;
+    border-right: solid 0.5rem $grey-color8;
+    overflow: hidden;
+
+    // search bar row
+    &__bar {
+      @include flexBlock(column, 1rem, center, center);
+      position: relative;
+      width: 100%;
+      border-bottom: solid 0.5rem $grey-color8;
+      padding: 2rem;
+      padding-top: 8rem;
+
+      h2 {
+        font-size: 3rem;
+        text-shadow: 2px 2px 2px #000;
+        user-select: none;
+      }
+
+      p {
+        width: 60%;
+        font-size: 2rem;
+        text-align: center;
+      }
+
+      // inputs
+      &__inputs {
+        @include flexBlock(row, 1rem, center, center);
+        position: relative;
+        width: fit-content;
+
+        input {
+          @include mainInput;
+        }
+
+        button {
+          @include actionButton(0);
+          padding: 0.5rem;
+          border-width: 0.2rem;
+
+          &:hover {
+            border-width: 0.2rem;
+          }
+
+          svg {
+            height: 2.2rem;
+          }
+        }
+
+        // radios
+        .radios {
+          @include flexBlock(row, 1rem, space-evenly, center);
+          @include roundedBlock(1.2rem, 1.2rem);
+          position: absolute;
+          top: calc(100% + 2rem);
+          left: calc(100% - 10rem);
+          background-color: $grey-color8;
+          border: solid 0.2rem $grey-color0;
+          z-index: 10;
+
+          &::after {
+            content: "";
+            position: absolute;
+            top: calc(-1rem + -1px);
+            left: 42.5%;
+            height: 2rem;
+            width: 2rem;
+            background-color: $grey-color8;
+            transform: rotate(45deg);
+            border-top: solid 0.2rem $grey-color0;
+            border-left: solid 0.2rem $grey-color0;
+            box-sizing: border-box;
+            z-index: -1;
+          }
+
+          label {
+            cursor: pointer;
+            display: inline-block;
+            user-select: none;
+
+            input[type="radio"] {
+              display: none;
+            }
+
+            span {
+              @include roundedBlock(1rem, 0.5rem 1rem);
+              display: inline-block;
+              border: solid 0.2rem $grey-color0;
+              font-size: 2rem;
+            }
+
+            input[type="radio"]:checked ~ span {
+              color: $grey-color9;
+              border: solid 0.2rem $grey-color9;
+              background-color: $grey-color0;
+            }
+          }
+        }
+        // end radios
+      }
+      // end inuts
+    }
+    // end search bar row
+
+    // games list
+    &__list {
+      @include flexBlock(column, 1rem, start, center);
+      width: 100%;
+      padding: 2rem;
+      border-bottom: solid 0.5rem $grey-color8;
+
+      ul {
+        width: 100%;
+        list-style-type: none;
+        overflow-y: scroll;
+        overflow-x: auto;
+        padding: 0.5rem;
+
+        &::-webkit-scrollbar {
+          background-color: #0000;
+          width: 1rem;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background-color: $main-color9;
+          border-radius: 1rem;
+        }
+
+        li {
+          position: relative;
+          width: 100%;
+          border-radius: 1rem;
+          margin-bottom: 2rem;
+          overflow: hidden;
+        }
+      }
+
+      .nogames {
+        justify-self: center;
+        font-size: 2.2rem;
+        text-align: center;
+        color: $grey-color5;
+      }
+    }
+    // end list
+  }
+
+  &__details {
+    @include flexBlock(row, 0, center, center);
+    width: 100%;
+
+    .info {
+      background-color: rgba($main-color9, 0.5);
+      padding: 1rem;
+      border-radius: 1rem;
+
+      h3 {
+        width: 100%;
+        font-size: 3rem;
+        text-align: center;
+        border-bottom: solid 0.5rem $main-color9;
+      }
+
+      p {
+        font-size: 2rem;
+        padding: 0.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .manage {
+    position: relative;
+    grid-template-columns: 1fr;
+
+    &__games {
+      grid-template-rows: 28% 66% 6%;
+      border-right: none;
+
+      &__bar {
+        position: relative;
+        align-items: start;
+        padding-left: 4rem;
+        gap: 2rem;
+
+        h2 {
+          font-size: 5rem;
+        }
+
+        p {
+          width: fit-content;
+        }
+      }
+    }
+
+    &__details {
+      @include absoluteCenter;
+      height: 100dvh;
+      background-color: rgba(#000, 0.5);
+      z-index: 20;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+}

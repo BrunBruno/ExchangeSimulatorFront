@@ -1,10 +1,34 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import classes from "./App.module.scss";
-import About from "./components/about-page/About";
-import HomePage from "./components/home-page/HomePage";
+
+import HubRouter from "./components/hub/HubRouter";
+import HomeRouter from "./components/home/HomeRouter";
 
 function App() {
-  // return <HomePage />;
-  return <About />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/*"
+          element={
+            <>
+              <div className={classes.background} />
+              <HomeRouter />
+            </>
+          }
+        />
+        <Route
+          path="/hub/*"
+          element={
+            <>
+              <div className={classes.background} />
+              <HubRouter />
+            </>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
