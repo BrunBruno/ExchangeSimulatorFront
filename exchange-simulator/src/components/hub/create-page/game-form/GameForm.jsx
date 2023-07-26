@@ -29,7 +29,7 @@ function GameForm(props) {
       <div className={classes.row}>
         <span>
           <Icons name="name" />
-          Game name:
+          Name:
         </span>
         <input
           type="text"
@@ -41,7 +41,7 @@ function GameForm(props) {
       <div className={classes.row}>
         <span>
           <Icons name="password" />
-          Game password (optional):
+          Password (optional):
         </span>
         <input
           type="password"

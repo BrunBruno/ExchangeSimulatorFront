@@ -178,6 +178,7 @@ function CreateGame() {
           ref={errorMenuRef}
           className={`${classes["error-box"]} ${classes["hidden"]}`}
           onMouseEnter={onErrorMenuClose}
+          onClick={onErrorMenuClose}
         >
           <p>{errorMessage}</p>
           <svg

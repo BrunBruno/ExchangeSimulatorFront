@@ -25,14 +25,11 @@ function Details(props) {
   useEffect(() => {
     const getDetails = async () => {
       try {
-        const game = await axios.get(
-          `${baseUrl}/game/game-details?gameName=${props.game.name}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
+        const game = await axios.get(`${baseUrl}/game/${props.game.name}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
         setGameDetails(game.data);
       } catch (err) {

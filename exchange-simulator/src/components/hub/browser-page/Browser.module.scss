@@ -126,17 +126,36 @@
 @media (max-width: 800px) {
   .browser {
     grid-template-columns: 1fr;
-    grid-template-rows: 30% 70%;
+    grid-template-rows: 34% 66%;
 
     &__search {
-      flex-direction: column;
-      justify-content: space-evenly;
-      align-items: center;
-      width: 100%;
-      padding-left: 20%;
-      padding-right: 20%;
       border-right: none;
       border-bottom: solid 0.5rem $grey-color8;
+      padding-bottom: 4rem;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $grey-color7;
+        border-radius: 1rem;
+      }
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      input {
+        width: fit-content;
+      }
+
+      .radios {
+        width: fit-content;
+        gap: 1rem;
+      }
 
       &__details {
         display: none;
@@ -161,18 +180,24 @@
 
 @media (max-width: 600px) {
   .browser {
+    grid-template-rows: 30% 70%;
     &__search {
+      justify-content: end;
       h2 {
-        font-size: 4rem;
+        font-size: 5rem;
       }
     }
     &__cards {
       &__container {
         overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+          background-color: #0000;
+          width: 0;
+        }
+
         ul {
-          height: 300%;
           grid-template-columns: 1fr;
-          grid-template-rows: repeat(6, 1fr);
         }
       }
     }

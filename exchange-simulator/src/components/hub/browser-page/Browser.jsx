@@ -34,6 +34,8 @@ function Browser() {
 
   const location = useLocation();
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   const [gameList, setGameList] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
   const [totalPages, setTotalPages] = useState(0);
@@ -49,6 +51,36 @@ function Browser() {
   );
 
   const [gamesType, setGamesType] = useState(null);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
+
+  const smallStyles = {
+    height: `${50 * gameList.length}%`,
+    gridTemplateRows: `repeat(${gameList.length}, 1fr)`,
+  };
+  const midStyles = {
+    height: `${50 * gameList.length}%`,
+    gridTemplateRows: `repeat(${gameList.length / 2}, 1fr)`,
+  };
+
+  let ulStyles;
+  if (windowWidth < 600) {
+    ulStyles = smallStyles;
+  } else if (windowWidth >= 600 && windowWidth < 800) {
+    ulStyles = midStyles;
+  } else {
+    ulStyles = {};
+  }
 
   useEffect(() => {
     setGamesType(location.state.title.toLowerCase().replace(" ", "-"));
@@ -218,7 +250,7 @@ function Browser() {
                     <div className={classes.error}>No games found.</div>
                   </div>
                 ) : (
-                  <ul>
+                  <ul style={ulStyles}>
                     {gameList.map((game, index) => {
                       let joinOption;
 

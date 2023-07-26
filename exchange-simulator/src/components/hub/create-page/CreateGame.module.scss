@@ -4,7 +4,7 @@
 .container {
   @include container;
   background-image: linear-gradient(to right, rgba(#000, 1), rgba(#000, 0.2)),
-    url("../../../../public/images/create-bg0.jpg");
+    url("../../../../public/images/create-bg.jpg");
   background-size: auto 100%;
   background-position: right;
   background-repeat: no-repeat;

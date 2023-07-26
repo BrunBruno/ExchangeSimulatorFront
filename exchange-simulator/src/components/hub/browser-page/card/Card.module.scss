@@ -27,11 +27,13 @@
       padding: 2rem;
 
       svg {
-        width: 4rem;
+        position: absolute;
+        height: 4rem;
       }
 
       div {
         width: 100%;
+        padding-left: 6rem;
 
         h2 {
           width: 80%;
@@ -136,7 +138,7 @@
 
   @function random-percentage() {
     $random: 10 + random(80);
-    @return percentage($random / 100);
+    @return percentage(calc($random / 100));
   }
 
   @each $key, $value in $colors {
@@ -159,9 +161,6 @@
     &__content {
       .text {
         div {
-          svg {
-            height: 8rem;
-          }
           h2 {
             font-size: 5rem;
           }
