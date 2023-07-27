@@ -65,6 +65,7 @@ function SignIn(props) {
         navigate("/hub");
       }
     } catch (err) {
+      console.log(err);
       // Display backend exeptions
       if (err.response && err.response.data) {
         emailErrRef.current.classList.add(classes.error);

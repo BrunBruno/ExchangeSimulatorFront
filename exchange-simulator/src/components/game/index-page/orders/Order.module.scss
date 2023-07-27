@@ -1,0 +1,7 @@
+@import "../../../Shared/Variables.scss";
+
+.order {
+  @include roundedBlock(1rem, 1rem);
+  width: 100%;
+  background-color: rgba(#000, 0.1);
+}

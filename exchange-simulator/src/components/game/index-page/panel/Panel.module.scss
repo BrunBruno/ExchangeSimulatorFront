@@ -1,0 +1,32 @@
+@import "../../../Shared/Variables.scss";
+
+.panel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20rem;
+  display: grid;
+  grid-template-columns: calc(100% - 3rem) 3rem 0;
+  transition: all 0.3s;
+
+  &__actions {
+    @include flexBlock(row, 1rem, end, end);
+    background-color: $grey-color9;
+  }
+
+  &__button {
+    background-color: $grey-color8;
+    border-bottom-right-radius: 2rem;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-color7;
+    }
+  }
+}
+
+.hidden-panel {
+  grid-template-columns: 0 3rem calc(100% - 3rem);
+  transition: all 0.3s;
+}

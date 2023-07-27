@@ -3,6 +3,7 @@ import classes from "./App.module.scss";
 
 import HubRouter from "./components/hub/HubRouter";
 import HomeRouter from "./components/home/HomeRouter";
+import GameRouter from "./components/game/GameRouter";
 
 function App() {
   return (
@@ -23,6 +24,15 @@ function App() {
             <>
               <div className={classes.background} />
               <HubRouter />
+            </>
+          }
+        />
+        <Route
+          path="/game/*"
+          element={
+            <>
+              <div className={classes.background} />
+              <GameRouter />
             </>
           }
         />

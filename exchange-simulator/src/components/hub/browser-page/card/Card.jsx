@@ -50,8 +50,8 @@ function Card(props) {
 
   const onReJoinGame = async (event) => {
     event.preventDefault();
-    // transfer to game
-    console.log("re-join");
+
+    navigate(`/game/${event.target.gameName.value}`);
   };
 
   const handleSubmit = (event) => {
