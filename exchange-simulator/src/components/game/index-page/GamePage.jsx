@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
+import axios from "axios";
 
 import classes from "./GamePage.module.scss";
 
 import Header from "./header/Header";
 import Orders from "./orders/Orders";
 import Panel from "./panel/Panel";
-import axios from "axios";
 import baseUrl from "../../Shared/Url";
+import Plot from "./plot/Plot";
+import Messenger from "./messenger/Messenger";
 
 function GamePage() {
   const { gameName } = useParams();
@@ -67,7 +69,10 @@ function GamePage() {
           <Panel onMakeOrder={onMakeOrder} />
           <Orders />
         </div>
-        <div className={classes["container__grid__column"]}></div>
+        <div className={classes["container__grid__column"]}>
+          <Plot />
+          <Messenger />
+        </div>
       </div>
     </div>
   );
