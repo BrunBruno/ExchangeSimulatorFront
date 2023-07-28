@@ -100,6 +100,8 @@
       border-bottom-right-radius: 2rem;
 
       h2 {
+        @include flexBlock(row, 2rem, start, center);
+        position: relative;
         align-self: start;
         font-size: 3rem;
 
@@ -109,6 +111,44 @@
         .sell {
           color: $danger-color;
         }
+
+        img {
+          height: 3rem;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .coin-list {
+          @include roundedBlock(0.6rem, 0.6rem);
+          position: absolute;
+          top: 0;
+          left: calc(100% + 2rem);
+          background-color: $grey-color1;
+          color: $grey-color9;
+
+          p {
+            @include flexBlock(row, 0.5rem, start, center);
+            font-size: 1.6rem;
+            background-color: $grey-color1;
+            padding: 0.5rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: $grey-color9;
+              color: $grey-color0;
+            }
+
+            img {
+              height: 1.2rem;
+            }
+          }
+        }
+
+        .hidden-list {
+          display: none;
+        }
       }
 
       input {
@@ -116,8 +156,19 @@
         text-align: start;
       }
 
+      input[type="number"]::-webkit-inner-spin-button,
+      input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+      }
+
+      .hidden-input {
+        display: none;
+      }
+
       button {
         @include actionButton(0);
+        align-self: end;
+        font-size: 2rem;
       }
     }
   }

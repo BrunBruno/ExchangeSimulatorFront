@@ -6,6 +6,21 @@
   height: 100%;
   padding: 5rem;
 
+  .stats {
+    h2 {
+      font-size: 3rem;
+    }
+
+    p {
+      @include flexBlock(row, 1rem, start, center);
+      font-size: 2rem;
+
+      img {
+        height: 2rem;
+      }
+    }
+  }
+
   &__content {
     @include roundedBlock(2rem, 6rem 4rem 2rem 4rem);
     position: absolute;

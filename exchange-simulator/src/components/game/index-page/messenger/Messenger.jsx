@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import classes from "./Messenger.module.scss";
 
-function Messenger() {
+function Messenger(props) {
   const messengerRef = useRef(null);
   const onOpenMessenger = () => {
     if (messengerRef.current) {
@@ -15,6 +15,18 @@ function Messenger() {
 
   return (
     <div className={classes.messenger}>
+      <div className={classes.stats}>
+        <h2>{props.playerInfo.name}</h2>
+        <p>Available assets: {props.playerInfo.money} $</p>
+        <p>Total turnover: {props.playerInfo.turnOver}</p>
+        <p>Total trades: {props.playerInfo.tradesQuantity}</p>
+        <p>Coins:</p>
+        {props.playerInfo.playerCoins.map((coin, index) => (
+          <p key={index}>
+            <img src={coin.imageUrl} /> {coin.quantity} {coin.name}
+          </p>
+        ))}
+      </div>
       <div
         ref={messengerRef}
         className={`${classes["messenger__content"]} ${classes.close}`}

@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 
@@ -11,13 +11,16 @@ import Panel from "./panel/Panel";
 import baseUrl from "../../Shared/Url";
 import Plot from "./plot/Plot";
 import Messenger from "./messenger/Messenger";
+import LoadingPage from "../../Shared/LoadingPage";
 
 function GamePage() {
-  const { gameName } = useParams();
+  const location = useLocation();
+  const [gameName, setGameName] = useState(location.state.gameName);
+  const [playerInfo, setPlayerInfo] = useState(null);
 
   // .withUrl(`http://192.168.1.46:5130/game`, {
   const connection = new signalR.HubConnectionBuilder()
-    .configureLogging(signalR.LogLevel.Debug)
+    // .configureLogging(signalR.LogLevel.Debug)
     .withUrl(`http://localhost:5130/game`, {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets,
@@ -61,17 +64,46 @@ function GamePage() {
     }
   };
 
+  useEffect(() => {
+    const GetPlayerInfo = async () => {
+      try {
+        const playerInfo = await axios.get(
+          `${baseUrl}/player/my?gameName=${gameName}`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+        console.log(playerInfo.data);
+        setPlayerInfo(playerInfo.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    GetPlayerInfo();
+  }, []);
+
+  if (!playerInfo) {
+    return <LoadingPage />;
+  }
+
   return (
     <div className={classes.container}>
       <Header />
       <div className={classes["container__grid"]}>
         <div className={classes["container__grid__column"]}>
-          <Panel onMakeOrder={onMakeOrder} />
+          <Panel
+            gameName={gameName}
+            playerInfo={playerInfo}
+            onMakeOrder={onMakeOrder}
+          />
           <Orders />
         </div>
         <div className={classes["container__grid__column"]}>
           <Plot />
-          <Messenger />
+          <Messenger playerInfo={playerInfo} />
         </div>
       </div>
     </div>

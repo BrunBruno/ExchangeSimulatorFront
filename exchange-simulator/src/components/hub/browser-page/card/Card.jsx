@@ -51,7 +51,9 @@ function Card(props) {
   const onReJoinGame = async (event) => {
     event.preventDefault();
 
-    navigate(`/game/${event.target.gameName.value}`);
+    navigate(`/game/${event.target.gameName.value}`, {
+      state: { gameName: event.target.gameName.value },
+    });
   };
 
   const handleSubmit = (event) => {
