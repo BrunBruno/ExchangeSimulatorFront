@@ -20,17 +20,14 @@ function Orders(props) {
   const [sellOrders, setSellOrders] = useState(null);
   const [buyOrdersCount, setBuyOrdersCount] = useState(10);
   const [sellOrdersCount, setSellOrdersCount] = useState(10);
-  const [totalBuyOrderssCount, setTotalBuyOrderssCount] = useState(0);
-  const [totalSellOrderssCount, setTotalSellOrderssCount] = useState(0);
+
+  const [selectedCoin, setSelectedCoin] = useState("");
 
   const GetBuyOrders = async (count) => {
-    if (totalBuyOrderssCount > 0 && count > totalBuyOrderssCount) {
-      count = totalBuyOrderssCount;
-    }
-
+    console.log(selectedCoin);
     try {
       const buy = await axios.get(
-        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${orderTypes.buy}&elementsCount=${count}`,
+        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${orderTypes.buy}&elementsCount=${count}&coinName=${selectedCoin}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -39,20 +36,15 @@ function Orders(props) {
       );
 
       setBuyOrders(buy.data.items);
-      setTotalBuyOrderssCount(buy.data.totalItemsCount);
     } catch (err) {
       console.log(err);
     }
   };
 
   const GetSellOrders = async (count) => {
-    if (totalSellOrderssCount > 0 && count > totalSellOrderssCount) {
-      count = totalSellOrderssCount;
-    }
-
     try {
       const sell = await axios.get(
-        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${orderTypes.sell}&elementsCount=${count}`,
+        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${orderTypes.sell}&elementsCount=${count}&coinName=${selectedCoin}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -61,24 +53,29 @@ function Orders(props) {
       );
 
       setSellOrders(sell.data.items);
-      setTotalSellOrderssCount(sell.data.totalItemsCount);
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
+    props.connection.on("OrdersChanged", () => {
+      GetBuyOrders(buyOrdersCount);
+      GetSellOrders(sellOrdersCount);
+    });
+
+    return () => {
+      props.connection.off("OrdersChanged");
+    };
+  }, [selectedCoin]);
+
+  useEffect(() => {
     GetBuyOrders(buyOrdersCount);
-  }, [buyOrdersCount]);
+  }, [buyOrdersCount, selectedCoin]);
 
   useEffect(() => {
     GetSellOrders(sellOrdersCount);
-  }, [sellOrdersCount]);
-
-  props.connection.on("OrdersChanged", () => {
-    GetBuyOrders(buyOrdersCount);
-    GetSellOrders(sellOrdersCount);
-  });
+  }, [sellOrdersCount, selectedCoin]);
 
   const handleOrdersScroll = (event) => {
     const scrollTop = buyListRef.current.scrollTop;
@@ -107,22 +104,81 @@ function Orders(props) {
     }, 100);
   }, []);
 
+  const showDecimal = (number, position) => {
+    return (Math.round(number * 100) / 100).toFixed(position);
+  };
+
   if (!sellOrders || !buyOrders) {
     return <LoadingPage />;
   }
+
   return (
     <div className={classes.orders}>
-      <div ref={buyListRef} className={classes["orders__column"]}>
-        {/* Sell orders in buy column */}
-        {sellOrders.map((order, index) => (
-          <Order key={index} order={order} />
-        ))}
+      <div className={classes["orders__header"]}>
+        <h2>
+          <p>
+            <span className={classes.buy}>Buy</span> Price:{" "}
+            {sellOrders && sellOrders.length > 0 && selectedCoin
+              ? showDecimal(sellOrders[0].price, 4) + " $-" + selectedCoin
+              : "---"}
+          </p>
+          <p>
+            <span className={classes.sell}>Sell</span> Price:{" "}
+            {buyOrders && buyOrders.length > 0 && selectedCoin
+              ? showDecimal(buyOrders[0].price, 4) + " $-" + selectedCoin
+              : "---"}
+          </p>
+        </h2>
+        <div className={classes["orders__header__list"]}>
+          {props.playerInfo.playerCoins.map((coin, index) => (
+            <div
+              key={index}
+              className={`${classes.coin} ${
+                coin.name === selectedCoin ? classes["selected-coin"] : ""
+              }`}
+              onClick={() => {
+                setSelectedCoin(coin.name);
+              }}
+            >
+              <img src={coin.imageUrl} alt={coin.name} />
+              <span>{coin.name}</span>
+            </div>
+          ))}
+          <div
+            className={`${classes.coin} ${
+              selectedCoin === "" ? classes["selected-coin"] : ""
+            }`}
+            onClick={() => {
+              setSelectedCoin("");
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
+                stroke="#fff"
+              />
+            </svg>
+            <span>All</span>
+          </div>
+        </div>
       </div>
-      <div ref={sellListRef} className={classes["orders__column"]}>
-        {/* Buy orders in sell column */}
-        {buyOrders.map((order, index) => (
-          <Order key={index} order={order} />
-        ))}
+      <div className={classes["orders__lists"]}>
+        <div ref={buyListRef} className={classes["orders__lists__column"]}>
+          {/* Sell orders in buy column */}
+          {sellOrders.map((order, index) => (
+            <Order key={index} order={order} />
+          ))}
+        </div>
+        <div ref={sellListRef} className={classes["orders__lists__column"]}>
+          {/* Buy orders in sell column */}
+          {buyOrders.map((order, index) => (
+            <Order key={index} order={order} />
+          ))}
+        </div>
       </div>
     </div>
   );

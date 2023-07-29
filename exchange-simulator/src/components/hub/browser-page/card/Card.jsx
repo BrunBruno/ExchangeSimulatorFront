@@ -57,7 +57,6 @@ function Card(props) {
   };
 
   const handleSubmit = (event) => {
-    console.log(props.game);
     if (props.join === 1) {
       onJoinGame(event);
     } else if (props.join === 2) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import axios from "axios";
@@ -15,8 +15,29 @@ import LoadingPage from "../../Shared/LoadingPage";
 
 function GamePage() {
   const location = useLocation();
+
+  const connectionRef = useRef(null);
+
   const [gameName, setGameName] = useState(location.state.gameName);
   const [playerInfo, setPlayerInfo] = useState(null);
+
+  const connectionInit = async () => {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl(`http://localhost:5130/game`, {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+      })
+      .build();
+
+    connectionRef.current = connection;
+
+    await connection.start();
+    await connection.invoke("JoinGame", gameName);
+
+    connection.on("OrdersChanged", () => {
+      GetPlayerInfo();
+    });
+  };
 
   const GetPlayerInfo = async () => {
     try {
@@ -35,35 +56,15 @@ function GamePage() {
     }
   };
 
-  // .withUrl(`http://192.168.1.46:5130/game`, {
-  const connection = new signalR.HubConnectionBuilder()
-    // .configureLogging(signalR.LogLevel.Debug)
-    .withUrl(`http://localhost:5130/game`, {
-      skipNegotiation: true,
-      transport: signalR.HttpTransportType.WebSockets,
-    })
-    .build();
-
-  connection
-    .start()
-    .then(() => {
-      connection
-        .invoke("JoinGame", gameName)
-        .then((result) => {})
-        .catch((err) => {
-          console.error(err);
-        });
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-
-  connection.on("OrdersChanged", () => {
-    GetPlayerInfo();
-  });
-
   useEffect(() => {
     GetPlayerInfo();
+    connectionInit();
+
+    return () => {
+      if (connectionRef.current) {
+        connectionRef.current.off("OrdersChanged");
+      }
+    };
   }, []);
 
   if (!playerInfo) {
@@ -76,7 +77,11 @@ function GamePage() {
       <div className={classes["container__grid"]}>
         <div className={classes["container__grid__column"]}>
           <Panel gameName={gameName} playerInfo={playerInfo} />
-          <Orders gameName={gameName} connection={connection} />
+          <Orders
+            gameName={gameName}
+            connection={connectionRef.current}
+            playerInfo={playerInfo}
+          />
         </div>
         <div className={classes["container__grid__column"]}>
           <Plot />
