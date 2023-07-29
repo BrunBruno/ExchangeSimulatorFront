@@ -9,6 +9,7 @@
   height: 20rem;
   transition: all 0.3s;
   z-index: 6;
+  pointer-events: none;
 
   &__actions {
     background-color: $grey-color9;
@@ -17,6 +18,7 @@
     width: 80%;
     overflow: hidden;
     z-index: 6;
+    pointer-events: all;
     transition: all 0.3s;
 
     h1 {
@@ -70,6 +72,7 @@
     border-bottom-right-radius: 2rem;
     width: 3rem;
     z-index: 6;
+    pointer-events: all;
 
     &:hover {
       cursor: pointer;
@@ -89,6 +92,7 @@
     grid-template-rows: 50% auto;
     background-color: rgba(#000, 0.2);
     z-index: 5;
+    pointer-events: all;
     transition: all 0.3s;
 
     .form {

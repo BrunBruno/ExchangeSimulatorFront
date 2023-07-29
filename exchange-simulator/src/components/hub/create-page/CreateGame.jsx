@@ -94,10 +94,10 @@ function CreateGame() {
       name: event.target.gameName.value.trim(),
       description: event.target.description.value.trim(),
       password: event.target.password.value,
-      money: event.target.money.value,
+      startingBalance: event.target.money.value,
       coins: coinList,
       duration: event.target.duration.value,
-      numberOfPlayers: event.target.numberOfPlayers.value,
+      totalPlayers: event.target.numberOfPlayers.value,
     };
 
     if (game.name === "") {
@@ -110,13 +110,13 @@ function CreateGame() {
       game.description = "No description.";
     }
 
-    if (game.money === "") {
+    if (game.startingBalance === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select amount of starting assets.");
       return;
     }
 
-    if (game.numberOfPlayers === "") {
+    if (game.totalPlayers === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select number of players.");
       return;

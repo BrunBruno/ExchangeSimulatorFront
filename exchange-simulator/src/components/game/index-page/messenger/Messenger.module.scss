@@ -15,6 +15,10 @@
       @include flexBlock(row, 1rem, start, center);
       font-size: 2rem;
 
+      span {
+        color: $grey-color5;
+      }
+
       img {
         height: 2rem;
       }

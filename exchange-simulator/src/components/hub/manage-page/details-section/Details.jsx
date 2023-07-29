@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import classes from "./Details.module.scss";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import classes from "./Details.module.scss";
+
 import baseUrl from "../../../Shared/Url";
 
 function Details(props) {
@@ -19,6 +22,8 @@ function Details(props) {
     "#FF75A0",
   ];
   const gamesStatus = { available: 0, active: 1, finished: 2 };
+
+  const navigate = useNavigate();
 
   const [gameDetails, setGameDetails] = useState(null);
 
@@ -51,9 +56,20 @@ function Details(props) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+
+      navigate(`/game/${name}`, {
+        state: { gameName: name },
+      });
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const onJoinGame = (name) => {
+    console.log(name);
+    navigate(`/game/${name}`, {
+      state: { gameName: name },
+    });
   };
 
   if (!gameDetails) {
@@ -86,7 +102,7 @@ function Details(props) {
             </p>
             <p>
               <span>Starting money: </span>
-              {gameDetails.money}$
+              {gameDetails.totalBalance}$
             </p>
             <p>
               <span>Players Count: </span>
@@ -126,7 +142,13 @@ function Details(props) {
                 Start Now
               </button>
             ) : (
-              <button>Re-Join</button>
+              <button
+                onClick={() => {
+                  onJoinGame(gameDetails.name);
+                }}
+              >
+                Enter
+              </button>
             )}
           </div>
           <div className={classes["details__content__grid__column"]}>

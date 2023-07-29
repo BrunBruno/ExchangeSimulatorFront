@@ -13,17 +13,38 @@ function Messenger(props) {
     }
   };
 
+  const showDecimal = (number, position) => {
+    return (Math.round(number * 100) / 100).toFixed(position);
+  };
+
   return (
     <div className={classes.messenger}>
       <div className={classes.stats}>
         <h2>{props.playerInfo.name}</h2>
-        <p>Available assets: {props.playerInfo.money} $</p>
-        <p>Total turnover: {props.playerInfo.turnOver}</p>
-        <p>Total trades: {props.playerInfo.tradesQuantity}</p>
-        <p>Coins:</p>
+        <p>
+          <span>Available assets: </span>
+          {showDecimal(props.playerInfo.totalBalance, 2)} $
+        </p>
+        <p>
+          <span>Locked assets: </span>
+          {showDecimal(props.playerInfo.lockedBalance, 2)} $
+        </p>
+        <p>
+          <span>Total turnover: </span>
+          {showDecimal(props.playerInfo.turnOver, 2)} $
+        </p>
+        <p>
+          <span>Total trades: </span>
+          {props.playerInfo.tradesQuantity}
+        </p>
         {props.playerInfo.playerCoins.map((coin, index) => (
           <p key={index}>
-            <img src={coin.imageUrl} /> {coin.quantity} {coin.name}
+            <img src={coin.imageUrl} /> {showDecimal(coin.totalBalance, 4)}{" "}
+            {coin.name}
+            <span>
+              {" "}
+              ({showDecimal(coin.lockedBalance, 4)} {coin.name} locked)
+            </span>
           </p>
         ))}
       </div>

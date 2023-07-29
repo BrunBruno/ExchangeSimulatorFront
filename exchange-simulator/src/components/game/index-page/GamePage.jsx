@@ -18,6 +18,23 @@ function GamePage() {
   const [gameName, setGameName] = useState(location.state.gameName);
   const [playerInfo, setPlayerInfo] = useState(null);
 
+  const GetPlayerInfo = async () => {
+    try {
+      const playerInfo = await axios.get(
+        `${baseUrl}/player/my?gameName=${gameName}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setPlayerInfo(playerInfo.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   // .withUrl(`http://192.168.1.46:5130/game`, {
   const connection = new signalR.HubConnectionBuilder()
     // .configureLogging(signalR.LogLevel.Debug)
@@ -33,55 +50,38 @@ function GamePage() {
       connection
         .invoke("JoinGame", gameName)
         .then((result) => {
-          console.log("Method invocation successful:", result);
+          // console.log("Method invocation successful:", result);
         })
         .catch((error) => {
-          console.error("Error invoking method on hub:", error);
+          // console.error("Error invoking method on hub:", error);
         });
     })
     .catch((error) => {
-      console.error("Error connecting to SignalR hub:", error);
+      // console.error("Error connecting to SignalR hub:", error);
     });
 
-  connection.on("OrdersChanged", (gameName) => {
-    console.log("Orders changed for game:", gameName);
+  connection.on("OrdersChanged", () => {
+    GetPlayerInfo();
   });
 
-  const onMakeOrder = async () => {
-    // connection
-    //   .invoke("", gameName)
-    //   .then((result) => {
-    //     OrdersChanged;
-    //     console.log("Method invocation successful:", result);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error invoking method on hub:", error);
-    //   });
-    try {
-      await axios.get(`${baseUrl}/game/order/${gameName}`);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const onMakeOrder = async () => {
+  //   // connection
+  //   //   .invoke("", gameName)
+  //   //   .then((result) => {
+  //   //     OrdersChanged;
+  //   //     console.log("Method invocation successful:", result);
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error("Error invoking method on hub:", error);
+  //   //   });
+  //   // try {
+  //   //   await axios.get(`${baseUrl}/game/order/${gameName}`);
+  //   // } catch (err) {
+  //   //   console.log(err);
+  //   // }
+  // };
 
   useEffect(() => {
-    const GetPlayerInfo = async () => {
-      try {
-        const playerInfo = await axios.get(
-          `${baseUrl}/player/my?gameName=${gameName}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        console.log(playerInfo.data);
-        setPlayerInfo(playerInfo.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     GetPlayerInfo();
   }, []);
 
@@ -94,12 +94,8 @@ function GamePage() {
       <Header />
       <div className={classes["container__grid"]}>
         <div className={classes["container__grid__column"]}>
-          <Panel
-            gameName={gameName}
-            playerInfo={playerInfo}
-            onMakeOrder={onMakeOrder}
-          />
-          <Orders />
+          <Panel gameName={gameName} playerInfo={playerInfo} />
+          <Orders gameName={gameName} />
         </div>
         <div className={classes["container__grid__column"]}>
           <Plot />

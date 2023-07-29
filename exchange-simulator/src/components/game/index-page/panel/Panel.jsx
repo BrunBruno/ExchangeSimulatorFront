@@ -36,11 +36,18 @@ function Panel(props) {
         playerCoinId: event.target.playerCoinId.value,
         quantity: event.target.quantity.value,
         price: event.target.price.value,
-        type: event.target.type.value,
+        type: parseInt(event.target.type.value),
       };
 
+      if (order.price === "") {
+        return;
+      }
+
+      if (order.quantity === "") {
+        return;
+      }
+
       console.log(order);
-      return;
 
       await axios.post(`${baseUrl}/order`, order, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
@@ -173,7 +180,7 @@ function Panel(props) {
             />
           ) : (
             <input
-              placeholder={`Amount (max: ${props.playerInfo.playerCoins[selectedCoin].quantity})`}
+              placeholder={`Amount (max: ${props.playerInfo.playerCoins[selectedCoin].totalBalance})`}
               name="quantity"
               type="number"
               step="any"
