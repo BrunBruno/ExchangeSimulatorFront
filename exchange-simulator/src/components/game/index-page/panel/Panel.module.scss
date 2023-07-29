@@ -116,11 +116,19 @@
           color: $danger-color;
         }
 
-        img {
-          height: 3rem;
+        .icon {
+          @include flexBlock(column, 0, center, center);
 
-          &:hover {
-            cursor: pointer;
+          img {
+            height: 3rem;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          svg {
+            height: 4rem;
           }
         }
 
@@ -165,14 +173,23 @@
         -webkit-appearance: none;
       }
 
+      .error::placeholder {
+        color: $danger-color;
+      }
+
       .hidden-input {
         display: none;
       }
 
-      button {
-        @include actionButton(0);
-        align-self: end;
-        font-size: 2rem;
+      .buttons {
+        @include flexBlock(row, 1rem, end, center);
+        width: 100%;
+
+        button {
+          @include actionButton(0);
+          font-size: 1.6rem;
+          padding: 0.8rem 1.6rem;
+        }
       }
     }
   }

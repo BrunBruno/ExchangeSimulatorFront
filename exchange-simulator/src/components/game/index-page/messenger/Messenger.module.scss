@@ -7,6 +7,18 @@
   padding: 5rem;
 
   .stats {
+    height: 100%;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      background-color: #0000;
+      width: 1rem;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #000;
+      border-radius: 1rem;
+    }
+
     h2 {
       font-size: 3rem;
     }
@@ -20,6 +32,10 @@
       }
 
       img {
+        height: 2rem;
+      }
+
+      svg {
         height: 2rem;
       }
     }

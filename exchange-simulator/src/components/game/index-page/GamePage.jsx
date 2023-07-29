@@ -46,40 +46,21 @@ function GamePage() {
 
   connection
     .start()
-    .then(async () => {
+    .then(() => {
       connection
         .invoke("JoinGame", gameName)
-        .then((result) => {
-          // console.log("Method invocation successful:", result);
-        })
-        .catch((error) => {
-          // console.error("Error invoking method on hub:", error);
+        .then((result) => {})
+        .catch((err) => {
+          console.error(err);
         });
     })
-    .catch((error) => {
-      // console.error("Error connecting to SignalR hub:", error);
+    .catch((err) => {
+      console.error(err);
     });
 
   connection.on("OrdersChanged", () => {
     GetPlayerInfo();
   });
-
-  // const onMakeOrder = async () => {
-  //   // connection
-  //   //   .invoke("", gameName)
-  //   //   .then((result) => {
-  //   //     OrdersChanged;
-  //   //     console.log("Method invocation successful:", result);
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.error("Error invoking method on hub:", error);
-  //   //   });
-  //   // try {
-  //   //   await axios.get(`${baseUrl}/game/order/${gameName}`);
-  //   // } catch (err) {
-  //   //   console.log(err);
-  //   // }
-  // };
 
   useEffect(() => {
     GetPlayerInfo();
@@ -95,7 +76,7 @@ function GamePage() {
       <div className={classes["container__grid"]}>
         <div className={classes["container__grid__column"]}>
           <Panel gameName={gameName} playerInfo={playerInfo} />
-          <Orders gameName={gameName} />
+          <Orders gameName={gameName} connection={connection} />
         </div>
         <div className={classes["container__grid__column"]}>
           <Plot />
