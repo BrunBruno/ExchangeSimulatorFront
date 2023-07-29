@@ -1,0 +1,146 @@
+@import "../../../Shared/Variables.scss";
+
+.manage {
+  @include flexBlock(row, 0, end, end);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 44%;
+  height: 80%;
+  z-index: 1;
+  pointer-events: none;
+
+  &__button {
+    position: relative;
+    background-color: $grey-color8;
+    border-bottom-left-radius: 2rem;
+    width: 3rem;
+    height: 100%;
+    z-index: 6;
+    pointer-events: all;
+    padding-bottom: 5rem;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-color7;
+    }
+
+    p {
+      position: absolute;
+      bottom: 10%;
+      left: -60%;
+      font-size: 2rem;
+      transform: rotate(-90deg);
+    }
+  }
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    background-color: $grey-color9;
+    padding: 2rem;
+    padding-top: 8rem;
+    overflow: hidden;
+    pointer-events: all;
+    transition: all 0.3s;
+
+    &__header {
+      @include flexBlock(row, 2rem, start, center);
+      margin-bottom: 2rem;
+      h2 {
+        font-size: 3rem;
+      }
+
+      //radios
+      .radios {
+        @include flexBlock(row, 1rem, space-evenly, center);
+
+        label {
+          cursor: pointer;
+          display: inline-block;
+          user-select: none;
+
+          input[type="radio"] {
+            display: none;
+          }
+
+          span {
+            @include roundedBlock(1rem, 0.5rem 1rem);
+            display: inline-block;
+            border: solid 0.2rem $grey-color0;
+            font-size: 2rem;
+          }
+
+          .buy {
+            color: $success-color;
+            border-color: $success-color;
+          }
+          .sell {
+            color: $danger-color;
+            border-color: $danger-color;
+          }
+
+          input[type="radio"]:checked ~ .buy {
+            color: $grey-color9;
+            border: solid 0.2rem $grey-color9;
+            background-color: $success-color;
+          }
+          input[type="radio"]:checked ~ .sell {
+            color: $grey-color9;
+            border: solid 0.2rem $grey-color9;
+            background-color: $danger-color;
+          }
+        }
+      }
+      // end radois
+    }
+
+    .order-list {
+      @include flexBlock(column, 0.5rem, start, center);
+      width: 100%;
+      height: calc(100% - 5rem);
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #000;
+        border-radius: 1rem;
+      }
+
+      .order {
+        width: 100%;
+        padding: 1rem;
+        border-bottom: solid 0.3rem $grey-color8;
+
+        h3 {
+          @include flexBlock(row, 1rem, start, center);
+          font-size: 2rem;
+
+          .buy {
+            color: $success-color;
+          }
+          .sell {
+            color: $danger-color;
+          }
+
+          img {
+            height: 2rem;
+          }
+        }
+
+        p {
+          font-size: 1.6rem;
+        }
+      }
+    }
+  }
+
+  .hidden-content {
+    padding: 0;
+    width: 0;
+  }
+}

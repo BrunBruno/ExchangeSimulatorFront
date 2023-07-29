@@ -7,9 +7,9 @@
   left: 0;
   width: 100%;
   height: 20rem;
-  transition: all 0.3s;
   z-index: 6;
   pointer-events: none;
+  transition: all 0.3s;
 
   &__actions {
     background-color: $grey-color9;
@@ -68,6 +68,7 @@
   }
 
   &__button {
+    position: relative;
     background-color: $grey-color8;
     border-bottom-right-radius: 2rem;
     width: 3rem;
@@ -77,6 +78,14 @@
     &:hover {
       cursor: pointer;
       background-color: $grey-color7;
+    }
+
+    p {
+      position: absolute;
+      bottom: 20%;
+      left: -60%;
+      font-size: 2rem;
+      transform: rotate(90deg);
     }
   }
 

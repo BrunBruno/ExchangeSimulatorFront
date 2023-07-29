@@ -164,7 +164,9 @@ function Panel(props) {
           </button>
         </div>
       </div>
-      <div className={classes["panel__button"]} onClick={onExpandPanel}></div>
+      <div className={classes["panel__button"]} onClick={onExpandPanel}>
+        <p>Create</p>
+      </div>
       <div
         ref={formRef}
         className={`${classes["panel__expand"]} ${classes["expand-close"]}`}

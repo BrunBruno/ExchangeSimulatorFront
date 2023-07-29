@@ -12,6 +12,7 @@ import baseUrl from "../../Shared/Url";
 import Plot from "./plot/Plot";
 import Messenger from "./messenger/Messenger";
 import LoadingPage from "../../Shared/LoadingPage";
+import ManageOrders from "./manage/ManageOrders";
 
 function GamePage() {
   const location = useLocation();
@@ -84,6 +85,7 @@ function GamePage() {
           />
         </div>
         <div className={classes["container__grid__column"]}>
+          <ManageOrders gameName={gameName} playerInfo={playerInfo} />
           <Plot />
           <Messenger playerInfo={playerInfo} />
         </div>

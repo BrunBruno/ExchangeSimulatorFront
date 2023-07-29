@@ -24,7 +24,6 @@ function Orders(props) {
   const [selectedCoin, setSelectedCoin] = useState("");
 
   const GetBuyOrders = async (count) => {
-    console.log(selectedCoin);
     try {
       const buy = await axios.get(
         `${baseUrl}/order?gameName=${props.gameName}&OrderType=${orderTypes.buy}&elementsCount=${count}&coinName=${selectedCoin}`,
