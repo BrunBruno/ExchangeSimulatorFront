@@ -92,7 +92,12 @@
         position: relative;
         background-color: #000;
         height: 100%;
-        padding-bottom: 8rem;
+        padding-bottom: 6rem;
+
+        &:hover > button {
+          opacity: 1;
+          transition: opacity 0.5s;
+        }
 
         h3 {
           font-size: 4rem;
@@ -110,6 +115,8 @@
           bottom: 0;
           right: 0;
           margin: 2rem;
+          opacity: 0;
+          transition: opacity 0.5s;
         }
       }
       // end cards content

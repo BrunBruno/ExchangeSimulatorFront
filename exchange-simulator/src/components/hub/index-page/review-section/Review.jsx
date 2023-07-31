@@ -20,8 +20,8 @@ function Review(props) {
   const [startsArray, setStartsArray] = useState([]);
   const [selectedStars, setSelectedStarts] = useState(0);
 
-  const bgImage =
-    window.innerWidth <= 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
+  // const bgImage =
+  //   window.innerWidth <= 800 ? "review-bg-mobile.jpg" : "review-bg.jpg";
   const countStarts = startsArray.filter((val) => val === 1).length;
 
   let color;
@@ -65,7 +65,8 @@ function Review(props) {
   useEffect(() => {
     const handleScroll = () => {
       const windowWidth = window.innerWidth;
-      let scrollMultiplier = Math.min(2, 0.125 * Math.ceil(windowWidth / 100));
+      let scrollMultiplier =
+        0.1 * Math.min(2, 0.125 * Math.ceil(windowWidth / 100));
 
       const backgroundHeight = reviewBackgroundRef.current.clientHeight;
       const containerHeight = reviewRef.current.clientHeight;
@@ -75,8 +76,7 @@ function Review(props) {
 
       const windowHeight = window.innerHeight;
       const { y } = reviewRef.current.getBoundingClientRect();
-      const position =
-        (-(y - windowHeight / 2) - containerHeight / 2) * scrollMultiplier;
+      const position = -(y - windowHeight / 2) * scrollMultiplier;
 
       setTranslateY(position);
     };
@@ -132,7 +132,7 @@ function Review(props) {
       <img
         ref={reviewBackgroundRef}
         className={classes["review__background"]}
-        src={`../../../../../public/images/${bgImage}`}
+        src={`../../../../../public/images/review-bg.jpg`}
         style={{
           transform: `translateY(${translateY}px)`,
           top: `${offsetTop}px`,

@@ -1,28 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { GameCards } from "../HubPageOptions";
+
 import classes from "./Games.module.scss";
 
 function Games() {
-  const cards = [
-    {
-      title: "Current Games",
-      description:
-        "Search for your ongoing games. You can always quit the game and rejoin it whenever you want to.",
-    },
-    {
-      title: "Available Games",
-      description:
-        "Discover new games that your friends or other users have started. Search for free-entry games or ones that require a password, and join now!",
-    },
-    {
-      title: "Previous Games",
-      description:
-        "Inspect your previous games for better performance in the future. Analyze your latest strategies and learn from your mistakes as well as others.",
-    },
-  ];
-
   const navigate = useNavigate();
+
   const titleRef = useRef(null);
   const cardsRefs = useRef([]);
 
@@ -63,10 +48,10 @@ function Games() {
         ref={titleRef}
         className={`${classes["section-title"]} ${classes["hidden-title"]}`}
       >
-        Search for Games
+        Explore
       </div>
       <div className={classes.grid}>
-        {cards.map((card, index) => (
+        {GameCards.map((card, index) => (
           <div
             key={index}
             ref={(el) => (cardsRefs.current[index] = el)}

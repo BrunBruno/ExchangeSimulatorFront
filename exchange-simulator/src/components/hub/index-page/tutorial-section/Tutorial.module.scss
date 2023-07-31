@@ -4,7 +4,6 @@
   @include flexBlock(column, 0, start, start);
   position: relative;
   width: 100%;
-  height: 100rem;
   background-color: #000;
   padding: 10rem 0;
   box-sizing: border-box;
@@ -34,21 +33,25 @@
     box-shadow: -5rem -5rem 0 5rem #000;
   }
 
+  // row
   &__row {
     width: 100%;
-    height: 100%;
+    height: 30rem;
     display: flex;
-    transition: all 0.3s;
+    transition: width 0.3s;
 
     &:nth-child(odd) {
       width: 100%;
-      height: 6rem;
+      height: 2rem;
       background-image: linear-gradient(
         to left,
         $main-color0,
         $main-color5,
         $main-color9
       );
+
+      border-bottom-left-radius: 2rem;
+      border-top-right-radius: 2rem;
     }
 
     &:nth-child(4n + 3) {
@@ -59,46 +62,349 @@
         $main-color5,
         $main-color0
       );
+
+      border-bottom-left-radius: 0;
+      border-top-right-radius: 0;
+      border-top-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
     }
 
-    &:nth-child(4n + 2) {
-      padding-left: 2rem;
+    &:first-child {
+      border-bottom-left-radius: 0rem;
+    }
+    &:last-child {
+      border-top-left-radius: 0rem;
     }
 
     &__content {
-      width: 100%;
+      position: relative;
+      display: inline-block;
+      width: calc(100% - 2rem);
       height: 100%;
-      padding: 2rem;
-
-      h2 {
-        font-size: 5rem;
-      }
-    }
-
-    .border {
-      width: 2rem;
-      height: 100%;
-      transition: all 0.3s;
       background-image: linear-gradient(
         to bottom,
         $main-color0,
         $main-color5,
         $main-color9
       );
+
+      &:nth-child(2) {
+        .inner-content {
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+          border-top-left-radius: 2rem;
+          border-bottom-left-radius: 2rem;
+        }
+      }
+
+      .inner-content {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        padding: 2rem 4rem;
+        background-color: #000;
+        border-top-right-radius: 2rem;
+        border-bottom-right-radius: 2rem;
+        transition: all 0.3s 0.3s;
+
+        h2 {
+          font-size: 5rem;
+        }
+
+        .create-text {
+          padding: 2rem 8rem 2rem 16rem;
+          font-size: 2.2rem;
+          color: $grey-color5;
+        }
+
+        .create-icon {
+          position: absolute;
+          width: fit-content;
+          margin-top: 2rem;
+
+          .plus {
+            width: fit-content;
+
+            svg {
+              height: 10rem;
+            }
+          }
+
+          .hand {
+            position: absolute;
+            transform: rotate(90deg);
+            width: fit-content;
+            left: -20rem;
+
+            svg {
+              height: 10rem;
+            }
+          }
+        }
+
+        .create-icon-running {
+          .plus {
+            svg {
+              animation: createIconAnimation 1s 1s;
+            }
+          }
+
+          .hand {
+            animation: handIconAnimation 3s;
+          }
+        }
+
+        @keyframes createIconAnimation {
+          0% {
+            height: 10rem;
+            margin: 0;
+            opacity: 1;
+          }
+          40% {
+            height: 8rem;
+            margin: 1rem;
+
+            opacity: 0.5;
+          }
+          60% {
+            height: 8rem;
+            margin: 1rem;
+            opacity: 0.5;
+          }
+          100% {
+            height: 10rem;
+            margin: 0;
+            opacity: 1;
+          }
+        }
+
+        @keyframes handIconAnimation {
+          0% {
+            left: -20rem;
+          }
+          40% {
+            left: -8rem;
+          }
+          60% {
+            left: -8rem;
+          }
+          100% {
+            left: -20rem;
+          }
+        }
+
+        .search-text {
+          position: inherit;
+          padding: 2rem 16rem 2rem 2rem;
+          font-size: 2.2rem;
+          color: $grey-color5;
+          z-index: 3;
+        }
+
+        .search-icon {
+          position: absolute;
+          width: 18rem;
+          height: 100%;
+          top: 0;
+          left: calc(100% - 18rem + 2rem);
+          z-index: 0;
+
+          .search {
+            position: absolute;
+            width: fit-content;
+            left: 86%;
+            top: 54%;
+            transform: translateY(-50%);
+            z-index: 2;
+
+            svg {
+              height: 20rem;
+            }
+          }
+
+          .game {
+            position: absolute;
+            width: fit-content;
+            left: 54%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            svg {
+              height: 8rem;
+            }
+          }
+
+          .cover {
+            position: absolute;
+            left: 0%;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 1;
+
+            &::after {
+              content: "";
+              height: 14rem;
+              width: 14rem;
+              position: absolute;
+              top: 50%;
+              left: 100%;
+              background-color: #0000;
+              transform: translateY(-50%);
+              border-radius: 100%;
+
+              box-shadow: -10rem 0 0 0 #000;
+            }
+          }
+        }
+
+        .search-icon-running {
+          .search {
+            animation: searchIconAnimation 4s;
+          }
+
+          .cover {
+            animation: searchCoverAnimation 4s;
+          }
+        }
+
+        @keyframes searchIconAnimation {
+          0% {
+            left: 86%;
+          }
+          50% {
+            left: 0%;
+          }
+          100% {
+            left: 86%;
+          }
+        }
+
+        @keyframes searchCoverAnimation {
+          0% {
+            left: 0%;
+          }
+          50% {
+            left: -86%;
+          }
+          100% {
+            left: 0%;
+          }
+        }
+
+        .cup-text {
+          width: 80%;
+          padding: 2rem;
+          font-size: 2.2rem;
+          color: $grey-color5;
+        }
+
+        .cup-icon {
+          position: absolute;
+          width: 16rem;
+          height: 100%;
+          top: 0;
+          left: 80%;
+
+          .cup {
+            @include absoluteCenter;
+            width: fit-content;
+
+            z-index: 2;
+            padding: 2rem;
+            border-radius: 100%;
+
+            svg {
+              height: 14rem;
+            }
+          }
+
+          .circle {
+            @include absoluteCenter;
+            width: 50%;
+            aspect-ratio: 1 / 1;
+            z-index: 1;
+            border-radius: 100%;
+            filter: blur(1rem);
+          }
+        }
+
+        .cup-icon-running {
+          .circle {
+            animation: circleAnimation 1s linear;
+          }
+        }
+
+        @keyframes circleAnimation {
+          0% {
+            box-shadow: 0 0 0 0 $main-color0;
+            transform: translate(-50%, -80%) rotate(-90deg);
+            background-color: #000;
+          }
+          50% {
+            box-shadow: -3rem 0 5rem 0 $main-color0;
+            background-color: rgba($main-color0, 0.5);
+          }
+          100% {
+            box-shadow: 0 0 0 0 $main-color0;
+            transform: translate(-50%, -80%) rotate(270deg);
+            background-color: #000;
+          }
+        }
+      }
+    }
+
+    .border {
+      display: inline-block;
+      width: 2rem;
+      height: 100%;
+      background-image: linear-gradient(
+        to bottom,
+        $main-color0,
+        $main-color5,
+        $main-color9
+      );
+      transition: height 0.3s 0.3s;
     }
   }
+  // end row
 
   .hidden-row {
     &:nth-child(odd) {
       width: 0;
     }
 
-    &__content {
-      color: #0000;
+    .inner-content {
+      border-radius: 0;
     }
 
     .border {
       height: 0;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .tutorial {
+    &__row {
+      height: 40rem;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .tutorial {
+    &__row {
+      height: 50rem;
+    }
+  }
+}
+
+@media (max-width: 300px) {
+  .tutorial {
+    &__row {
+      height: fit-content;
     }
   }
 }

@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import classes from "./App.module.scss";
 
 import HubRouter from "./components/hub/HubRouter";

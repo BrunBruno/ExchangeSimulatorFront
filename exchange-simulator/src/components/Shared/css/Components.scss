@@ -133,6 +133,7 @@
   overflow: overlay;
   overflow-y: scroll;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 
   &::-webkit-scrollbar {
     background-color: #0000;
