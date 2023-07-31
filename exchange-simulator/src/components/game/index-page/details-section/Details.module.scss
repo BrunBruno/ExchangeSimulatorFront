@@ -1,0 +1,59 @@
+@import "../../../Shared/css/Components.scss";
+
+.details {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 8rem 5rem;
+  background-color: $grey-color9;
+  border-left: solid 0.5rem $grey-color8;
+
+  &__navigation {
+    @include flexBlock(row, 0, end, center);
+    padding: 0 5rem;
+
+    &__list {
+      @include flexBlock(row, 0, center, center);
+
+      li {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+        list-style-type: none;
+        background-color: $main-color9;
+        user-select: none;
+        border: solid 0.2rem $main-color8;
+
+        &:not(.active):hover {
+          cursor: pointer;
+          background-color: $main-color8;
+        }
+        &:not(.active):active {
+          cursor: pointer;
+          background-color: $grey-color7;
+          color: $grey-color0;
+        }
+
+        &:first-child {
+          border-top-left-radius: 2rem;
+          border-bottom-left-radius: 2rem;
+        }
+        &:last-child {
+          border-top-right-radius: 2rem;
+          border-bottom-right-radius: 2rem;
+        }
+      }
+
+      .active {
+        background-color: $main-color0;
+        color: $main-color9;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .details {
+    border-left: none;
+    padding: 6rem 3rem;
+  }
+}

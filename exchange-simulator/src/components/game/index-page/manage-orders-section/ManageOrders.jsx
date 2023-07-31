@@ -1,4 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import axios from "axios";
 
 import { onExpandElement } from "../../../Shared/functions/components-function";
@@ -10,7 +16,7 @@ import classes from "./ManageOrders.module.scss";
 import LoadingPage from "../../../Shared/pages/loading-page/LoadingPage";
 import UpdateOrder from "./UpdateOrder";
 
-function ManageOrders(props) {
+const ManageOrders = forwardRef((props, ref) => {
   const contentRef = useRef(null);
 
   const [pageNumber, setPageNumber] = useState(1);
@@ -22,7 +28,7 @@ function ManageOrders(props) {
   const GetOrders = async () => {
     try {
       const orders = await axios.get(
-        `${baseUrl}/order/owner-orders?gameName=${props.gameName}&playerId=${props.playerInfo.id}&PageNumber=${pageNumber}&orderType=${selectedType}`,
+        `${baseUrl}/game/${props.gameName}/order/owner-orders?&playerId=${props.playerInfo.id}&PageNumber=${pageNumber}&orderType=${selectedType}`,
         authorization(localStorage.getItem("token"))
       );
 
@@ -31,6 +37,10 @@ function ManageOrders(props) {
       console.log(err);
     }
   };
+
+  useImperativeHandle(ref, () => {
+    GetOrders();
+  });
 
   useEffect(() => {
     GetOrders();
@@ -48,7 +58,18 @@ function ManageOrders(props) {
     setSelectedOrder(order);
   };
 
-  const CloseOrder = (order) => {};
+  const CloseOrder = async (order) => {
+    try {
+      await axios.delete(
+        `${baseUrl}/game/${props.gameName}/order/${order.id}`,
+        authorization(localStorage.getItem("token"))
+      );
+
+      GetOrders();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   if (!playerOrders) {
     return <LoadingPage />;
@@ -140,6 +161,6 @@ function ManageOrders(props) {
       </div>
     </div>
   );
-}
+});
 
 export default ManageOrders;

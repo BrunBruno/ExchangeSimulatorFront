@@ -82,10 +82,11 @@
 
     p {
       position: absolute;
-      bottom: 20%;
-      left: -60%;
+      width: 2rem;
+      bottom: 8rem;
+      left: 0.5rem;
       font-size: 2rem;
-      transform: rotate(90deg);
+      rotate: 90deg;
     }
   }
 
@@ -206,5 +207,15 @@
   .expand-close {
     transform: rotateX(90deg);
     transition: all 0.3s;
+  }
+}
+
+@media (max-width: 800px) {
+  .panel {
+    height: 24rem;
+
+    &__actions {
+      padding-top: 10rem;
+    }
   }
 }

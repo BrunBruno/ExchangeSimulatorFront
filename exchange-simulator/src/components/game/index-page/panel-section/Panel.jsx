@@ -78,10 +78,12 @@ function Panel(props) {
       }
 
       await axios.post(
-        `${baseUrl}/order`,
+        `${baseUrl}/game/${props.gameName}/order`,
         order,
         authorization(localStorage.getItem("token"))
       );
+
+      props.GetOwnerOrders();
     } catch (err) {
       console.log(err);
     }

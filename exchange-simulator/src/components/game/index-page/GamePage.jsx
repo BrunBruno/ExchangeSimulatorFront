@@ -4,28 +4,32 @@ import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
+import { onExpandElement } from "../../Shared/functions/components-function";
 
 import classes from "./GamePage.module.scss";
 
 import Header from "./header-section/Header";
 import Orders from "./orders-section/Orders";
 import Panel from "./panel-section/Panel";
-import Plot from "./plot-section/Plot";
 import Messenger from "./messenger/Messenger";
 import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
 import ManageOrders from "./manage-orders-section/ManageOrders";
+import Stats from "./details-section/Stats";
+import Details from "./details-section/Details";
 
 function GamePage() {
   const location = useLocation();
 
   const connectionRef = useRef(null);
+  const manageOrdersRef = useRef();
+  const gridRef = useRef(null);
 
   const [gameName, setGameName] = useState(location.state.gameName);
   const [playerInfo, setPlayerInfo] = useState(null);
 
   const connectionInit = async () => {
     const connection = new signalR.HubConnectionBuilder()
-      .withUrl(`http://localhost:5130/game`, {
+      .withUrl(`http://192.168.1.46:5130/game`, {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
       })
@@ -54,6 +58,12 @@ function GamePage() {
     }
   };
 
+  const GetOwnerOrders = () => {
+    if (manageOrdersRef.current) {
+      manageOrdersRef.current.GetOrders();
+    }
+  };
+
   useEffect(() => {
     GetPlayerInfo();
     connectionInit();
@@ -65,6 +75,10 @@ function GamePage() {
     };
   }, []);
 
+  const onExpandDetails = () => {
+    onExpandElement(gridRef, classes["hidden-details"]);
+  };
+
   if (!playerInfo) {
     return <LoadingPage />;
   }
@@ -72,9 +86,14 @@ function GamePage() {
   return (
     <div className={classes.container}>
       <Header />
-      <div className={classes["container__grid"]}>
+      <div ref={gridRef} className={classes["container__grid"]}>
         <div className={classes["container__grid__column"]}>
-          <Panel gameName={gameName} playerInfo={playerInfo} />
+          <Panel
+            gameName={gameName}
+            playerInfo={playerInfo}
+            connection={connectionRef.current}
+            GetOwnerOrders={GetOwnerOrders}
+          />
           <Orders
             gameName={gameName}
             connection={connectionRef.current}
@@ -82,10 +101,25 @@ function GamePage() {
           />
         </div>
         <div className={classes["container__grid__column"]}>
-          <ManageOrders gameName={gameName} playerInfo={playerInfo} />
-          <Plot />
-          <Messenger playerInfo={playerInfo} />
+          <ManageOrders
+            ref={manageOrdersRef}
+            gameName={gameName}
+            playerInfo={playerInfo}
+            connection={connectionRef.current}
+          />
+          {window.innerWidth <= 800 ? (
+            <div
+              className={classes["container__grid__column__button"]}
+              onClick={onExpandDetails}
+            >
+              <p>Details</p>
+            </div>
+          ) : (
+            ""
+          )}
+          <Details playerInfo={playerInfo} />
         </div>
+        {/* <Messenger playerInfo={playerInfo} /> */}
       </div>
     </div>
   );

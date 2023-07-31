@@ -20,11 +20,12 @@ function Orders(props) {
   const [sellOrdersCount, setSellOrdersCount] = useState(10);
 
   const [selectedCoin, setSelectedCoin] = useState("");
+  const [selectedType, setSelectedtype] = useState(OrderTypes.buy);
 
   const GetBuyOrders = async (count) => {
     try {
       const buy = await axios.get(
-        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${OrderTypes.buy}&elementsCount=${count}&coinName=${selectedCoin}`,
+        `${baseUrl}/game/${props.gameName}/order?orderType=${OrderTypes.buy}&elementsCount=${count}&coinName=${selectedCoin}`,
         authorization(localStorage.getItem("token"))
       );
 
@@ -37,7 +38,7 @@ function Orders(props) {
   const GetSellOrders = async (count) => {
     try {
       const sell = await axios.get(
-        `${baseUrl}/order?gameName=${props.gameName}&OrderType=${OrderTypes.sell}&elementsCount=${count}&coinName=${selectedCoin}`,
+        `${baseUrl}/game/${props.gameName}/order?orderType=${OrderTypes.sell}&elementsCount=${count}&coinName=${selectedCoin}`,
         authorization(localStorage.getItem("token"))
       );
 
@@ -151,20 +152,64 @@ function Orders(props) {
           </div>
         </div>
       </div>
-      <div className={classes["orders__lists"]}>
-        <div ref={buyListRef} className={classes["orders__lists__column"]}>
-          {/* Sell orders in buy column */}
-          {sellOrders.map((order, index) => (
-            <Order key={index} order={order} />
-          ))}
+      {window.innerWidth > 800 ? (
+        <div className={classes["orders__lists"]}>
+          <div ref={buyListRef} className={classes["orders__lists__column"]}>
+            <div className={classes["orders__lists__column__list"]}>
+              {/* Sell orders in buy column */}
+              {sellOrders.map((order, index) => (
+                <Order key={index} order={order} />
+              ))}
+            </div>
+          </div>
+          <div ref={sellListRef} className={classes["orders__lists__column"]}>
+            <div className={classes["orders__lists__column__list"]}>
+              {/* Buy orders in sell column */}
+              {buyOrders.map((order, index) => (
+                <Order key={index} order={order} />
+              ))}
+            </div>
+          </div>
         </div>
-        <div ref={sellListRef} className={classes["orders__lists__column"]}>
-          {/* Buy orders in sell column */}
-          {buyOrders.map((order, index) => (
-            <Order key={index} order={order} />
-          ))}
+      ) : (
+        <div className={classes["orders__lists"]}>
+          {selectedType === OrderTypes.buy ? (
+            <div ref={buyListRef} className={classes["orders__lists__column"]}>
+              <div
+                className={classes["orders__lists__column__change"]}
+                onClick={() => {
+                  setSelectedtype(OrderTypes.sell);
+                }}
+              >
+                <p className={classes.sell}>See Sell Orders</p>
+              </div>
+              <div className={classes["orders__lists__column__list"]}>
+                {/* Sell orders in buy column */}
+                {sellOrders.map((order, index) => (
+                  <Order key={index} order={order} />
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div ref={sellListRef} className={classes["orders__lists__column"]}>
+              <div
+                className={classes["orders__lists__column__change"]}
+                onClick={() => {
+                  setSelectedtype(OrderTypes.buy);
+                }}
+              >
+                <p className={classes.buy}>See Buy Orders</p>
+              </div>
+              <div className={classes["orders__lists__column__list"]}>
+                {/* Buy orders in sell column */}
+                {buyOrders.map((order, index) => (
+                  <Order key={index} order={order} />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }

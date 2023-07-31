@@ -8,18 +8,44 @@
     height: 100%;
     display: grid;
     grid-template-columns: 60% 40%;
+    transition: all 0.3s;
 
     &__column {
       position: relative;
       width: 100%;
       height: 100vh;
+    }
+  }
+}
 
-      &:last-child {
-        background-color: $grey-color9;
-        border-left: solid 0.5rem $grey-color8;
-        display: grid;
-        grid-template-rows: 50% 50%;
+@media (max-width: 800px) {
+  .container {
+    &__grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: 60% 40%;
+
+      &__column {
+        height: 100%;
+
+        &__button {
+          position: absolute;
+          width: 100%;
+          height: 3rem;
+          background-color: $grey-color8;
+          z-index: 1;
+          padding: 0.5rem 2rem;
+
+          p {
+            font-size: 2rem;
+            rotate: 0deg;
+          }
+        }
       }
+    }
+
+    .hidden-details {
+      grid-template-rows: calc(100% - 3rem) 3rem;
+      overflow: hidden;
     }
   }
 }
