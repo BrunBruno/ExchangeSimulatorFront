@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
+import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
+
 import classes from "./Review.module.scss";
 
-import baseUrl from "../../../Shared/Url";
 import StartsIcons from "./StartsIcons";
 
 function Review(props) {
@@ -114,9 +115,11 @@ function Review(props) {
         review: index + 1,
       };
 
-      await axios.put(`${baseUrl}/user/user-review`, userReview, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+      await axios.put(
+        `${baseUrl}/user/user-review`,
+        userReview,
+        authorization(localStorage.getItem("token"))
+      );
 
       setSelectedStarts(userReview.review);
     } catch (err) {

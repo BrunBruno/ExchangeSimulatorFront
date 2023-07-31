@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 import classes from "./Tutorial.module.scss";
 
 function Tutorial() {

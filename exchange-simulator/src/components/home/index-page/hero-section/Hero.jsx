@@ -1,16 +1,10 @@
-import classes from "./Hero.module.scss";
-
 import { useEffect, useRef } from "react";
 
+import { Rotations } from "../HomePageOptions";
+
+import classes from "./Hero.module.scss";
+
 function Hero(props) {
-  const rotations = [
-    "",
-    "rotateX(90deg)",
-    "rotateX(-90deg)",
-    "rotateY(-90deg)",
-    "rotateY(90deg)",
-    "rotateY(180deg)",
-  ];
   const figureRef = useRef(null);
 
   // resize animated cube
@@ -21,14 +15,14 @@ function Hero(props) {
         const transformSize = figure.offsetWidth / 2;
 
         // adjust cube
-        d.style.transform = `${rotations[i]} translateZ(${
+        d.style.transform = `${Rotations[i]} translateZ(${
           transformSize * 1.5
         }px)`;
 
         // adjust cubs walls
         d.childNodes.forEach((p, i) => {
           if (i !== 0 && i !== d.childNodes.length - 1) {
-            p.style.transform = `${rotations[i]} translateZ(${transformSize}px)`;
+            p.style.transform = `${Rotations[i]} translateZ(${transformSize}px)`;
           }
         });
       });
@@ -38,6 +32,7 @@ function Hero(props) {
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
+
     return () => {
       window.removeEventListener("resize", handleResize);
     };

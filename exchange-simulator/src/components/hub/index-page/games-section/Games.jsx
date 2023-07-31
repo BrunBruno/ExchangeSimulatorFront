@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 import classes from "./Games.module.scss";
-import { useNavigate } from "react-router-dom";
 
 function Games() {
   const cards = [

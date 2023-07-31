@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 
+import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
+
 import classes from "./GamePage.module.scss";
 
-import Header from "./header/Header";
-import Orders from "./orders/Orders";
-import Panel from "./panel/Panel";
-import baseUrl from "../../Shared/Url";
-import Plot from "./plot/Plot";
+import Header from "./header-section/Header";
+import Orders from "./orders-section/Orders";
+import Panel from "./panel-section/Panel";
+import Plot from "./plot-section/Plot";
 import Messenger from "./messenger/Messenger";
-import LoadingPage from "../../Shared/LoadingPage";
-import ManageOrders from "./manage/ManageOrders";
+import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
+import ManageOrders from "./manage-orders-section/ManageOrders";
 
 function GamePage() {
   const location = useLocation();
@@ -44,11 +45,7 @@ function GamePage() {
     try {
       const playerInfo = await axios.get(
         `${baseUrl}/player/my?gameName=${gameName}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        authorization(localStorage.getItem("token"))
       );
 
       setPlayerInfo(playerInfo.data);

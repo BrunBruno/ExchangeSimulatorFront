@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
-import baseUrl from "../Shared/Url";
-import LoadingPage from "../Shared/LoadingPage";
+import { baseUrl, authorization } from "../Shared/options/ApiOptions";
+
+import LoadingPage from "../Shared/pages/loading-page/LoadingPage";
 import GamePage from "./index-page/GamePage";
 
 function GameRouter() {
@@ -18,11 +19,7 @@ function GameRouter() {
         try {
           const isEmailVerified = await axios.get(
             `${baseUrl}/user/is-verified`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+            authorization(localStorage.getItem("token"))
           );
 
           if (!isEmailVerified.data.isEmailVerified) {
@@ -35,11 +32,10 @@ function GameRouter() {
           }
 
           // get user info
-          const user = await axios.get(`${baseUrl}/user`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          const user = await axios.get(
+            `${baseUrl}/user`,
+            authorization(localStorage.getItem("token"))
+          );
 
           // set user info
           localStorage.setItem("userInfo", JSON.stringify(user.data));

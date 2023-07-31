@@ -1,34 +1,18 @@
 import { useRef } from "react";
+
+import {
+  showDecimal,
+  randomColor,
+} from "../../../Shared/functions/extra-functions";
+import { onExpandElement } from "../../../Shared/functions/components-function";
+
 import classes from "./Messenger.module.scss";
 
 function Messenger(props) {
-  const colors = [
-    "#F5A623",
-    "#F8E71C",
-    "#7ED321",
-    "#BD10E0",
-    "#9013FE",
-    "#4A90E2",
-    "#50E3C2",
-    "#B8E986",
-    "#FF686B",
-    "#FFD97D",
-    "#66D9EF",
-    "#FF75A0",
-  ];
   const messengerRef = useRef(null);
-  const onOpenMessenger = () => {
-    if (messengerRef.current) {
-      if (messengerRef.current.classList.contains(classes["close"])) {
-        messengerRef.current.classList.remove(classes["close"]);
-      } else {
-        messengerRef.current.classList.add(classes["close"]);
-      }
-    }
-  };
 
-  const showDecimal = (number, position) => {
-    return (Math.round(number * 100) / 100).toFixed(position);
+  const onOpenMessenger = () => {
+    onExpandElement(messengerRef, classes["close"]);
   };
 
   return (
@@ -52,7 +36,7 @@ function Messenger(props) {
           {props.playerInfo.tradesQuantity}
         </p>
         {props.playerInfo.playerCoins.map((coin, index) => {
-          const color = colors[Math.floor(Math.random() * colors.length)];
+          const color = randomColor();
 
           return (
             <p key={index}>

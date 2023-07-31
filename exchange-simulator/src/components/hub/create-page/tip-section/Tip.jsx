@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+
 import classes from "./Tip.module.scss";
+
+import ArrowLeftSvg from "../../../Shared/svgs/ArrowLeftSvg";
+import ArrowRightSvg from "../../../Shared/svgs/ArrowRightSvg";
 
 function Tip() {
   const introRef = useRef(null);
   const [icon, setIcon] = useState("");
 
+  // show tip on start
   useEffect(() => {
     setTimeout(() => {
       onShowContent();
@@ -21,20 +26,12 @@ function Tip() {
 
   const onHideContent = () => {
     introRef.current.classList.add(classes["hidden-conetnt"]);
-    setIcon(
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 7L10 12L15 17" stroke="#fff" />
-      </svg>
-    );
+    setIcon(<ArrowLeftSvg />);
   };
 
   const onShowContent = () => {
     introRef.current.classList.remove(classes["hidden-conetnt"]);
-    setIcon(
-      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 7L14 12L9 17" stroke="#fff" />
-      </svg>
-    );
+    setIcon(<ArrowRightSvg />);
   };
 
   return (

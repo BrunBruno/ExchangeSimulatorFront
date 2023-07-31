@@ -1,0 +1,132 @@
+@import "../../../Shared/css/Components.scss";
+
+// header section
+.header {
+  @include flexBlock(row, 5rem, start, center);
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  font-size: 1.4rem;
+  background-color: #000;
+  padding: 1rem;
+
+  // logo
+  &__logo {
+    svg {
+      height: 2rem;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  // navigation section
+  &__nav {
+    width: 100%;
+    overflow: hidden;
+
+    ul {
+      @include flexBlock(row, 1rem, start, center);
+      height: 100%;
+      list-style-type: none;
+
+      li {
+        white-space: nowrap;
+        padding: 0.5rem;
+
+        &::after {
+          content: "";
+          display: block;
+          top: 50%;
+          height: 2px;
+          width: 0;
+          background-color: rgba($grey-color0, 0.5);
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          cursor: pointer;
+          &::after {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  // end navigation section
+
+  // account section
+  &__account {
+    ul {
+      @include flexBlock(row, 1rem, start, center);
+      height: 100%;
+      list-style-type: none;
+
+      li {
+        @include flexBlock(row, 0.5rem, start, center);
+        position: relative;
+        white-space: nowrap;
+
+        &::after {
+          content: "";
+          position: absolute;
+          display: block;
+          bottom: -20%;
+          height: 2px;
+          width: 0;
+          background-color: rgba($grey-color0, 0.5);
+          transition: all 0.3s;
+        }
+
+        &:hover {
+          cursor: pointer;
+
+          &::after {
+            width: 100%;
+          }
+        }
+
+        svg {
+          height: 2rem;
+        }
+
+        img {
+          @include circleBlock(2rem);
+        }
+      }
+    }
+  }
+  // end account section
+}
+// end header section
+
+// mobile layout
+@media (max-width: 600px) {
+  .header {
+    font-size: 3rem;
+    padding: 2%;
+    justify-content: space-between;
+
+    &__logo {
+      svg {
+        height: 3rem;
+      }
+    }
+
+    &__nav {
+      width: 0;
+    }
+    &__account {
+      ul {
+        li {
+          svg {
+            height: 3rem;
+          }
+        }
+      }
+    }
+  }
+}
+// end mobile layout

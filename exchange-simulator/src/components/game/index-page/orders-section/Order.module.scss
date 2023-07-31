@@ -1,0 +1,54 @@
+@import "../../../Shared/css/Components.scss";
+
+.order {
+  @include roundedBlock(1rem, 1rem 2rem);
+  position: relative;
+  width: 100%;
+  background-color: rgba(#000, 0.1);
+
+  &:hover {
+    background-color: rgba(#000, 0.2);
+  }
+
+  h3 {
+    @include flexBlock(row, 1rem, start, center);
+    font-size: 2.2rem;
+
+    img {
+      height: 2rem;
+    }
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  button {
+    @include actionButton(0);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 1rem;
+    padding: 0.6rem 1.2rem;
+    border-width: 0.2rem;
+
+    &:hover {
+      border-width: 0.2rem;
+    }
+  }
+
+  .buy {
+    color: $success-color;
+
+    &:hover {
+      border-color: $success-color;
+    }
+  }
+  .sell {
+    color: $danger-color;
+
+    &:hover {
+      border-color: $danger-color;
+    }
+  }
+}
