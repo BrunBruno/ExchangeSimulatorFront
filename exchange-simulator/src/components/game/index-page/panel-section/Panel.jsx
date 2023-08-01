@@ -4,6 +4,7 @@ import axios from "axios";
 
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { onExpandElement } from "../../../Shared/functions/components-function";
+import { showPrecison } from "../../../Shared/functions/extra-functions";
 import { OrderTypes } from "../GamePageOptions";
 
 import classes from "./Panel.module.scss";
@@ -12,11 +13,17 @@ function Panel(props) {
   const panelRef = useRef(null);
   const formRef = useRef(null);
   const coinListRef = useRef(null);
-  const priceErrRef = useRef(null);
-  const quantityErrRef = useRef(null);
+  const priceRef = useRef(null);
+  const quantityRef = useRef(null);
 
-  const [orderType, setOrderType] = useState(-1);
-  const [selectedCoin, setSelectedCoin] = useState(0);
+  const [orderType, setOrderType] = useState(0);
+  const [selectedCoin, setSelectedCoin] = useState(
+    props.playerInfo.playerCoins[0]
+  );
+
+  // inputs options
+  const [price, setPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
 
   useEffect(() => {
     // expan panel on start
@@ -32,11 +39,10 @@ function Panel(props) {
 
     try {
       const order = {
-        gameName: event.target.gameName.value,
-        playerCoinId: event.target.playerCoinId.value,
-        quantity: event.target.quantity.value,
-        price: event.target.price.value,
-        type: parseInt(event.target.type.value),
+        playerCoinId: selectedCoin.id,
+        quantity: parseFloat(event.target.quantity.value),
+        price: parseFloat(event.target.price.value),
+        type: parseInt(orderType),
       };
 
       if (
@@ -44,9 +50,9 @@ function Panel(props) {
         props.playerInfo.totalBalance - order.price * order.quantity < 0
       ) {
         console.log("Insufficient assets.");
-        priceErrRef.current.classList.add(classes.error);
-        priceErrRef.current.placeholder = "Insufficient assets.";
-        priceErrRef.current.value = "";
+        priceRef.current.classList.add(classes.error);
+        priceRef.current.placeholder = "Insufficient assets.";
+        priceRef.current.value = "";
         return;
       }
 
@@ -57,23 +63,27 @@ function Panel(props) {
         order.type === OrderTypes.sell &&
         coin.totalBalance - order.quantity < 0
       ) {
-        quantityErrRef.current.classList.add(classes.error);
-        quantityErrRef.current.placeholder = "Insufficient assets.";
-        quantityErrRef.current.value = "";
+        quantityRef.current.classList.add(classes.error);
+        quantityRef.current.placeholder = "Insufficient assets.";
+        quantityRef.current.value = "";
         return;
       }
 
-      if (order.price === "") {
-        priceErrRef.current.classList.add(classes.error);
-        priceErrRef.current.placeholder = "Incorrect value.";
-        priceErrRef.current.value = "";
+      if (order.price <= 0 || order.price === "" || isNaN(order.price)) {
+        priceRef.current.classList.add(classes.error);
+        priceRef.current.placeholder = "Incorrect value.";
+        priceRef.current.value = "";
         return;
       }
 
-      if (order.quantity === "") {
-        quantityErrRef.current.classList.add(classes.error);
-        quantityErrRef.current.placeholder = "Incorrect value.";
-        quantityErrRef.current.value = "";
+      if (
+        order.quantity <= 0 ||
+        order.quantity === "" ||
+        isNaN(order.quantity)
+      ) {
+        quantityRef.current.classList.add(classes.error);
+        quantityRef.current.placeholder = "Incorrect value.";
+        quantityRef.current.value = "";
         return;
       }
 
@@ -83,6 +93,9 @@ function Panel(props) {
         authorization(localStorage.getItem("token"))
       );
 
+      setPrice(0);
+      setQuantity(0);
+
       props.GetOwnerOrders();
     } catch (err) {
       console.log(err);
@@ -90,14 +103,14 @@ function Panel(props) {
   };
 
   const clearErrors = () => {
-    if (priceErrRef.current) {
-      priceErrRef.current.classList.remove(classes.error);
-      priceErrRef.current.placeholder = "Price:";
+    if (priceRef.current) {
+      priceRef.current.classList.remove(classes.error);
+      priceRef.current.placeholder = "Price:";
     }
 
-    if (quantityErrRef.current) {
-      quantityErrRef.current.classList.remove(classes.error);
-      quantityErrRef.current.placeholder = "Amount:";
+    if (quantityRef.current) {
+      quantityRef.current.classList.remove(classes.error);
+      quantityRef.current.placeholder = "Amount:";
     }
   };
 
@@ -136,6 +149,38 @@ function Panel(props) {
 
   const onExpandCoinList = () => {
     onExpandElement(coinListRef, classes["hidden-list"]);
+  };
+
+  const onChangeInput = (event, set) => {
+    const inputValue = parseFloat(event.target.value);
+    if (!isNaN(inputValue)) {
+      if (event.target.value.length === 2) {
+        event.target.value = "";
+      }
+      set(parseFloat(inputValue));
+    } else {
+      set(0);
+    }
+  };
+
+  const onSetMax = () => {
+    if (orderType === OrderTypes.buy) {
+      if (
+        parseFloat(priceRef.current.value) !== 0 &&
+        !isNaN(parseFloat(priceRef.current.value))
+      ) {
+        console.log(true);
+        setQuantity(
+          showPrecison(
+            parseFloat(props.playerInfo.totalBalance / priceRef.current.value)
+          )
+        );
+      } else {
+        setQuantity(0);
+      }
+    } else {
+      setQuantity(selectedCoin.totalBalance);
+    }
   };
 
   return (
@@ -178,13 +223,11 @@ function Panel(props) {
             ) : (
               <span className={classes.sell}>Sell</span>
             )}
-            {props.playerInfo.playerCoins[selectedCoin].name}
+            {selectedCoin.name}
 
             <div className={classes.icon} onClick={onExpandCoinList}>
-              {props.playerInfo.playerCoins[selectedCoin].imageUrl ? (
-                <img
-                  src={props.playerInfo.playerCoins[selectedCoin].imageUrl}
-                />
+              {selectedCoin.imageUrl ? (
+                <img src={selectedCoin.imageUrl} />
               ) : (
                 <svg
                   viewBox="0 0 24 24"
@@ -206,7 +249,7 @@ function Panel(props) {
                 <p
                   key={index}
                   onClick={() => {
-                    setSelectedCoin(index);
+                    setSelectedCoin(props.playerInfo.playerCoins[index]);
                     onExpandCoinList();
                   }}
                 >
@@ -215,54 +258,49 @@ function Panel(props) {
                 </p>
               ))}
             </div>
-          </h2>
-          <input
-            className={classes["hidden-input"]}
-            value={props.gameName}
-            name="gameName"
-            onChange={() => {}}
-          />
-          <input
-            className={classes["hidden-input"]}
-            value={orderType}
-            name="type"
-            onChange={() => {}}
-          />
-          <input
-            className={classes["hidden-input"]}
-            value={props.playerInfo.playerCoins[selectedCoin].id}
-            name="playerCoinId"
-            onChange={() => {}}
-          />
-          <input
-            ref={priceErrRef}
-            placeholder="Price per coin"
-            name="price"
-            type="number"
-            step="any"
-          />
-          {orderType === 0 ? (
+          </h2>{" "}
+          <div className={classes.input}>
+            <p>Price:</p>
             <input
-              ref={quantityErrRef}
-              placeholder="Amount"
+              ref={priceRef}
+              placeholder="Price:"
+              name="price"
+              type="number"
+              step="any"
+              value={price}
+              onChange={(event) => {
+                onChangeInput(event, setPrice);
+              }}
+            />
+            <span>$</span>
+          </div>
+          <div className={classes.input}>
+            <p>Amount:</p>
+            <input
+              ref={quantityRef}
+              placeholder="Amount:"
               name="quantity"
               type="number"
               step="any"
+              value={quantity}
+              onChange={(event) => {
+                onChangeInput(event, setQuantity);
+              }}
             />
-          ) : (
-            <input
-              ref={quantityErrRef}
-              placeholder={`Amount (max: ${props.playerInfo.playerCoins[selectedCoin].totalBalance})`}
-              name="quantity"
-              type="number"
-              step="any"
-            />
-          )}
+            <span
+              className={classes.max}
+              onClick={() => {
+                onSetMax();
+              }}
+            >
+              MAX
+            </span>
+          </div>
           <div className={classes.buttons}>
+            <button type="submit">Create</button>
             <button type="button" onClick={onCloseOrderFrom}>
               Cancel
             </button>
-            <button type="submit">Create</button>
           </div>
         </form>
       </div>

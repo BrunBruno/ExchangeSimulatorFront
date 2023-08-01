@@ -20,6 +20,14 @@ export const showDecimal = (number, position) => {
   return (Math.round(number * 100) / 100).toFixed(position);
 };
 
+export const showPrecison = (number) => {
+  if (number >= 100) {
+    return (Math.round(number * 100) / 100).toFixed(2);
+  } else {
+    return number.toPrecision(4);
+  }
+};
+
 export const makeShortDate = (date) => {
   return new Date(date).toDateString();
 };

@@ -1,5 +1,6 @@
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
@@ -8,6 +9,7 @@ import {
 import axios from "axios";
 
 import { onExpandElement } from "../../../Shared/functions/components-function";
+import { showPrecison } from "../../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { OrderTypes } from "../GamePageOptions";
 
@@ -25,7 +27,7 @@ const ManageOrders = forwardRef((props, ref) => {
 
   const [selectedOrder, setSelectedOrder] = useState(null);
 
-  const GetOrders = async () => {
+  const GetOrders = useCallback(async () => {
     try {
       const orders = await axios.get(
         `${baseUrl}/game/${props.gameName}/order/owner-orders?&playerId=${props.playerInfo.id}&PageNumber=${pageNumber}&orderType=${selectedType}`,
@@ -36,11 +38,15 @@ const ManageOrders = forwardRef((props, ref) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [selectedType, props.gameName, props.playerInfo.id, pageNumber]);
 
-  useImperativeHandle(ref, () => {
-    GetOrders();
-  });
+  useImperativeHandle(ref, () => ({
+    getOrders: GetOrders,
+  }));
+
+  useEffect(() => {
+    ref.current.getOrders();
+  }, [ref]);
 
   useEffect(() => {
     GetOrders();
@@ -93,6 +99,8 @@ const ManageOrders = forwardRef((props, ref) => {
             order={selectedOrder}
             playerInfo={props.playerInfo}
             setSelectedOrder={setSelectedOrder}
+            GetOrders={GetOrders}
+            gameName={props.gameName}
           />
         </div>
         <div className={classes["manage__content__header"]}>
@@ -134,10 +142,10 @@ const ManageOrders = forwardRef((props, ref) => {
                 <img src={order.coinImageUrl} />
               </h3>
               <p>
-                Price: {order.price} $ / {order.coinName}
+                Price: {showPrecison(order.price)} $ / {order.coinName}
               </p>
               <p>
-                Amount: {order.quantity} {order.coinName}
+                Amount: {showPrecison(order.quantity)} {order.coinName}
               </p>
               <div className={classes.buttons}>
                 <button

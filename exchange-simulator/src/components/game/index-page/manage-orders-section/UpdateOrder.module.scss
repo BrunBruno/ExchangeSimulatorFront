@@ -34,22 +34,42 @@
     }
   }
 
-  input {
-    @include mainInput;
-    text-align: start;
-  }
+  .input {
+    position: relative;
 
-  input[type="number"]::-webkit-inner-spin-button,
-  input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-  }
+    input {
+      @include mainInput;
+      text-align: start;
+    }
 
-  .error::placeholder {
-    color: $danger-color;
-  }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
 
-  .hidden-input {
-    display: none;
+    .error::placeholder {
+      color: $danger-color;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    span {
+      position: absolute;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      color: $main-color9;
+      font-weight: 600;
+    }
+
+    .max {
+      &:hover {
+        cursor: pointer;
+      }
+    }
   }
 
   .buttons {
@@ -60,12 +80,6 @@
       @include actionButton(0);
       font-size: 1.6rem;
       padding: 0.8rem 1.6rem;
-
-      &:first-child {
-        &:hover {
-          color: $danger-color;
-        }
-      }
     }
   }
 }

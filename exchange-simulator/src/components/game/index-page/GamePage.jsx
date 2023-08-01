@@ -11,20 +11,18 @@ import classes from "./GamePage.module.scss";
 import Header from "./header-section/Header";
 import Orders from "./orders-section/Orders";
 import Panel from "./panel-section/Panel";
-import Messenger from "./messenger/Messenger";
 import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
 import ManageOrders from "./manage-orders-section/ManageOrders";
-import Stats from "./details-section/Stats";
 import Details from "./details-section/Details";
 
 function GamePage() {
   const location = useLocation();
+  const gameName = location.state.gameName;
 
   const connectionRef = useRef(null);
   const manageOrdersRef = useRef();
   const gridRef = useRef(null);
 
-  const [gameName, setGameName] = useState(location.state.gameName);
   const [playerInfo, setPlayerInfo] = useState(null);
 
   const connectionInit = async () => {
@@ -48,7 +46,7 @@ function GamePage() {
   const GetPlayerInfo = async () => {
     try {
       const playerInfo = await axios.get(
-        `${baseUrl}/player/my?gameName=${gameName}`,
+        `${baseUrl}/game/${gameName}/player/my`,
         authorization(localStorage.getItem("token"))
       );
 
@@ -60,7 +58,7 @@ function GamePage() {
 
   const GetOwnerOrders = () => {
     if (manageOrdersRef.current) {
-      manageOrdersRef.current.GetOrders();
+      manageOrdersRef.current.getOrders();
     }
   };
 

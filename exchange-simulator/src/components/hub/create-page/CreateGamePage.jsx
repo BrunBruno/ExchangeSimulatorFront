@@ -26,6 +26,7 @@ function CreateGamePage() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
+    // horizontal scroll in coins list
     const handleCoinListScroll = (event) => {
       event.preventDefault();
       coinListRef.current.scrollLeft += event.deltaY;
@@ -34,8 +35,15 @@ function CreateGamePage() {
     coinListRef.current.addEventListener("wheel", handleCoinListScroll, {
       passive: false,
     });
+
+    return () => {
+      if (coinListRef.current) {
+        coinListRef.current.removeEventListener("wheel", handleCoinListScroll);
+      }
+    };
   }, []);
 
+  // add coin to list
   const onAddCoin = (symbol, image, amount) => {
     if (amount < 0) {
       return;
@@ -71,6 +79,7 @@ function CreateGamePage() {
     });
   };
 
+  // delete coin from list
   const onDeleteCoin = (index) => {
     setCoinList((prevCoinList) => {
       const updatedList = [...prevCoinList];
@@ -79,55 +88,65 @@ function CreateGamePage() {
     });
   };
 
+  // display coin menu window
   const onCoinMenuExpand = () => {
     onExpandElement(coinMenuRef, classes["hidden"]);
   };
 
+  // hide error
   const onErrorMenuClose = () => {
     errorMenuRef.current.classList.add(classes["hidden"]);
     setErrorMessage("");
   };
 
+  // create new game
   const onCreateNewGame = async (event) => {
     event.preventDefault();
+
     const game = {
       name: event.target.gameName.value.trim(),
       description: event.target.description.value.trim(),
       password: event.target.password.value,
-      startingBalance: event.target.money.value,
+      startingBalance: parseFloat(event.target.money.value),
       coins: coinList,
-      duration: event.target.duration.value,
-      totalPlayers: event.target.numberOfPlayers.value,
+      duration: parseInt(event.target.duration.value),
+      totalPlayers: parseInt(event.target.numberOfPlayers.value),
     };
 
+    // check for empty name
     if (game.name === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please choose a name.");
       return;
     }
 
+    // check for empty description
     if (game.description === "") {
       game.description = "No description.";
     }
 
-    if (game.startingBalance === "") {
+    // cehck for empty starting balance
+    if (game.startingBalance === 0 || game.startingBalance === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select amount of starting assets.");
       return;
     }
 
-    if (game.totalPlayers === "") {
+    // check for empty total players
+    if (game.totalPlayers === 0 || game.totalPlayers === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select number of players.");
       return;
     }
 
-    if (game.duration === "") {
+    // check for empty duration
+    if (game.duration === 0 || game.duration === "") {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please select duration of the game.");
       return;
     }
 
+    // check for no coins selected
     if (game.coins.length === 0) {
       errorMenuRef.current.classList.remove(classes["hidden"]);
       setErrorMessage("Please fill some coins.");
@@ -135,27 +154,30 @@ function CreateGamePage() {
     }
 
     try {
+      // create a game
       await axios.post(
         `${baseUrl}/game`,
         game,
         authorization(localStorage.getItem("token"))
       );
 
-      const joinPlayer = {
-        gameName: game.name,
+      const joinToGame = {
         password: game.password,
       };
 
+      // join creator to game
       await axios.post(
-        `${baseUrl}/game/join-game`,
-        joinPlayer,
+        `${baseUrl}/game/${game.name}/player/join-game`,
+        joinToGame,
         authorization(localStorage.getItem("token"))
       );
 
+      // go to hub
       navigate("/hub", {
         state: { popup: "Game created." },
       });
     } catch (err) {
+      // display backend errors
       if (err.response && err.response.data) {
         errorMenuRef.current.classList.remove(classes["hidden"]);
         setErrorMessage(err.response.data);

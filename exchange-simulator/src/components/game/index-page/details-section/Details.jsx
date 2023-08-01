@@ -6,6 +6,7 @@ import classes from "./Details.module.scss";
 
 import Stats from "./Stats";
 import Plot from "./Plot";
+import NavIcons from "./NavIcons";
 
 function Details(props) {
   const [selectedoption, setSelectedOption] = useState(DetailsOptions.stats);
@@ -22,7 +23,10 @@ function Details(props) {
               setSelectedOption(DetailsOptions.stats);
             }}
           >
-            Stats
+            <NavIcons
+              name="stats"
+              active={selectedoption === DetailsOptions.stats}
+            />
           </li>
           <li
             className={
@@ -32,7 +36,10 @@ function Details(props) {
               setSelectedOption(DetailsOptions.ranking);
             }}
           >
-            Ranking
+            <NavIcons
+              name="ranking"
+              active={selectedoption === DetailsOptions.ranking}
+            />
           </li>
           <li
             className={
@@ -42,7 +49,10 @@ function Details(props) {
               setSelectedOption(DetailsOptions.plot);
             }}
           >
-            Plot
+            <NavIcons
+              name="plot"
+              active={selectedoption === DetailsOptions.plot}
+            />
           </li>
         </ul>
       </nav>

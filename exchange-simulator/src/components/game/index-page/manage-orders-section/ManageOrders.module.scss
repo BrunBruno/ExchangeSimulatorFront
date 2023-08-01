@@ -48,6 +48,7 @@
     padding-top: 8rem;
     overflow: hidden;
     pointer-events: all;
+    border-bottom: solid 0.5rem $grey-color8;
     transition: all 0.3s;
 
     // header
@@ -125,6 +126,7 @@
       height: calc(100% - 5rem);
       overflow-y: scroll;
       overflow-x: hidden;
+      padding-right: 0.5rem;
 
       &::-webkit-scrollbar {
         background-color: #0000;
@@ -140,6 +142,10 @@
         width: 100%;
         padding: 1rem;
         border-bottom: solid 0.3rem $grey-color8;
+
+        &:last-child {
+          border-bottom: none;
+        }
 
         h3 {
           @include flexBlock(row, 1rem, start, center);
@@ -171,6 +177,15 @@
           button {
             @include actionButton(0);
             padding: 0.6rem 1.2rem;
+            border-width: 0.2rem;
+            color: $grey-color5;
+            border-color: $grey-color5;
+
+            &:hover {
+              border-width: 0.2rem;
+              color: $grey-color0;
+              border-color: $grey-color0;
+            }
 
             &:last-child {
               &:hover {

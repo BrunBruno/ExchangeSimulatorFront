@@ -26,14 +26,13 @@ function Card(props) {
     event.preventDefault();
 
     try {
-      const joinPlayer = {
-        gameName: event.target.gameName.value,
+      const joinToGame = {
         password: event.target.gamePassword.value,
       };
 
       await axios.post(
-        `${baseUrl}/game/join-game`,
-        joinPlayer,
+        `${baseUrl}/game/${props.game.name}/player/join-game`,
+        joinToGame,
         authorization(localStorage.getItem("token"))
       );
 
@@ -48,8 +47,8 @@ function Card(props) {
   const onReJoinGame = async (event) => {
     event.preventDefault();
 
-    navigate(`/game/${event.target.gameName.value}`, {
-      state: { gameName: event.target.gameName.value },
+    navigate(`/game/${props.game.name}`, {
+      state: { gameName: props.game.name },
     });
   };
 
@@ -113,13 +112,6 @@ function Card(props) {
               </div>
             </div>
           )}
-          <input
-            type="text"
-            name="gameName"
-            value={props.game.name}
-            onChange={() => {}}
-            className={classes["hidden-input"]}
-          />
           <div className={classes.buttons}>
             {props.join === 1 && <button type="submit">Join</button>}
             {props.join === 2 && props.game.status === 0 && (

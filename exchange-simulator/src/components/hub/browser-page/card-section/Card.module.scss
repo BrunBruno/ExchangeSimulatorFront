@@ -96,10 +96,6 @@
         }
       }
 
-      .hidden-input {
-        display: none;
-      }
-
       button {
         @include actionButton(0);
         position: absolute;

@@ -17,7 +17,7 @@
 
       li {
         font-size: 2rem;
-        padding: 1rem 2rem;
+        padding: 0.4rem 1.6rem;
         list-style-type: none;
         background-color: $main-color9;
         user-select: none;
@@ -40,6 +40,10 @@
         &:last-child {
           border-top-right-radius: 2rem;
           border-bottom-right-radius: 2rem;
+        }
+
+        svg {
+          height: 3rem;
         }
       }
 

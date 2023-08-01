@@ -100,10 +100,21 @@
     transform: rotateX(0deg);
     display: grid;
     grid-template-rows: 50% auto;
-    background-color: rgba(#000, 0.2);
     z-index: 5;
     pointer-events: all;
     transition: all 0.3s;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -4rem;
+      top: 50%;
+      width: 4rem;
+      height: 50%;
+      border-top-right-radius: 4rem;
+      background-color: #0000;
+      box-shadow: 0 -4rem 0 0 $grey-color9;
+    }
 
     .form {
       @include flexBlock(column, 2rem, start, center);
@@ -149,6 +160,8 @@
           left: calc(100% + 2rem);
           background-color: $grey-color1;
           color: $grey-color9;
+          z-index: 10;
+          border: solid 0.2rem $grey-color2;
 
           p {
             @include flexBlock(row, 0.5rem, start, center);
@@ -173,22 +186,44 @@
         }
       }
 
-      input {
-        @include mainInput;
-        text-align: start;
-      }
+      .input {
+        position: relative;
 
-      input[type="number"]::-webkit-inner-spin-button,
-      input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-      }
+        input {
+          @include mainInput;
+          text-align: start;
+        }
 
-      .error::placeholder {
-        color: $danger-color;
-      }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+        }
 
-      .hidden-input {
-        display: none;
+        .error::placeholder {
+          color: $danger-color;
+        }
+
+        p {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+          margin-left: 2rem;
+        }
+
+        span {
+          position: absolute;
+          right: 2rem;
+          top: calc(50% + 1.5rem);
+          transform: translateY(-50%);
+          font-size: 2rem;
+          color: $main-color9;
+          font-weight: 600;
+        }
+
+        .max {
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
 
       .buttons {
