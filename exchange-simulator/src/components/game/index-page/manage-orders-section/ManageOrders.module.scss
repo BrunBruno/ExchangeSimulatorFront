@@ -136,65 +136,6 @@
         background-color: #000;
         border-radius: 1rem;
       }
-
-      .order {
-        position: relative;
-        width: 100%;
-        padding: 1rem;
-        border-bottom: solid 0.3rem $grey-color8;
-
-        &:last-child {
-          border-bottom: none;
-        }
-
-        h3 {
-          @include flexBlock(row, 1rem, start, center);
-          font-size: 2rem;
-
-          .buy {
-            color: $success-color;
-          }
-          .sell {
-            color: $danger-color;
-          }
-
-          img {
-            height: 2rem;
-          }
-        }
-
-        p {
-          font-size: 1.6rem;
-        }
-
-        .buttons {
-          @include flexBlock(row, 1rem, center, end);
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          margin: 1rem;
-
-          button {
-            @include actionButton(0);
-            padding: 0.6rem 1.2rem;
-            border-width: 0.2rem;
-            color: $grey-color5;
-            border-color: $grey-color5;
-
-            &:hover {
-              border-width: 0.2rem;
-              color: $grey-color0;
-              border-color: $grey-color0;
-            }
-
-            &:last-child {
-              &:hover {
-                color: $danger-color;
-              }
-            }
-          }
-        }
-      }
     }
     // end order list
 

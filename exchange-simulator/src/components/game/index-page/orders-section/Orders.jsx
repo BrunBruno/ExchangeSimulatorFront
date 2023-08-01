@@ -116,9 +116,9 @@ function Orders(props) {
           </p>
         </h2>
         <div className={classes["orders__header__list"]}>
-          {props.playerInfo.playerCoins.map((coin, index) => (
+          {props.playerInfo.playerCoins.map((coin) => (
             <div
-              key={index}
+              key={coin.name}
               className={`${classes.coin} ${
                 coin.name === selectedCoin ? classes["selected-coin"] : ""
               }`}
@@ -157,16 +157,26 @@ function Orders(props) {
           <div ref={buyListRef} className={classes["orders__lists__column"]}>
             <div className={classes["orders__lists__column__list"]}>
               {/* Sell orders in buy column */}
-              {sellOrders.map((order, index) => (
-                <Order key={index} order={order} />
+              {sellOrders.map((order) => (
+                <Order
+                  key={order.id}
+                  gameName={props.gameName}
+                  order={order}
+                  playerInfo={props.playerInfo}
+                />
               ))}
             </div>
           </div>
           <div ref={sellListRef} className={classes["orders__lists__column"]}>
             <div className={classes["orders__lists__column__list"]}>
               {/* Buy orders in sell column */}
-              {buyOrders.map((order, index) => (
-                <Order key={index} order={order} />
+              {buyOrders.map((order) => (
+                <Order
+                  key={order.id}
+                  gameName={props.gameName}
+                  order={order}
+                  playerInfo={props.playerInfo}
+                />
               ))}
             </div>
           </div>
@@ -185,8 +195,13 @@ function Orders(props) {
               </div>
               <div className={classes["orders__lists__column__list"]}>
                 {/* Sell orders in buy column */}
-                {sellOrders.map((order, index) => (
-                  <Order key={index} order={order} />
+                {sellOrders.map((order) => (
+                  <Order
+                    key={order.id}
+                    gameName={props.gameName}
+                    order={order}
+                    playerInfo={props.playerInfo}
+                  />
                 ))}
               </div>
             </div>
@@ -202,8 +217,13 @@ function Orders(props) {
               </div>
               <div className={classes["orders__lists__column__list"]}>
                 {/* Buy orders in sell column */}
-                {buyOrders.map((order, index) => (
-                  <Order key={index} order={order} />
+                {buyOrders.map((order) => (
+                  <Order
+                    key={order.id}
+                    gameName={props.gameName}
+                    order={order}
+                    playerInfo={props.playerInfo}
+                  />
                 ))}
               </div>
             </div>

@@ -149,6 +149,14 @@
             transition: all 1s 0s;
           }
         }
+
+        &__content {
+          padding-bottom: 10rem;
+
+          button {
+            opacity: 1;
+          }
+        }
       }
     }
   }

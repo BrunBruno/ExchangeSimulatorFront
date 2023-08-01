@@ -8,3 +8,8 @@ export const DetailsOptions = {
   ranking: 1,
   plot: 2,
 };
+
+export const OrderStatus = {
+  active: 0,
+  freeze: 1,
+};

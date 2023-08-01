@@ -70,6 +70,12 @@ function GamePage() {
       if (connectionRef.current) {
         connectionRef.current.off("OrdersChanged");
       }
+
+      if (connectionRef.current.state === "Connected") {
+        connectionRef.current
+          .invoke("LeaveGame", gameName)
+          .catch((err) => console.error(err));
+      }
     };
   }, []);
 

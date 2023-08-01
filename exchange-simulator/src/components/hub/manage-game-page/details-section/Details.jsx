@@ -70,7 +70,7 @@ function Details(props) {
       <div className={classes["details__content"]}>
         <div className={classes["details__content__header"]}>
           <h2>{gameDetails.name}</h2>
-          <div className={classes.x}>
+          <div className={classes.x} onClick={props.onCloseDetails}>
             <XSvg />
           </div>
         </div>

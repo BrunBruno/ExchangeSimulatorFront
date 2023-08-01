@@ -12,6 +12,7 @@ import Details from "./details-section/Details";
 import Card from "./card-section/Card";
 
 import SortOptionSvg from "../../Shared/svgs/SortOption";
+import DetailsSvg from "../../Shared/svgs/DetailsSvg";
 
 function ManageGamePage() {
   const containerRef = useRef(null);
@@ -106,6 +107,9 @@ function ManageGamePage() {
       <Header containerRef={containerRef} />
       <div className={classes["manage__games"]}>
         <div className={classes["manage__games__bar"]}>
+          <div className={classes.background}>
+            <DetailsSvg />
+          </div>
           <h2>Manage your games.</h2>
           <div className={classes["manage__games__bar__inputs"]}>
             <input
@@ -187,7 +191,7 @@ function ManageGamePage() {
       >
         {selectedGame === null ? (
           <div className={classes.info}>
-            <h3>Hello</h3>
+            <h3>Game Manager</h3>
             <p>No game selected.</p>
             <p>Please select game to manage it.</p>
           </div>

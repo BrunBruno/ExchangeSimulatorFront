@@ -6,11 +6,14 @@
   height: 100%;
   padding: 8rem 5rem;
   background-color: $grey-color9;
-  border-left: solid 0.5rem $grey-color8;
 
   &__navigation {
-    @include flexBlock(row, 0, end, center);
-    padding: 0 5rem;
+    @include flexBlock(row, 0, space-between, center);
+    padding-right: 5rem;
+
+    h2 {
+      font-size: 3rem;
+    }
 
     &__list {
       @include flexBlock(row, 0, center, center);

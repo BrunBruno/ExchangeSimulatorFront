@@ -25,6 +25,18 @@
       padding: 2rem;
       padding-top: 8rem;
 
+      .background {
+        position: absolute;
+        top: 10%;
+        left: 2%;
+        rotate: -10deg;
+        opacity: 0.05;
+
+        svg {
+          height: 20rem;
+        }
+      }
+
       h2 {
         font-size: 3rem;
         text-shadow: 2px 2px 2px #000;
@@ -119,6 +131,7 @@
     // games list
     &__list {
       @include flexBlock(column, 1rem, start, center);
+      position: relative;
       width: 100%;
       padding: 2rem;
       border-bottom: solid 0.5rem $grey-color8;
@@ -197,6 +210,11 @@
         align-items: start;
         padding-left: 4rem;
         gap: 2rem;
+
+        .background {
+          left: 80%;
+          rotate: 10deg;
+        }
 
         h2 {
           font-size: 5rem;

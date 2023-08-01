@@ -7,6 +7,7 @@
   border-radius: 2rem;
   border-bottom: solid 0.5rem $main-color0;
   overflow: hidden;
+  transform: scale(0.96);
   transition: opacity 1s, transform 0.3s;
 
   &:hover {
@@ -146,6 +147,7 @@
 // end card
 
 .hidden {
+  transform: scale(0.5);
   opacity: 0.1;
   transition: all 0s;
 }

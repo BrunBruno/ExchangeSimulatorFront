@@ -17,6 +17,10 @@ import Card from "./card-section/Card";
 import Header from "../hub-shared/header/Header";
 import Pagination from "../../Shared/pages/pagination/Pagination";
 
+import SearchSvg from "../../Shared/svgs/SearchSvg";
+import GameControllerSvg from "../../Shared/svgs/GameControllerSvg";
+import TimeSvg from "../../Shared/svgs/TimeSvg";
+
 function Browser() {
   const location = useLocation();
   const gamesPerPage = 6;
@@ -220,6 +224,17 @@ function Browser() {
               </p>
             </div>
           )}
+          <div className={classes.backgroud}>
+            {gameType === GameTypes.current ? (
+              <GameControllerSvg />
+            ) : gameType === GameTypes.available ? (
+              <SearchSvg />
+            ) : gameType === GameTypes.previous ? (
+              <TimeSvg />
+            ) : (
+              ""
+            )}
+          </div>
         </div>
         <div className={classes["browser__cards"]}>
           <div
@@ -269,6 +284,7 @@ function Browser() {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={onPageChange}
+            fontSize={1.6}
           />
         </div>
       </div>

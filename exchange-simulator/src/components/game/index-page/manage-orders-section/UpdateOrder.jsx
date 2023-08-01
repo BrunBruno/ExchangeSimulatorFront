@@ -34,8 +34,6 @@ function UpdateOrder(props) {
         quantity: quantity,
       };
 
-      console.log(order);
-
       if (
         props.order.type === OrderTypes.buy &&
         props.playerInfo.totalBalance +
@@ -109,11 +107,9 @@ function UpdateOrder(props) {
     if (props.order.type === OrderTypes.buy) {
       if (parseFloat(priceRef.current.value) !== 0) {
         setQuantity(
-          showPrecison(
-            parseFloat(
-              (props.playerInfo.totalBalance + props.order.price) /
-                priceRef.current.value
-            )
+          parseFloat(
+            (props.playerInfo.totalBalance + props.order.price) /
+              priceRef.current.value
           )
         );
       } else {

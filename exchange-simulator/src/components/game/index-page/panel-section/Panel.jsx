@@ -169,7 +169,6 @@ function Panel(props) {
         parseFloat(priceRef.current.value) !== 0 &&
         !isNaN(parseFloat(priceRef.current.value))
       ) {
-        console.log(true);
         setQuantity(
           showPrecison(
             parseFloat(props.playerInfo.totalBalance / priceRef.current.value)

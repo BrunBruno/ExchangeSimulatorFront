@@ -14,6 +14,15 @@ function Details(props) {
   return (
     <div className={classes.details}>
       <nav className={classes["details__navigation"]}>
+        {selectedoption === DetailsOptions.stats ? (
+          <h2>Stats</h2>
+        ) : selectedoption === DetailsOptions.ranking ? (
+          <h2>Ranking</h2>
+        ) : selectedoption === DetailsOptions.plot ? (
+          <h2>Plot</h2>
+        ) : (
+          ""
+        )}
         <ul className={classes["details__navigation__list"]}>
           <li
             className={

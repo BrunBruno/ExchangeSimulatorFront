@@ -22,7 +22,7 @@ export const showDecimal = (number, position) => {
 
 export const showPrecison = (number) => {
   if (number >= 100) {
-    return (Math.round(number * 100) / 100).toFixed(2);
+    return (Math.round(number * 100) / 100).toFixed(4);
   } else {
     return number.toPrecision(4);
   }

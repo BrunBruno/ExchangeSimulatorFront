@@ -5,52 +5,136 @@
   position: relative;
   width: 100%;
   background-color: rgba(#000, 0.1);
+  transition: all 0.1s;
 
   &:hover {
     background-color: rgba(#000, 0.2);
-  }
 
-  h3 {
-    @include flexBlock(row, 1rem, start, center);
-    font-size: 2.2rem;
-
-    img {
-      height: 2rem;
+    .order__action {
+      background-color: rgba(#000, 0.2);
     }
   }
 
-  p {
-    font-size: 1.6rem;
+  &:has(.order__action.hidden-action) {
+    transition-delay: 0.3s;
   }
 
-  button {
-    @include actionButton(0);
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    margin: 1rem;
-    padding: 0.6rem 1.2rem;
-    border-width: 0.2rem;
-    font-size: 2rem;
+  &:not(:has(.order__action.hidden-action)) {
+    margin-bottom: 7rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    transition-delay: 0s;
 
-    &:hover {
+    button {
+      bottom: -6rem;
+    }
+  }
+
+  &__header {
+    max-width: 80%;
+
+    h3 {
+      @include flexBlock(row, 1rem, start, center);
+      font-size: 2.2rem;
+
+      img {
+        height: 2rem;
+      }
+    }
+
+    p {
+      font-size: 1.6rem;
+    }
+
+    button {
+      @include actionButton(0);
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin: 1rem;
+      padding: 0.6rem 1.2rem;
       border-width: 0.2rem;
+      font-size: 2rem;
+      z-index: 2;
+      transition: all 0.3s;
+
+      &:hover {
+        border-width: 0.2rem;
+      }
+    }
+
+    .buy {
+      color: $success-color;
+
+      &:hover {
+        border-color: $success-color;
+      }
+    }
+    .sell {
+      color: $danger-color;
+
+      &:hover {
+        border-color: $danger-color;
+      }
     }
   }
 
-  .buy {
-    color: $success-color;
+  &__action {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: rgba(#000, 0.1);
+    width: 100%;
+    height: 7rem;
+    padding: 1rem;
+    overflow: hidden;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    transition: padding-top 0.3s, height 0.3s;
 
-    &:hover {
-      border-color: $success-color;
+    .input {
+      position: relative;
+      width: fit-content;
+      margin: 0.5rem;
+
+      input {
+        @include roundedBlock(1rem, 0.2rem 2rem);
+        background-color: #0000;
+        border: none;
+        border-bottom: solid 0.2rem $grey-color5;
+        outline: none;
+        color: $grey-color0;
+
+        &:focus {
+          background-color: rgba(#000, 0.2);
+        }
+      }
+
+      p {
+        margin-left: 2rem;
+        margin-bottom: 0.5rem;
+        font-size: 1.6rem;
+      }
+
+      .max {
+        position: absolute;
+        right: 2rem;
+        top: calc(50% + 0.8rem);
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        color: $main-color0;
+        font-weight: 600;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
-  .sell {
-    color: $danger-color;
 
-    &:hover {
-      border-color: $danger-color;
-    }
+  .hidden-action {
+    height: 0;
+    padding: 0;
   }
 }
 

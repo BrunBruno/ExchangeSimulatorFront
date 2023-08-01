@@ -11,12 +11,15 @@ import axios from "axios";
 import { onExpandElement } from "../../../Shared/functions/components-function";
 import { showPrecison } from "../../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
-import { OrderTypes } from "../GamePageOptions";
+import { OrderTypes, OrderStatus } from "../GamePageOptions";
 
 import classes from "./ManageOrders.module.scss";
 
 import LoadingPage from "../../../Shared/pages/loading-page/LoadingPage";
 import UpdateOrder from "./UpdateOrder";
+
+import FreezeSvg from "../../../Shared/svgs/FreezeSvg";
+import Order from "./Order";
 
 const ManageOrders = forwardRef((props, ref) => {
   const contentRef = useRef(null);
@@ -62,19 +65,6 @@ const ManageOrders = forwardRef((props, ref) => {
 
   const onSelectOrder = (order) => {
     setSelectedOrder(order);
-  };
-
-  const CloseOrder = async (order) => {
-    try {
-      await axios.delete(
-        `${baseUrl}/game/${props.gameName}/order/${order.id}`,
-        authorization(localStorage.getItem("token"))
-      );
-
-      GetOrders();
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   if (!playerOrders) {
@@ -131,39 +121,13 @@ const ManageOrders = forwardRef((props, ref) => {
 
         <div className={classes["order-list"]}>
           {playerOrders.map((order, index) => (
-            <div key={index} className={classes.order}>
-              <h3>
-                {order.type == OrderTypes.buy ? (
-                  <span className={classes.buy}>BUY</span>
-                ) : (
-                  <span className={classes.sell}>SELL</span>
-                )}{" "}
-                {order.coinName}
-                <img src={order.coinImageUrl} />
-              </h3>
-              <p>
-                Price: {showPrecison(order.price)} $ / {order.coinName}
-              </p>
-              <p>
-                Amount: {showPrecison(order.quantity)} {order.coinName}
-              </p>
-              <div className={classes.buttons}>
-                <button
-                  onClick={() => {
-                    onSelectOrder(order);
-                  }}
-                >
-                  Change
-                </button>
-                <button
-                  onClick={() => {
-                    CloseOrder(order);
-                  }}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
+            <Order
+              key={index}
+              order={order}
+              onSelectOrder={onSelectOrder}
+              gameName={props.gameName}
+              GetOrders={GetOrders}
+            />
           ))}
         </div>
       </div>
