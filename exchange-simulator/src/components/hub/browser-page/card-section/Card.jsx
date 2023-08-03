@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { makeShortDate } from "../../../Shared/functions/extra-functions";
+import { makeNiceDate } from "../../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { CardStyles } from "../BrowserPageOptions";
 
@@ -37,7 +37,7 @@ function Card(props) {
       );
 
       navigate("/hub/current-games", {
-        state: { title: "Current Games" },
+        state: { title: "Current Games", popup: "Game joined." },
       });
     } catch (err) {
       passwordErrRef.current.classList.remove(classes["hidden-error"]);
@@ -74,7 +74,7 @@ function Card(props) {
           <div>
             <h2>{props.game.name}</h2>
             <p>by {props.game.ownerName}</p>
-            <span>{makeShortDate(props.game.createdAt)}</span>
+            <span>{makeNiceDate(props.game.createdAt)}</span>
           </div>
         </div>
         <form className={classes.form} onSubmit={handleSubmit}>

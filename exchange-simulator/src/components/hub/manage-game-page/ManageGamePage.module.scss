@@ -2,6 +2,7 @@
 
 .manage {
   @include container;
+  @include popup;
   display: grid;
   grid-template-columns: 40% 60%;
 
@@ -60,7 +61,7 @@
         }
 
         button {
-          @include actionButton(0);
+          @include actionButton;
           padding: 0.5rem;
           border-width: 0.2rem;
 

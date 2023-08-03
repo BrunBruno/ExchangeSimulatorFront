@@ -11,14 +11,13 @@ import LoadingPage from "../Shared/pages/loading-page/LoadingPage";
 import ManageGamePage from "./manage-game-page/ManageGamePage";
 
 function HubRouter() {
-  const [authorize, setAuthorize] = useState(false);
   const navigate = useNavigate();
+
+  const [authorize, setAuthorize] = useState(false);
 
   useEffect(() => {
     const verifyUsersToken = async () => {
-      const token = localStorage.getItem("token");
-
-      if (token) {
+      if (localStorage.getItem("token")) {
         try {
           const isEmailVerified = await axios.get(
             `${baseUrl}/user/is-verified`,

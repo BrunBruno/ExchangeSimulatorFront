@@ -28,7 +28,7 @@ export const showPrecison = (number) => {
   }
 };
 
-export const makeShortDate = (date) => {
+export const makeNiceDate = (date) => {
   return new Date(date).toDateString();
 };
 
@@ -38,4 +38,20 @@ export const makeDate = (date) => {
 
 export const makeFullDate = (date) => {
   return new Date(date).toLocaleString();
+};
+
+export const makeDuration = (duration) => {
+  const keyWords = ["days", "hours", "minutes"];
+  duration = duration.replace(".", ":");
+  duration = duration.split(":");
+  let niceDuration = "";
+  for (let i = duration.length - 2; i >= 0; i--) {
+    if (parseFloat(duration[i]) === 1) {
+      niceDuration =
+        duration[i] + " " + keyWords[i].slice(0, -1) + " " + niceDuration;
+    } else if (parseFloat(duration[i]) !== 0) {
+      niceDuration = duration[i] + " " + keyWords[i] + " " + niceDuration;
+    }
+  }
+  return niceDuration;
 };

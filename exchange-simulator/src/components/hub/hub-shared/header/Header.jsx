@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import classes from "./Header.module.scss";
 
@@ -9,6 +9,7 @@ import LogOutSvg from "../../../Shared/svgs/LogOutSvg";
 function Header(props) {
   const headerRef = useRef(null);
 
+  const location = useLocation();
   const navigate = useNavigate();
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
@@ -34,7 +35,16 @@ function Header(props) {
       ref={headerRef}
       className={`${classes.header} ${classes["header-trans"]}`}
     >
-      <div onClick={() => navigate("/hub")} className={classes["header__logo"]}>
+      <div
+        onClick={() => {
+          if (location.pathname === "/hub") {
+            navigate("/");
+          } else {
+            navigate("/hub");
+          }
+        }}
+        className={classes["header__logo"]}
+      >
         <Logo />
       </div>
       <div className={classes["header__nav"]}>

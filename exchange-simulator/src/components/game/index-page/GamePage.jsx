@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 
+import usePopup from "../../Shared/hooks/usePopup ";
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
 import { onExpandElement } from "../../Shared/functions/components-function";
 
@@ -17,13 +18,17 @@ import Details from "./details-section/Details";
 
 function GamePage() {
   const location = useLocation();
-  const gameName = location.state.gameName;
 
   const connectionRef = useRef(null);
-  const manageOrdersRef = useRef();
+  const manageOrdersRef = useRef(null);
   const gridRef = useRef(null);
 
+  const [gameName, setGameName] = useState(localStorage.getItem("gameName"));
   const [playerInfo, setPlayerInfo] = useState(null);
+
+  const [infoPpupRef, popupContent, setPopupContent] = usePopup(
+    classes["hidden-popup"]
+  );
 
   const connectionInit = async () => {
     const connection = new signalR.HubConnectionBuilder()
@@ -63,8 +68,8 @@ function GamePage() {
   };
 
   useEffect(() => {
-    GetPlayerInfo();
     connectionInit();
+    GetPlayerInfo();
 
     return () => {
       if (connectionRef.current) {
@@ -124,6 +129,12 @@ function GamePage() {
           <Details playerInfo={playerInfo} />
         </div>
         {/* <Messenger playerInfo={playerInfo} /> */}
+      </div>
+      <div
+        ref={infoPpupRef}
+        className={`${classes.popup} ${classes["hidden-popup"]}`}
+      >
+        {popupContent}
       </div>
     </div>
   );

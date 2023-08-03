@@ -47,6 +47,9 @@ function EmailVerificationModal(props) {
         JSON.parse(localStorage.getItem("userTemp"))
       );
 
+      // remove user temp
+      localStorage.removeItem("userTemp");
+
       // set token
       localStorage.setItem("token", response.data.token);
 
@@ -57,14 +60,13 @@ function EmailVerificationModal(props) {
         },
       });
     } catch (err) {
-      console.log(err);
-
       // Display backend exeptions
       if (err.response && err.response.data) {
         codeRef.current.classList.add(classes.error);
         codeRef.current.innerHTML = err.response.data;
       } else {
-        props.handlePopUp("Connection error.");
+        // display popup
+        props.setPopupContent("Connection error.");
       }
     }
   };
@@ -79,14 +81,16 @@ function EmailVerificationModal(props) {
         authorization(localStorage.getItem("token"))
       );
 
-      props.handlePopUp("Email resend.");
+      // display popup
+      props.setPopupContent("Email resend.");
     } catch (err) {
       // Display backend exeptions
       if (err.response && err.response.data) {
         codeRef.current.classList.add(classes.error);
         codeRef.current.innerHTML = err.response.data;
       } else {
-        props.handlePopUp("Connection error.");
+        // display popup
+        props.setPopupContent("Connection error.");
       }
     }
   };

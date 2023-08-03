@@ -40,7 +40,7 @@ function CoinFormModal(props) {
       <div className={classes.grid}>
         <ul>
           {apiCoins.map((coin, index) => (
-            <li key={index} style={{ opacity: coin.opacity }}>
+            <li key={coin.id} style={{ opacity: coin.opacity }}>
               <div>
                 <img src={coin.icon} />
                 <p>{coin.symbol}</p>

@@ -6,6 +6,7 @@ import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import {
   randomColor,
   makeFullDate,
+  makeDuration,
 } from "../../../Shared/functions/extra-functions";
 import { GameStatus } from "../ManageGamePageOptions";
 
@@ -47,8 +48,9 @@ function Details(props) {
         authorization(localStorage.getItem("token"))
       );
 
+      localStorage.setItem("gameName", name);
       navigate(`/game/${name}`, {
-        state: { gameName: name },
+        state: { popup: "Game started!" },
       });
     } catch (err) {
       console.log(err);
@@ -56,8 +58,9 @@ function Details(props) {
   };
 
   const onJoinGame = (name) => {
+    localStorage.setItem("gameName", name);
     navigate(`/game/${name}`, {
-      state: { gameName: name },
+      state: { gameName: name, popup: "Game joined." },
     });
   };
 
@@ -96,7 +99,7 @@ function Details(props) {
               </p>
               <p>
                 <span>Duration: </span>
-                {gameDetails.duration}
+                {makeDuration(gameDetails.duration)}
               </p>
               <p>
                 <span>Created At: </span>
@@ -137,10 +140,10 @@ function Details(props) {
           <div className={classes["details__content__grid__column"]}>
             <div className={classes.players}>
               <div className={classes["players__title"]}>Players</div>
-              {gameDetails.players.map((player, index) => {
+              {gameDetails.players.map((player) => {
                 let color = randomColor();
                 return (
-                  <p key={index}>
+                  <p key={player.name}>
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <circle fill="none" stroke={color} cx="12" cy="7" r="5" />
                       <path
@@ -156,7 +159,7 @@ function Details(props) {
             </div>
             <div className={classes.coins}>
               <div className={classes["coins__title"]}>Coins</div>
-              {gameDetails.coins.map((coin, index) => {
+              {gameDetails.coins.map((coin) => {
                 let color = randomColor();
 
                 const coinElement = coin.imageUrl ? (
@@ -175,7 +178,7 @@ function Details(props) {
                 );
 
                 return (
-                  <p key={index}>
+                  <p key={coin.name}>
                     {coinElement}
                     <span>{coin.name}</span>
                   </p>

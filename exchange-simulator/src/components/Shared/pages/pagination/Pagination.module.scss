@@ -5,7 +5,6 @@
   width: 100%;
   padding: 1rem;
   background-color: $grey-color9;
-  // background-color: rgba(#0f0, 0.1);
   z-index: 2;
 
   button {
@@ -17,8 +16,7 @@
     border-radius: 100%;
 
     svg {
-      width: 4rem;
-      height: 4rem;
+      height: 1.2rem;
     }
   }
 
@@ -28,5 +26,15 @@
     height: 100%;
     aspect-ratio: 1/1;
     border-radius: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagination {
+    button {
+      svg {
+        height: 1.6rem;
+      }
+    }
   }
 }

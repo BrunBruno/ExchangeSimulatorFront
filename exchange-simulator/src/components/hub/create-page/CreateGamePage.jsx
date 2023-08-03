@@ -173,7 +173,7 @@ function CreateGamePage() {
       );
 
       // go to hub
-      navigate("/hub", {
+      navigate("/hub/manage", {
         state: { popup: "Game created." },
       });
     } catch (err) {

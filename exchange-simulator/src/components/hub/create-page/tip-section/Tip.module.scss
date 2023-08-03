@@ -24,9 +24,14 @@
     transition: all 0.1s;
     background-color: $grey-color8;
     pointer-events: all;
+    text-align: justify;
 
     &:hover {
       cursor: pointer;
+    }
+
+    svg {
+      height: 2rem;
     }
   }
 

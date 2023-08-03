@@ -110,7 +110,7 @@
         }
 
         button {
-          @include actionButton(25%);
+          @include arrowButton(2rem);
           position: absolute;
           bottom: 0;
           right: 0;

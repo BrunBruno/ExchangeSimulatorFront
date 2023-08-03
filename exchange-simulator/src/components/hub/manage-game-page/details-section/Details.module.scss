@@ -121,7 +121,7 @@
           }
 
           button {
-            @include actionButton(0);
+            @include actionButton;
             justify-self: end;
             font-size: 2rem;
           }

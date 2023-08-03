@@ -63,7 +63,9 @@ function SignInModal(props) {
       if (!isEmailVerified.data.isEmailVerified) {
         // go to email verification
         props.handleEmailVerificationModal(true);
-        props.handlePopUp("Please verify email.");
+
+        // display popup
+        props.setPopupContent("Please verify email.");
       } else {
         // go to hub page
         navigate("/hub");
@@ -75,7 +77,8 @@ function SignInModal(props) {
         emailErrRef.current.classList.add(classes.error);
         emailErrRef.current.innerHTML = err.response.data;
       } else {
-        props.handlePopUp("Connection error.");
+        // display popup
+        props.setPopupContent("Connection error.");
       }
     }
   };

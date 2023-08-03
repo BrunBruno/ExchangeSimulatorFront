@@ -58,6 +58,16 @@
           display: none;
         }
 
+        .empty-list-info {
+          @include flexBlock(row, 1rem, start, center);
+          margin: auto;
+          font-size: 2rem;
+
+          svg {
+            height: 1rem;
+          }
+        }
+
         .coin {
           @include flexBlock(row, 0.5rem, start, center);
           @include roundedBlock(1rem, 1rem);
@@ -116,7 +126,7 @@
 
     // confirm button
     button {
-      @include actionButton(0);
+      @include actionButton;
       font-size: 3rem;
       border-width: 1rem;
       margin: 2rem;
@@ -129,6 +139,7 @@
         border-color: #992617;
         color: #992617;
         background-color: $grey-color0;
+        animation: none;
         filter: invert(1);
       }
     }

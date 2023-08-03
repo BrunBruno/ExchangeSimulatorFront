@@ -7,7 +7,7 @@
   border-radius: 2rem;
   border-bottom: solid 0.5rem $main-color0;
   overflow: hidden;
-  transform: scale(0.96);
+  transform: scale(1);
   transition: opacity 1s, transform 0.3s;
 
   &:hover {
@@ -98,7 +98,7 @@
       }
 
       button {
-        @include actionButton(0);
+        @include actionButton;
         position: absolute;
         bottom: 0;
         right: 0;

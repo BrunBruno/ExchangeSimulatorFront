@@ -11,47 +11,39 @@ import Hero from "./hero-section/Hero";
 import SignInModal from "./modal-section/SignInModal";
 import RegisterModal from "./modal-section/RegisterModal";
 import EmailVerificationModal from "./modal-section/EmailVerificationModal";
+import usePopup from "../../Shared/hooks/usePopup ";
 
 function HomePage() {
   const location = useLocation();
 
+  const [userIsPresent, setUserIspresent] = useState(false);
+
+  // modals options
   const signInModalRef = useRef(null);
   const registerModalRef = useRef(null);
   const emailVerificationModalRef = useRef(null);
-  const infoPpupRef = useRef(null);
-
   const [signInModalOn, setSignInModalOn] = useState(false);
   const [registerModalOn, setRegisterModalOn] = useState(false);
-  const [userIsPresent, setUserIspresent] = useState(false);
 
-  const handlePopUp = (message) => {
-    if (infoPpupRef.current) {
-      infoPpupRef.current.classList.remove(classes["hidden-popup"]);
-      infoPpupRef.current.innerHTML = message;
-      setTimeout(() => {
-        infoPpupRef.current.classList.add(classes["hidden-popup"]);
-        setTimeout(() => {
-          infoPpupRef.current.innerHTML = "";
-        }, 2000);
-      }, 3000);
-
-      if (location.state && location.state.openEmailVerification) {
-        handleEmailVerificationModal(true);
-      }
-
-      const updatedState = { ...location.state };
-      delete updatedState.popup;
-
-      window.history.replaceState(updatedState, "", location.pathname);
-    }
-  };
+  // pop up options
+  const [infoPpupRef, popupContent, setPopupContent] = usePopup(
+    classes["hidden-popup"]
+  );
 
   useEffect(() => {
-    if (location.state && location.state.popup) {
-      handlePopUp(location.state.popup);
+    if (location.state) {
+      if (location.state.openEmailVerification) {
+        handleEmailVerificationModal(true);
+
+        const updatedState = { ...location.state };
+        delete updatedState.openEmailVerification;
+
+        window.history.replaceState(updatedState, "", location.pathname);
+      }
     }
   }, [location.state]);
 
+  // check if user is present
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
     if (userInfo) {
@@ -110,18 +102,21 @@ function HomePage() {
         handleSignInModal={handleSignInModal}
         handleEmailVerificationModal={handleEmailVerificationModal}
         modalRef={signInModalRef}
-        handlePopUp={handlePopUp}
+        // handlePopUp={handlePopUp}
+        setPopupContent={setPopupContent}
       />
       <RegisterModal
         handleRegisterModal={handleRegisterModal}
         handleEmailVerificationModal={handleEmailVerificationModal}
         modalRef={registerModalRef}
-        handlePopUp={handlePopUp}
+        // handlePopUp={handlePopUp}
+        setPopupContent={setPopupContent}
       />
       <EmailVerificationModal
         handleEmailVerificationModal={handleEmailVerificationModal}
         modalRef={emailVerificationModalRef}
-        handlePopUp={handlePopUp}
+        // handlePopUp={handlePopUp}
+        setPopupContent={setPopupContent}
       />
 
       <Hero
@@ -132,7 +127,9 @@ function HomePage() {
       <div
         ref={infoPpupRef}
         className={`${classes.popup} ${classes["hidden-popup"]}`}
-      ></div>
+      >
+        {popupContent}
+      </div>
     </div>
   );
 }

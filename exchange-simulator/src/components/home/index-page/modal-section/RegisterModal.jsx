@@ -101,15 +101,16 @@ function RegisterModal(props) {
       // go to email verification
       props.handleEmailVerificationModal(true);
 
-      // display pop up
-      props.handlePopUp("Account created.");
+      // display popup
+      props.setPopupContent("Account created.");
     } catch (err) {
       // Display backend exeptions
       if (err.response && err.response.data) {
         emailErrRef.current.classList.add(classes.error);
         emailErrRef.current.innerHTML = err.response.data;
       } else {
-        props.handlePopUp("Connection error.");
+        // display popup
+        props.setPopupContent("Connection error.");
       }
     }
   };

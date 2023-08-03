@@ -48,7 +48,7 @@
     margin: 1rem;
 
     button {
-      @include actionButton(0);
+      @include actionButton;
       padding: 0.6rem 1.2rem;
       border-width: 0.2rem;
       color: $grey-color5;

@@ -80,8 +80,7 @@ function Pagination({ currentPage, totalPages, onPageChange, fontSize }) {
         className={classes.currentPage}
         style={{ fontSize: `${fontSize}rem` }}
       >
-        {/* <ArrowLeftSvg /> */}
-        {"<"}
+        <ArrowLeftSvg />
       </button>
 
       {renderPageButtons(
@@ -94,8 +93,7 @@ function Pagination({ currentPage, totalPages, onPageChange, fontSize }) {
         className={classes.currentPage}
         style={{ fontSize: `${fontSize}rem` }}
       >
-        {/* <ArrowRightSvg /> */}
-        {">"}
+        <ArrowRightSvg />
       </button>
     </div>
   );

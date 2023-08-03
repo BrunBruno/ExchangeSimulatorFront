@@ -11,6 +11,7 @@ import ComboBox from "./ComboBox";
 import GameFormIcons from "./GameFormIcons";
 import XSvg from "../../../Shared/svgs/XSvg";
 import PlusSvg from "../../../Shared/svgs/PlusSvg";
+import ArrowRightSvg from "../../../Shared/svgs/ArrowRightSvg";
 
 function GameForm(props) {
   return (
@@ -77,20 +78,31 @@ function GameForm(props) {
         </span>
         <div className={classes["row__list"]}>
           <div className={classes.list} ref={props.coinListRef}>
-            {props.coinList.map((coin, index) => (
-              <div key={index} className={classes.coin}>
-                <img src={coin.imageUrl} />
-                {coin.quantity} {coin.name}
-                <div
-                  className={classes.x}
-                  onClick={() => {
-                    props.onDeleteCoin(index);
-                  }}
-                >
-                  <XSvg />
+            {props.coinList.length > 0 ? (
+              props.coinList.map((coin, index) => (
+                <div key={coin.name} className={classes.coin}>
+                  <img src={coin.imageUrl} />
+                  {coin.quantity} {coin.name}
+                  <div
+                    className={classes.x}
+                    onClick={() => {
+                      props.onDeleteCoin(index);
+                    }}
+                  >
+                    <XSvg />
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className={classes["empty-list-info"]}>
+                <span>Please select coins</span>
+                <p>
+                  <ArrowRightSvg />
+                  <ArrowRightSvg />
+                  <ArrowRightSvg />
+                </p>
               </div>
-            ))}
+            )}
           </div>
           <div
             onClick={props.onCoinMenuExpand}

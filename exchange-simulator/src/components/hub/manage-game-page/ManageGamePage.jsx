@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
+import usePopup from "../../Shared/hooks/usePopup ";
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
 import { GameSortOption } from "./ManageGamePageOptions";
 
@@ -34,6 +35,10 @@ function ManageGamePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentSortOption, setCurrentSortOption] = useState(
     GameSortOption.Date
+  );
+
+  const [infoPpupRef, popupContent, setPopupContent] = usePopup(
+    classes["hidden-popup"]
   );
 
   const GetData = useCallback(async () => {
@@ -157,9 +162,9 @@ function ManageGamePage() {
         <div className={classes["manage__games__list"]}>
           {gameList.length > 0 ? (
             <ul>
-              {gameList.map((game, index) => (
+              {gameList.map((game) => (
                 <li
-                  key={index}
+                  key={game.name}
                   onClick={() => {
                     onSelectGame(game);
                   }}
@@ -202,6 +207,12 @@ function ManageGamePage() {
             onCloseDetails={onCloseDetails}
           />
         )}
+      </div>
+      <div
+        ref={infoPpupRef}
+        className={`${classes.popup} ${classes["hidden-popup"]}`}
+      >
+        {popupContent}
       </div>
     </div>
   );

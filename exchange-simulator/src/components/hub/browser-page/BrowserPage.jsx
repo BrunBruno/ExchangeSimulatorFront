@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
+import usePopup from "../../Shared/hooks/usePopup ";
 import { makeFullDate } from "../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
 import {
@@ -23,6 +24,7 @@ import TimeSvg from "../../Shared/svgs/TimeSvg";
 
 function Browser() {
   const location = useLocation();
+
   const gamesPerPage = 6;
 
   const containerRef = useRef(null);
@@ -46,6 +48,11 @@ function Browser() {
   );
 
   const [gameType, setGameType] = useState(null);
+
+  // popup options
+  const [infoPpupRef, popupContent, setPopupContent] = usePopup(
+    classes["hidden-popup"]
+  );
 
   useEffect(() => {
     const handleWindowResize = () => {
@@ -149,144 +156,143 @@ function Browser() {
   };
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className={classes.browser}>
       <Header containerRef={containerRef} />
-      <div className={classes.browser}>
-        <div className={classes["browser__search"]}>
-          <h2>{location.state.title.replace("-", " ").toUpperCase()}</h2>
-
-          <input
-            type="text"
-            placeholder="Game Name"
-            onChange={onSearchByName}
-          />
-          <input type="text" placeholder="Author" onChange={onSearchByAuthor} />
-          <div className={classes.radios}>
-            <label>
-              <input
-                type="radio"
-                value={GameSortOption.Date}
-                checked={currentSortOption === GameSortOption.Date}
-                onChange={onSelectSortType}
-                name="sortOption"
-              />
-              <span>Date</span>
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={GameSortOption.Name}
-                checked={currentSortOption === GameSortOption.Name}
-                onChange={onSelectSortType}
-                name="sortOption"
-              />
-              <span>Name</span>
-            </label>
-            <label>
-              <input
-                type="radio"
-                value={GameSortOption.Owner}
-                checked={currentSortOption === GameSortOption.Owner}
-                onChange={onSelectSortType}
-                name="sortOption"
-              />
-              <span>Owner</span>
-            </label>
+      <div className={classes["browser__search"]}>
+        <h2>{location.state.title.replace("-", " ").toUpperCase()}</h2>
+        <input type="text" placeholder="Game Name" onChange={onSearchByName} />
+        <input type="text" placeholder="Author" onChange={onSearchByAuthor} />
+        <div className={classes.radios}>
+          <label>
+            <input
+              type="radio"
+              value={GameSortOption.Date}
+              checked={currentSortOption === GameSortOption.Date}
+              onChange={onSelectSortType}
+              name="sortOption"
+            />
+            <span>Date</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              value={GameSortOption.Name}
+              checked={currentSortOption === GameSortOption.Name}
+              onChange={onSelectSortType}
+              name="sortOption"
+            />
+            <span>Name</span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              value={GameSortOption.Owner}
+              checked={currentSortOption === GameSortOption.Owner}
+              onChange={onSelectSortType}
+              name="sortOption"
+            />
+            <span>Owner</span>
+          </label>
+        </div>
+        {totalGames === 1 ? (
+          <p>{totalGames} game found.</p>
+        ) : (
+          <p>{totalGames} games found.</p>
+        )}
+        {selectedGame === null ? (
+          ""
+        ) : (
+          <div className={classes["browser__search__details"]}>
+            <p>
+              <span>Game: </span>
+              {selectedGame.name}
+            </p>
+            <p>
+              <span>Creator: </span>
+              {selectedGame.ownerName}
+            </p>
+            <p>
+              <span>Description: </span>
+              {selectedGame.description}
+            </p>
+            <p>
+              <span>Available spots: </span>
+              {selectedGame.availableSpots}
+            </p>
+            <p>
+              <span>Created At: </span>
+              {makeFullDate(selectedGame.createdAt)}
+            </p>
           </div>
-          {totalGames === 1 ? (
-            <p>{totalGames} game found.</p>
+        )}
+        <div className={classes.backgroud}>
+          {gameType === GameTypes.current ? (
+            <GameControllerSvg />
+          ) : gameType === GameTypes.available ? (
+            <SearchSvg />
+          ) : gameType === GameTypes.previous ? (
+            <TimeSvg />
           ) : (
-            <p>{totalGames} games found.</p>
-          )}
-          {selectedGame === null ? (
             ""
-          ) : (
-            <div className={classes["browser__search__details"]}>
-              <p>
-                <span>Game: </span>
-                {selectedGame.name}
-              </p>
-              <p>
-                <span>Creator: </span>
-                {selectedGame.ownerName}
-              </p>
-              <p>
-                <span>Description: </span>
-                {selectedGame.description}
-              </p>
-              <p>
-                <span>Available spots: </span>
-                {selectedGame.availableSpots}
-              </p>
-              <p>
-                <span>Created At: </span>
-                {makeFullDate(selectedGame.createdAt)}
-              </p>
-            </div>
           )}
-          <div className={classes.backgroud}>
-            {gameType === GameTypes.current ? (
-              <GameControllerSvg />
-            ) : gameType === GameTypes.available ? (
-              <SearchSvg />
-            ) : gameType === GameTypes.previous ? (
-              <TimeSvg />
-            ) : (
-              ""
-            )}
-          </div>
         </div>
-        <div className={classes["browser__cards"]}>
-          <div
-            ref={cardsConatinerRef}
-            className={classes["browser__cards__container"]}
-          >
-            {displayError ? (
-              <div>
-                <div className={classes.error}>Connection error.</div>
-              </div>
-            ) : (
-              <>
-                {gameList.length === 0 ? (
-                  <div>
-                    <div className={classes.error}>No games found.</div>
-                  </div>
-                ) : (
-                  <ul style={ulStyles}>
-                    {gameList.map((game, index) => {
-                      let joinOption;
+      </div>
+      <div className={classes["browser__cards"]}>
+        <div
+          ref={cardsConatinerRef}
+          className={classes["browser__cards__container"]}
+        >
+          {displayError ? (
+            <div>
+              <div className={classes.error}>Connection error.</div>
+            </div>
+          ) : (
+            <>
+              {gameList.length === 0 ? (
+                <div>
+                  <div className={classes.error}>No games found.</div>
+                </div>
+              ) : (
+                <ul style={ulStyles}>
+                  {gameList.map((game, index) => {
+                    let joinOption;
 
-                      if (gameType === GameTypes.current) {
-                        joinOption = JoiningOptions.rejoin;
-                      } else if (gameType === GameTypes.available) {
-                        joinOption = JoiningOptions.join;
-                      } else if (gameType === GameTypes.previous) {
-                        joinOption = JoiningOptions.no;
-                      }
+                    if (gameType === GameTypes.current) {
+                      joinOption = JoiningOptions.rejoin;
+                    } else if (gameType === GameTypes.available) {
+                      joinOption = JoiningOptions.join;
+                    } else if (gameType === GameTypes.previous) {
+                      joinOption = JoiningOptions.no;
+                    }
 
-                      return (
-                        <Card
-                          key={index}
-                          game={game}
-                          cardRef={(el) => (cardsRefs.current[index] = el)}
-                          index={index}
-                          join={joinOption}
-                          onSelectGame={onSelectGame}
-                        />
-                      );
-                    })}
-                  </ul>
-                )}
-              </>
-            )}
-          </div>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={onPageChange}
-            fontSize={1.6}
-          />
+                    return (
+                      <Card
+                        key={index}
+                        game={game}
+                        cardRef={(el) => (cardsRefs.current[index] = el)}
+                        index={index}
+                        join={joinOption}
+                        onSelectGame={onSelectGame}
+                      />
+                    );
+                  })}
+                </ul>
+              )}
+            </>
+          )}
         </div>
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+          fontSize={1.6}
+        />
+      </div>
+      <div
+        ref={infoPpupRef}
+        className={`${classes.popup} ${classes["hidden-popup"]}`}
+      >
+        {popupContent}
       </div>
     </div>
   );

@@ -30,8 +30,10 @@ function Tip() {
   };
 
   const onShowContent = () => {
-    introRef.current.classList.remove(classes["hidden-conetnt"]);
-    setIcon(<ArrowRightSvg />);
+    if (introRef.current) {
+      introRef.current.classList.remove(classes["hidden-conetnt"]);
+      setIcon(<ArrowRightSvg />);
+    }
   };
 
   return (

@@ -68,10 +68,12 @@
       transform: translate(-50%, -50%);
       z-index: 20;
       width: calc(80% / 2);
+      height: 50rem;
       margin: auto;
       overflow: hidden;
       background-color: rgba($main-color9, 0.9);
       border: solid 0.2rem $main-color0;
+      transition: all 0.3s;
     }
 
     .hidden {
@@ -100,6 +102,24 @@
       .create-coin {
         left: 50%;
         width: 80%;
+        height: 60rem;
+      }
+
+      .hidden {
+        width: 0;
+        height: 0;
+        padding: 0;
+        border: 0;
+      }
+    }
+  }
+}
+
+@media (max-height: 400px) {
+  .container {
+    &__content {
+      .create-coin {
+        position: absolute;
       }
     }
   }
