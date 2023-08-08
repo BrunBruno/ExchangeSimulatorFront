@@ -1,19 +1,14 @@
-export const randomColor = () => {
-  const colors = [
-    "#F5A623",
-    "#F8E71C",
-    "#7ED321",
-    "#BD10E0",
-    "#9013FE",
-    "#4A90E2",
-    "#50E3C2",
-    "#B8E986",
-    "#FF686B",
-    "#FFD97D",
-    "#66D9EF",
-    "#FF75A0",
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
+export const randomColor = (str) => {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  const r = (hash & 0xff0000) >> 16;
+  const g = (hash & 0x00ff00) >> 8;
+  const b = hash & 0x0000ff;
+
+  return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, "0")}`;
 };
 
 export const showDecimal = (number, position) => {
@@ -54,4 +49,10 @@ export const makeDuration = (duration) => {
     }
   }
   return niceDuration;
+};
+
+let timeOut;
+export const delayAction = (func, delay) => {
+  clearTimeout(timeOut);
+  timeOut = setTimeout(func, delay);
 };

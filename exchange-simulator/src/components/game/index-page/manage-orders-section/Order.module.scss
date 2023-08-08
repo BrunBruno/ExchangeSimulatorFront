@@ -68,3 +68,27 @@
     }
   }
 }
+
+@media (max-width: 800px) {
+  .order {
+    padding-bottom: 6rem;
+
+    h3 {
+      font-size: 2.6rem;
+
+      img {
+        height: 2.2rem;
+      }
+    }
+
+    p {
+      font-size: 2rem;
+    }
+
+    .buttons {
+      button {
+        font-size: 2rem;
+      }
+    }
+  }
+}

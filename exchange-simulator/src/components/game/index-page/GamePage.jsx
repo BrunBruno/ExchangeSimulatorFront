@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
 import * as signalR from "@microsoft/signalr";
 import axios from "axios";
 
@@ -15,15 +14,14 @@ import Panel from "./panel-section/Panel";
 import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
 import ManageOrders from "./manage-orders-section/ManageOrders";
 import Details from "./details-section/Details";
+import Messenger from "./messenger/Messenger";
 
 function GamePage() {
-  const location = useLocation();
-
   const connectionRef = useRef(null);
   const manageOrdersRef = useRef(null);
   const gridRef = useRef(null);
 
-  const [gameName, setGameName] = useState(localStorage.getItem("gameName"));
+  const [gameName, setGameName] = useState(sessionStorage.getItem("gameName"));
   const [playerInfo, setPlayerInfo] = useState(null);
 
   const [infoPpupRef, popupContent, setPopupContent] = usePopup(
@@ -44,6 +42,7 @@ function GamePage() {
     await connection.invoke("JoinGame", gameName);
 
     connection.on("OrdersChanged", () => {
+      console.log("shoudl  chnage");
       GetPlayerInfo();
     });
   };
@@ -128,7 +127,7 @@ function GamePage() {
           )}
           <Details playerInfo={playerInfo} />
         </div>
-        {/* <Messenger playerInfo={playerInfo} /> */}
+        <Messenger playerInfo={playerInfo} />
       </div>
       <div
         ref={infoPpupRef}

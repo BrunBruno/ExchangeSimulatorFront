@@ -110,14 +110,14 @@ function SignInModal(props) {
         <div className={classes["form-container"]}>
           <div>
             <span>Email</span>
-            <input type="text" name="email" autoComplete=""></input>
+            <input type="text" name="email" autoComplete="off"></input>
             <span ref={emailErrRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>
 
           <div>
             <span>Password</span>
-            <input type="password" name="password" autoComplete=""></input>
+            <input type="password" name="password" autoComplete="off"></input>
             <span ref={passwordErrRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>

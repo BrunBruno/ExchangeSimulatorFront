@@ -25,6 +25,7 @@ function Order(props) {
     try {
       await axios.patch(
         `${baseUrl}/game/${props.gameName}/order/${order.id}`,
+        {},
         authorization(localStorage.getItem("token"))
       );
 

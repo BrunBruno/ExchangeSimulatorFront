@@ -47,8 +47,9 @@ function Card(props) {
   const onReJoinGame = async (event) => {
     event.preventDefault();
 
+    sessionStorage.setItem("gameName", props.game.name);
     navigate(`/game/${props.game.name}`, {
-      state: { gameName: props.game.name },
+      state: { gameName: props.game.name, popup: "Game joined." },
     });
   };
 

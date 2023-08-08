@@ -4,6 +4,7 @@ import axios from "axios";
 import usePopup from "../../Shared/hooks/usePopup ";
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
 import { GameSortOption } from "./ManageGamePageOptions";
+import { delayAction } from "../../Shared/functions/extra-functions";
 
 import classes from "./ManageGamePage.module.scss";
 
@@ -120,7 +121,11 @@ function ManageGamePage() {
             <input
               type="text"
               placeholder="Game Name"
-              onChange={onSearchByName}
+              onChange={(event) => {
+                delayAction(() => {
+                  onSearchByName(event);
+                }, 500);
+              }}
             />
             <button type="button" onClick={toggleDropdown}>
               <SortOptionSvg />
@@ -174,11 +179,7 @@ function ManageGamePage() {
               ))}
             </ul>
           ) : (
-            <div className={classes.nogames}>
-              You do not have any games!
-              <br />
-              Please create one to manage it.
-            </div>
+            <div className={classes.nogames}>No games found.</div>
           )}
         </div>
         <Pagination

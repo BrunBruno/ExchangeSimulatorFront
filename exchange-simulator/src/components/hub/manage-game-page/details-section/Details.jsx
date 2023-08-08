@@ -13,6 +13,8 @@ import { GameStatus } from "../ManageGamePageOptions";
 import classes from "./Details.module.scss";
 
 import XSvg from "../../../Shared/svgs/XSvg";
+import CoinSvg from "../../../Shared/svgs/CoinSvg";
+import PlayerSvg from "../../../Shared/svgs/PlayerSvg";
 
 function Details(props) {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ function Details(props) {
         authorization(localStorage.getItem("token"))
       );
 
-      localStorage.setItem("gameName", name);
+      sessionStorage.setItem("gameName", name);
       navigate(`/game/${name}`, {
         state: { popup: "Game started!" },
       });
@@ -58,7 +60,7 @@ function Details(props) {
   };
 
   const onJoinGame = (name) => {
-    localStorage.setItem("gameName", name);
+    sessionStorage.setItem("gameName", name);
     navigate(`/game/${name}`, {
       state: { gameName: name, popup: "Game joined." },
     });
@@ -140,41 +142,20 @@ function Details(props) {
           <div className={classes["details__content__grid__column"]}>
             <div className={classes.players}>
               <div className={classes["players__title"]}>Players</div>
-              {gameDetails.players.map((player) => {
-                let color = randomColor();
-                return (
-                  <p key={player.name}>
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <circle fill="none" stroke={color} cx="12" cy="7" r="5" />
-                      <path
-                        fill="none"
-                        stroke={color}
-                        d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"
-                      />
-                    </svg>
-                    {player.name}
-                  </p>
-                );
-              })}
+              {gameDetails.players.map((player) => (
+                <p key={player.name}>
+                  <PlayerSvg color={randomColor(player.name)} />
+                  {player.name}
+                </p>
+              ))}
             </div>
             <div className={classes.coins}>
               <div className={classes["coins__title"]}>Coins</div>
               {gameDetails.coins.map((coin) => {
-                let color = randomColor();
-
                 const coinElement = coin.imageUrl ? (
                   <img src={coin.imageUrl} />
                 ) : (
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                      stroke={color}
-                    />
-                  </svg>
+                  <CoinSvg color={randomColor(coin.name)} />
                 );
 
                 return (

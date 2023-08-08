@@ -4,22 +4,33 @@ import axios from "axios";
 
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { onExpandElement } from "../../../Shared/functions/components-function";
-import { showPrecison } from "../../../Shared/functions/extra-functions";
 import { OrderTypes } from "../GamePageOptions";
 
 import classes from "./Panel.module.scss";
+import CoinSvg from "../../../Shared/svgs/CoinSvg";
+import { randomColor } from "../../../Shared/functions/extra-functions";
 
 function Panel(props) {
+  // expan elements refs
   const panelRef = useRef(null);
   const formRef = useRef(null);
   const coinListRef = useRef(null);
+
+  // inputs refs
   const priceRef = useRef(null);
   const quantityRef = useRef(null);
 
-  const [orderType, setOrderType] = useState(0);
-  const [selectedCoin, setSelectedCoin] = useState(
-    props.playerInfo.playerCoins[0]
-  );
+  // order options
+  const [orderType, setOrderType] = useState(-1);
+
+  // player info states
+  const [playerInfo, setPlayerInfo] = useState(null);
+  const [selectedCoin, setSelectedCoin] = useState(null);
+
+  useEffect(() => {
+    setPlayerInfo(props.playerInfo);
+    setSelectedCoin(props.playerInfo.playerCoins[0]);
+  }, [props.playerInfo]);
 
   // inputs options
   const [price, setPrice] = useState(0);
@@ -47,7 +58,7 @@ function Panel(props) {
 
       if (
         order.type === OrderTypes.buy &&
-        props.playerInfo.totalBalance - order.price * order.quantity < 0
+        playerInfo.totalBalance - order.price * order.quantity < 0
       ) {
         console.log("Insufficient assets.");
         priceRef.current.classList.add(classes.error);
@@ -56,7 +67,7 @@ function Panel(props) {
         return;
       }
 
-      const coin = props.playerInfo.playerCoins.find(
+      const coin = playerInfo.playerCoins.find(
         (c) => c.id === order.playerCoinId
       );
       if (
@@ -170,9 +181,7 @@ function Panel(props) {
         !isNaN(parseFloat(priceRef.current.value))
       ) {
         setQuantity(
-          showPrecison(
-            parseFloat(props.playerInfo.totalBalance / priceRef.current.value)
-          )
+          parseFloat(playerInfo.totalBalance / priceRef.current.value)
         );
       } else {
         setQuantity(0);
@@ -181,6 +190,10 @@ function Panel(props) {
       setQuantity(selectedCoin.totalBalance);
     }
   };
+
+  if (!playerInfo || !selectedCoin) {
+    return;
+  }
 
   return (
     <div className={classes.panel}>
@@ -228,36 +241,33 @@ function Panel(props) {
               {selectedCoin.imageUrl ? (
                 <img src={selectedCoin.imageUrl} />
               ) : (
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M12 16H13C13.6667 16 15 15.6 15 14C15 12.4 13.6667 12 13 12H11C10.3333 12 9 11.6 9 10C9 8.4 10.3333 8 11 8H12M12 16H9M12 16V18M15 8H12M12 8V6M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z"
-                    stroke="#fff"
-                  />
-                </svg>
+                <CoinSvg color={randomColor(selectedCoin.name)} />
               )}
             </div>
             <div
               ref={coinListRef}
               className={`${classes["coin-list"]} ${classes["hidden-list"]}`}
             >
-              {props.playerInfo.playerCoins.map((coin, index) => (
+              {playerInfo.playerCoins.map((coin, index) => (
                 <p
                   key={index}
                   onClick={() => {
-                    setSelectedCoin(props.playerInfo.playerCoins[index]);
+                    setSelectedCoin(playerInfo.playerCoins[index]);
                     onExpandCoinList();
                   }}
                 >
-                  <img src={coin.imageUrl} />
+                  {coin.imageUrl ? (
+                    <img src={coin.imageUrl} />
+                  ) : (
+                    <span className={classes.coin}>
+                      <CoinSvg color={randomColor(coin.name)} />
+                    </span>
+                  )}
                   {coin.name}
                 </p>
               ))}
             </div>
-          </h2>{" "}
+          </h2>
           <div className={classes.input}>
             <p>Price:</p>
             <input

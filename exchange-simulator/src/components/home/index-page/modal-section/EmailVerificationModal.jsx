@@ -125,7 +125,7 @@ function EmailVerificationModal(props) {
           </div>
           <div>
             <span>Enter code</span>
-            <input type="number" name="code" autoComplete=""></input>
+            <input type="number" name="code" autoComplete="off"></input>
             <span ref={codeRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>

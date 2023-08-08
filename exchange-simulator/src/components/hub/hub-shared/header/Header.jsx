@@ -5,6 +5,8 @@ import classes from "./Header.module.scss";
 
 import Logo from "../../../Shared/svgs/Logo";
 import LogOutSvg from "../../../Shared/svgs/LogOutSvg";
+import PlayerSvg from "../../../Shared/svgs/PlayerSvg";
+import { randomColor } from "../../../Shared/functions/extra-functions";
 
 function Header(props) {
   const headerRef = useRef(null);
@@ -86,14 +88,7 @@ function Header(props) {
         <ul>
           <li>
             {userInfo === null || userInfo.imageUrl === null ? (
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <circle fill="none" stroke="#e3fafc" cx="12" cy="7" r="5" />
-                <path
-                  fill="none"
-                  stroke="#e3fafc"
-                  d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"
-                />
-              </svg>
+              <PlayerSvg />
             ) : (
               <img src={userInfo.imageUrl} alt="User Avatar" />
             )}

@@ -28,6 +28,14 @@
     button {
       bottom: -6rem;
     }
+
+    &:last-child {
+      margin-bottom: 30rem;
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 20rem;
   }
 
   &__header {
@@ -143,6 +151,10 @@
     padding: 2rem;
     padding-bottom: 6rem;
 
+    &:not(:has(.order__action.hidden-action)) {
+      margin-bottom: 10rem;
+    }
+
     h3 {
       font-size: 3.2rem;
 
@@ -158,6 +170,10 @@
     button {
       font-size: 3rem;
       padding: 0.6rem 2.4rem;
+    }
+
+    &__action {
+      height: 10rem;
     }
   }
 }

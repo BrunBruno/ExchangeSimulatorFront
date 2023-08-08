@@ -144,19 +144,19 @@ function RegisterModal(props) {
         <div className={classes["form-container"]}>
           <div>
             <span>Email</span>
-            <input type="text" name="email"></input>
+            <input type="text" name="email" autoComplete="off"></input>
             <span ref={emailErrRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>
           <div>
             <span>Nick Name</span>
-            <input type="text" name="userName" autoComplete="userName"></input>
+            <input type="text" name="userName" autoComplete="off"></input>
             <span ref={userNameErrRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>
           <div>
             <span>Password</span>
-            <input type="password" name="password" autoComplete=""></input>
+            <input type="password" name="password" autoComplete="off"></input>
             <span ref={passwordErrRef}></span>
             <ModalArrowSvg className={classes.arrow} />
           </div>
@@ -165,7 +165,7 @@ function RegisterModal(props) {
             <input
               type="password"
               name="confirmPassword"
-              autoComplete=""
+              autoComplete="off"
             ></input>
             <ModalArrowSvg className={classes.arrow} />
           </div>

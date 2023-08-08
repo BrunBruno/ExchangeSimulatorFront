@@ -3,7 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import usePopup from "../../Shared/hooks/usePopup ";
-import { makeFullDate } from "../../Shared/functions/extra-functions";
+import {
+  makeFullDate,
+  delayAction,
+} from "../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../Shared/options/ApiOptions";
 import {
   GameSortOption,
@@ -17,6 +20,7 @@ import cardclasses from "./card-section/Card.module.scss";
 import Card from "./card-section/Card";
 import Header from "../hub-shared/header/Header";
 import Pagination from "../../Shared/pages/pagination/Pagination";
+import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
 
 import SearchSvg from "../../Shared/svgs/SearchSvg";
 import GameControllerSvg from "../../Shared/svgs/GameControllerSvg";
@@ -32,6 +36,7 @@ function Browser() {
   const cardsRefs = useRef([]);
 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [pageTitle, setPageTitle] = useState("");
 
   const [gameList, setGameList] = useState([]);
   const [selectedGame, setSelectedGame] = useState(null);
@@ -48,6 +53,8 @@ function Browser() {
   );
 
   const [gameType, setGameType] = useState(null);
+
+  const [noGameContent, setNoGamesContent] = useState(<LoadingPage />);
 
   // popup options
   const [infoPpupRef, popupContent, setPopupContent] = usePopup(
@@ -85,8 +92,26 @@ function Browser() {
   }
 
   useEffect(() => {
-    setGameType(location.state.title.toLowerCase().replace(" ", "-"));
-  }, [location.state.title]);
+    if (location.state.title) {
+      setPageTitle(location.state.title);
+      setGameType(location.state.title.toLowerCase().replace(" ", "-"));
+      setNoGamesContent(<LoadingPage />);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setNoGamesContent(
+        <div>
+          <div className={classes.error}>No games found.</div>
+        </div>
+      );
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [noGameContent]);
 
   const GetData = useCallback(async () => {
     if (gameType !== null) {
@@ -155,13 +180,33 @@ function Browser() {
     }, 100);
   };
 
+  if (!pageTitle) {
+    return <LoadingPage />;
+  }
+
   return (
     <div ref={containerRef} className={classes.browser}>
       <Header containerRef={containerRef} />
       <div className={classes["browser__search"]}>
-        <h2>{location.state.title.replace("-", " ").toUpperCase()}</h2>
-        <input type="text" placeholder="Game Name" onChange={onSearchByName} />
-        <input type="text" placeholder="Author" onChange={onSearchByAuthor} />
+        <h2>{pageTitle.toUpperCase()}</h2>
+        <input
+          type="text"
+          placeholder="Game Name"
+          onChange={(event) => {
+            delayAction(() => {
+              onSearchByName(event);
+            }, 500);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="Author"
+          onChange={(event) => {
+            delayAction(() => {
+              onSearchByAuthor(event);
+            }, 500);
+          }}
+        />
         <div className={classes.radios}>
           <label>
             <input
@@ -249,9 +294,7 @@ function Browser() {
           ) : (
             <>
               {gameList.length === 0 ? (
-                <div>
-                  <div className={classes.error}>No games found.</div>
-                </div>
+                noGameContent
               ) : (
                 <ul style={ulStyles}>
                   {gameList.map((game, index) => {

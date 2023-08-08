@@ -178,6 +178,14 @@
             img {
               height: 1.2rem;
             }
+
+            .coin {
+              width: 2rem;
+              height: 2rem;
+              svg {
+                height: 100%;
+              }
+            }
           }
         }
 
@@ -247,10 +255,10 @@
 
 @media (max-width: 800px) {
   .panel {
-    height: 24rem;
+    height: 26rem;
 
     &__actions {
-      padding-top: 10rem;
+      padding-top: 12rem;
     }
   }
 }

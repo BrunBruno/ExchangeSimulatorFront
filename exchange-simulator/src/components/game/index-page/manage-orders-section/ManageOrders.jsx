@@ -9,7 +9,6 @@ import {
 import axios from "axios";
 
 import { onExpandElement } from "../../../Shared/functions/components-function";
-import { showPrecison } from "../../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { OrderTypes, OrderStatus } from "../GamePageOptions";
 

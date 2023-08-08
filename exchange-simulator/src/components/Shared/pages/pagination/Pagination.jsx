@@ -25,10 +25,10 @@ function Pagination({ currentPage, totalPages, onPageChange, fontSize }) {
 
       if (startPage <= 1) {
         startPage = 1;
-        endPage = buttonsToShow + 2;
+        endPage = Math.min(totalPages, buttonsToShow);
       } else if (endPage >= totalPages) {
         endPage = totalPages;
-        startPage = totalPages - buttonsToShow - 1;
+        startPage = Math.max(1, totalPages - buttonsToShow + 1);
       }
       return (
         <>

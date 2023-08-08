@@ -25,7 +25,7 @@ function HubPage() {
       <Header containerRef={containerRef} />
       <Intro />
       <Games />
-      <Review containerRef={containerRef} />
+      <Review containerRef={containerRef} setPopupContent={setPopupContent} />
       <Tutorial />
       <Ranking />
       <Footer containerRef={containerRef} />

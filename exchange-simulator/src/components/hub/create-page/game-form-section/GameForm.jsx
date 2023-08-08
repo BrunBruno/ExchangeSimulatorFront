@@ -25,7 +25,7 @@ function GameForm(props) {
           type="text"
           placeholder="New Game"
           name="gameName"
-          autoComplete="gameName"
+          autoComplete="off"
         />
       </div>
       <div className={classes.row}>
@@ -37,7 +37,7 @@ function GameForm(props) {
           type="password"
           placeholder=""
           name="password"
-          autoComplete="password"
+          autoComplete="off"
         />
       </div>
       <div className={classes.row}>

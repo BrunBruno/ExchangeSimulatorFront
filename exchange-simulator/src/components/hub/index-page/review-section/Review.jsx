@@ -52,7 +52,9 @@ function Review(props) {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.remove(classes["hidden-content"]);
-          }, 500);
+          }, 100);
+
+          observer.unobserve(entry.target);
         }
       });
     });
@@ -60,6 +62,12 @@ function Review(props) {
     if (contentRef.current) {
       observer.observe(contentRef.current);
     }
+
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
   }, [contentRef]);
 
   useEffect(() => {
@@ -122,6 +130,7 @@ function Review(props) {
       );
 
       setSelectedStarts(userReview.review);
+      props.setPopupContent("Thank you.");
     } catch (err) {
       console.log(err);
     }
