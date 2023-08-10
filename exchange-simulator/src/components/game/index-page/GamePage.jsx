@@ -23,6 +23,7 @@ function GamePage() {
 
   const [gameName, setGameName] = useState(sessionStorage.getItem("gameName"));
   const [playerInfo, setPlayerInfo] = useState(null);
+  const [coinsPrice, setCoinsPrice] = useState(null);
 
   const [infoPpupRef, popupContent, setPopupContent] = usePopup(
     classes["hidden-popup"]
@@ -66,9 +67,23 @@ function GamePage() {
     }
   };
 
+  const GetPrices = async () => {
+    try {
+      const prices = await axios.get(
+        `${baseUrl}/game/${gameName}/transaction/prices`,
+        authorization(localStorage.getItem("token"))
+      );
+
+      setCoinsPrice(prices.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     connectionInit();
     GetPlayerInfo();
+    GetPrices();
 
     return () => {
       if (connectionRef.current) {
@@ -99,6 +114,7 @@ function GamePage() {
           <Panel
             gameName={gameName}
             playerInfo={playerInfo}
+            prices={coinsPrice}
             connection={connectionRef.current}
             GetOwnerOrders={GetOwnerOrders}
           />
@@ -125,7 +141,7 @@ function GamePage() {
           ) : (
             ""
           )}
-          <Details playerInfo={playerInfo} />
+          <Details gameName={gameName} playerInfo={playerInfo} />
         </div>
         <Messenger playerInfo={playerInfo} />
       </div>

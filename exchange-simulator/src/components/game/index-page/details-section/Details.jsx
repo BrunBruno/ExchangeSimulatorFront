@@ -6,6 +6,8 @@ import classes from "./Details.module.scss";
 
 import Stats from "./Stats";
 import Plot from "./Plot";
+import Ranking from "./Ranking";
+
 import NavIcons from "./NavIcons";
 
 function Details(props) {
@@ -68,7 +70,7 @@ function Details(props) {
       {selectedoption === DetailsOptions.stats ? (
         <Stats playerInfo={props.playerInfo} />
       ) : selectedoption === DetailsOptions.ranking ? (
-        ""
+        <Ranking gameName={props.gameName} />
       ) : selectedoption === DetailsOptions.plot ? (
         <Plot />
       ) : (
