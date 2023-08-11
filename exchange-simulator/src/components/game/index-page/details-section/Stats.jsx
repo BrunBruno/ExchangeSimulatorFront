@@ -28,7 +28,7 @@ function Stats(props) {
         </p>
         <p>
           <span>Total trades: </span>
-          {props.playerInfo.tradesQuantity} ( {props.playerInfo.buyTrades}
+          {props.playerInfo.trades} ( {props.playerInfo.buyTrades}
           <span className={classes.buy}>buy</span>:{" "}
           {props.playerInfo.sellTrades}
           <span className={classes.sell}>sell</span>)

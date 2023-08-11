@@ -1,0 +1,79 @@
+@import "../../../Shared/css/Components.scss";
+
+.tutorial {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(#000, 0.8);
+  z-index: 999;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+
+  .element {
+    position: absolute;
+    max-width: 40rem;
+
+    p {
+      font-size: 2.2rem;
+      text-align: center;
+    }
+    span {
+      font-size: 1.2rem;
+    }
+
+    @mixin buckle {
+      position: absolute;
+      height: 2rem;
+      width: calc(50% + 10rem);
+      bottom: 100%;
+      border-top: solid 0.3rem #aaa;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        height: 2rem;
+        width: 100%;
+        border-bottom: solid 0.3rem #aaa;
+      }
+    }
+
+    .buckleleft {
+      @include buckle;
+      left: -10.1rem;
+      border-top-right-radius: 2rem;
+
+      &::before {
+        left: -2rem;
+        border-bottom-left-radius: 2rem;
+      }
+    }
+    .buckleright {
+      @include buckle;
+      right: -10.1rem;
+      border-top-left-radius: 2rem;
+
+      &::before {
+        right: -2rem;
+        border-bottom-right-radius: 2rem;
+      }
+    }
+
+    .ellipse {
+      position: absolute;
+      left: 0;
+      top: 120%;
+      width: 160%;
+      height: 8rem;
+      border-radius: 100%;
+      border: solid 0.3rem #aaa;
+      rotate: 5deg;
+    }
+
+    svg {
+      height: 5rem;
+    }
+  }
+}

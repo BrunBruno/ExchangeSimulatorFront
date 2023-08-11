@@ -3,7 +3,7 @@ import axios from "axios";
 
 import {
   randomColor,
-  showDecimal,
+  showPrecison,
 } from "../../../Shared/functions/extra-functions";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { OrderTypes } from "../GamePageOptions";
@@ -25,6 +25,7 @@ function Orders(props) {
   const [sellOrdersCount, setSellOrdersCount] = useState(10);
 
   const [selectedCoin, setSelectedCoin] = useState("");
+  const [coinPrice, setCoinPrice] = useState(null);
   const [selectedType, setSelectedtype] = useState(OrderTypes.buy);
   const [playerInfo, setPlayerInfo] = useState(null);
 
@@ -58,11 +59,31 @@ function Orders(props) {
     }
   };
 
+  const GetPrice = async () => {
+    if (selectedCoin !== "" && selectedCoin !== undefined) {
+      try {
+        const price = await axios.get(
+          `${baseUrl}/game/${props.gameName}/transaction/prices?coinName=${selectedCoin}`,
+          authorization(localStorage.getItem("token"))
+        );
+
+        setCoinPrice(price.data);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      setCoinPrice(null);
+    }
+  };
+
   useEffect(() => {
     props.connection.on("OrdersChanged", () => {
       GetBuyOrders(buyOrdersCount);
       GetSellOrders(sellOrdersCount);
+      GetPrice();
     });
+
+    GetPrice();
 
     return () => {
       props.connection.off("OrdersChanged");
@@ -112,21 +133,16 @@ function Orders(props) {
     <div className={classes.orders}>
       <div className={classes["orders__header"]}>
         <h2>
-          <p>
-            <span className={classes.buy}>Buy</span> Price:{" "}
-            {sellOrders && sellOrders.length > 0 && selectedCoin
-              ? showDecimal(sellOrders[0].price, 4) + " $-" + selectedCoin
-              : "---"}
-          </p>
-          <p>
-            <span className={classes.sell}>Sell</span> Price:{" "}
-            {buyOrders && buyOrders.length > 0 && selectedCoin
-              ? showDecimal(buyOrders[0].price, 4) + " $-" + selectedCoin
-              : "---"}
-          </p>
+          {coinPrice ? (
+            <p>
+              {showPrecison(coinPrice.price)} $-{selectedCoin}
+            </p>
+          ) : (
+            "Price: ---"
+          )}
         </h2>
         <div className={classes["orders__header__list"]}>
-          {playerInfo.playerCoins.map((coin, index) => (
+          {playerInfo.playerCoins.map((coin) => (
             <div
               key={coin.name}
               className={`${classes.coin} ${
@@ -164,12 +180,7 @@ function Orders(props) {
             <div className={classes["orders__lists__column__list"]}>
               {/* Sell orders in buy column */}
               {sellOrders.map((order) => (
-                <Order
-                  key={order.id}
-                  gameName={props.gameName}
-                  order={order}
-                  playerInfo={playerInfo}
-                />
+                <Order key={order.id} gameName={props.gameName} order={order} />
               ))}
             </div>
           </div>
@@ -177,12 +188,7 @@ function Orders(props) {
             <div className={classes["orders__lists__column__list"]}>
               {/* Buy orders in sell column */}
               {buyOrders.map((order) => (
-                <Order
-                  key={order.id}
-                  gameName={props.gameName}
-                  order={order}
-                  playerInfo={playerInfo}
-                />
+                <Order key={order.id} gameName={props.gameName} order={order} />
               ))}
             </div>
           </div>
@@ -206,7 +212,6 @@ function Orders(props) {
                     key={order.id}
                     gameName={props.gameName}
                     order={order}
-                    playerInfo={playerInfo}
                   />
                 ))}
               </div>
@@ -228,7 +233,6 @@ function Orders(props) {
                     key={order.id}
                     gameName={props.gameName}
                     order={order}
-                    playerInfo={playerInfo}
                   />
                 ))}
               </div>

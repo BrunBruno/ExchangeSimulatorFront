@@ -178,6 +178,15 @@
   .manage {
     width: 80%;
 
+    &__button {
+      width: 4rem;
+
+      p {
+        font-size: 3rem;
+        right: 1rem;
+      }
+    }
+
     &__content {
       padding-top: 12rem;
 

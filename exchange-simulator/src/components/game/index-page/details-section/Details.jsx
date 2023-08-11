@@ -70,7 +70,7 @@ function Details(props) {
       {selectedoption === DetailsOptions.stats ? (
         <Stats playerInfo={props.playerInfo} />
       ) : selectedoption === DetailsOptions.ranking ? (
-        <Ranking gameName={props.gameName} />
+        <Ranking gameName={props.gameName} playerInfo={props.playerInfo} />
       ) : selectedoption === DetailsOptions.plot ? (
         <Plot />
       ) : (

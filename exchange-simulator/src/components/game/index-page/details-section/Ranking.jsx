@@ -35,11 +35,21 @@ function Ranking(props) {
           <p>Trades</p>
         </li>
         {players.map((player, index) => (
-          <li key={index}>
-            <p>No {index + 1}.</p>
+          <li
+            key={index}
+            style={
+              player.name === props.playerInfo.name ? { color: "#51cf66" } : {}
+            }
+          >
+            {player.name === props.playerInfo.name ? (
+              <p>You</p>
+            ) : (
+              <p> No {index + 1}.</p>
+            )}
+
             <p>{showDecimal(player.balance, 2)} $</p>
             <p>{showDecimal(player.turnOver, 2)} $</p>
-            <p>{player.tradesQuantity}</p>
+            <p>{player.trades}</p>
           </li>
         ))}
       </ul>

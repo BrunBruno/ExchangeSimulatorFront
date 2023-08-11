@@ -15,6 +15,9 @@ import LoadingPage from "../../Shared/pages/loading-page/LoadingPage";
 import ManageOrders from "./manage-orders-section/ManageOrders";
 import Details from "./details-section/Details";
 import Messenger from "./messenger/Messenger";
+import Tutorial from "./tutorial-section/Tutorial";
+
+import GuideSvg from "../../Shared/svgs/GuideSvg";
 
 function GamePage() {
   const connectionRef = useRef(null);
@@ -23,7 +26,8 @@ function GamePage() {
 
   const [gameName, setGameName] = useState(sessionStorage.getItem("gameName"));
   const [playerInfo, setPlayerInfo] = useState(null);
-  const [coinsPrice, setCoinsPrice] = useState(null);
+
+  const [tutorialVisible, setTutorialVisible] = useState(false);
 
   const [infoPpupRef, popupContent, setPopupContent] = usePopup(
     classes["hidden-popup"]
@@ -67,23 +71,9 @@ function GamePage() {
     }
   };
 
-  const GetPrices = async () => {
-    try {
-      const prices = await axios.get(
-        `${baseUrl}/game/${gameName}/transaction/prices`,
-        authorization(localStorage.getItem("token"))
-      );
-
-      setCoinsPrice(prices.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     connectionInit();
     GetPlayerInfo();
-    GetPrices();
 
     return () => {
       if (connectionRef.current) {
@@ -114,7 +104,6 @@ function GamePage() {
           <Panel
             gameName={gameName}
             playerInfo={playerInfo}
-            prices={coinsPrice}
             connection={connectionRef.current}
             GetOwnerOrders={GetOwnerOrders}
           />
@@ -143,7 +132,20 @@ function GamePage() {
           )}
           <Details gameName={gameName} playerInfo={playerInfo} />
         </div>
+        <div
+          className={classes["tutorial-button"]}
+          onClick={() => {
+            setTutorialVisible(true);
+          }}
+        >
+          <GuideSvg />
+          <span>See tutorial</span>
+        </div>
         <Messenger playerInfo={playerInfo} />
+        <Tutorial
+          tutorialVisible={tutorialVisible}
+          setTutorialVisible={setTutorialVisible}
+        />
       </div>
       <div
         ref={infoPpupRef}
