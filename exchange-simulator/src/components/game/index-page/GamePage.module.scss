@@ -11,6 +11,18 @@
     grid-template-columns: 60% 40%;
     transition: all 0.3s;
 
+    &__info {
+      @include absoluteCenter;
+      @include roundedBlock(2rem, 2rem);
+      background-color: $main-color9;
+      font-size: 2rem;
+      z-index: 100;
+    }
+
+    .hidden-info {
+      display: none;
+    }
+
     &__column {
       position: relative;
       width: 100%;

@@ -89,7 +89,7 @@ function CreateLimitOrder(props) {
         return;
       }
 
-      await axios.post(
+      const response = await axios.post(
         `${baseUrl}/game/${props.gameName}/order/${
           orderType === OrderTypes.buy ? "limit-buy" : "limit-sell"
         }`,
@@ -97,10 +97,20 @@ function CreateLimitOrder(props) {
         authorization(localStorage.getItem("token"))
       );
 
+      const transations = await axios.get(
+        `${baseUrl}/game/${props.gameName}/transaction/realized/${response.data}`,
+        authorization(localStorage.getItem("token"))
+      );
+
       setPrice(0);
       setQuantity(0);
 
       props.GetOwnerOrders();
+
+      props.setPopupContent("Order created");
+
+      props.setTransactionsInfo(transations.data);
+      console.log(transations);
     } catch (err) {
       console.log(err);
     }

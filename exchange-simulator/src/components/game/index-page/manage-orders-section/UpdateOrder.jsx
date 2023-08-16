@@ -14,11 +14,10 @@ function UpdateOrder(props) {
     return;
   }
 
+  console.log(props.order);
+
   const priceRef = useRef(null);
   const quantityRef = useRef(null);
-
-  const [orderType, setOrderType] = useState(-1);
-  const [selectedCoin, setSelectedCoin] = useState(0);
 
   const [price, setPrice] = useState(props.order.price);
   const [quantity, setQuantity] = useState(props.order.quantity);
@@ -41,7 +40,6 @@ function UpdateOrder(props) {
           order.price * order.quantity <
           0
       ) {
-        console.log("Insufficient assets.");
         priceRef.current.classList.add(classes.error);
         priceRef.current.placeholder = "Insufficient assets.";
         priceRef.current.value = "";
@@ -80,7 +78,9 @@ function UpdateOrder(props) {
       }
 
       await axios.put(
-        `${baseUrl}/game/${props.gameName}/order/${order.orderId}`,
+        `${baseUrl}/game/${props.gameName}/order/${order.orderId}/${
+          props.order.type === OrderTypes.buy ? "limit-buy" : "limit-sell"
+        }`,
         order,
         authorization(localStorage.getItem("token"))
       );

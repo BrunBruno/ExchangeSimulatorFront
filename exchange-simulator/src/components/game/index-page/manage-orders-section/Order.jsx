@@ -21,10 +21,10 @@ function Order(props) {
     }
   };
 
-  const UpdateOrderStatus = async (order) => {
+  const FreezeOrder = async () => {
     try {
       await axios.patch(
-        `${baseUrl}/game/${props.gameName}/order/${order.id}`,
+        `${baseUrl}/game/${props.gameName}/order/${props.order.id}/freeze`,
         {},
         authorization(localStorage.getItem("token"))
       );
@@ -61,17 +61,11 @@ function Order(props) {
       </p>
       <div className={classes.buttons}>
         {props.order.status === OrderStatus.freeze ? (
-          <button
-            onClick={() => {
-              UpdateOrderStatus(props.order);
-            }}
-          >
-            Publish
-          </button>
+          <button onClick={() => {}}>Publish</button>
         ) : (
           <button
             onClick={() => {
-              UpdateOrderStatus(props.order);
+              FreezeOrder();
             }}
           >
             Unpublish

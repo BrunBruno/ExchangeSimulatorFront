@@ -18,16 +18,19 @@ import Messenger from "./messenger/Messenger";
 import Tutorial from "./tutorial-section/Tutorial";
 
 import GuideSvg from "../../Shared/svgs/GuideSvg";
+import { info } from "sass";
 
 function GamePage() {
   const connectionRef = useRef(null);
   const manageOrdersRef = useRef(null);
   const gridRef = useRef(null);
+  const infoRef = useRef(null);
 
   const [gameName, setGameName] = useState(sessionStorage.getItem("gameName"));
   const [playerInfo, setPlayerInfo] = useState(null);
 
   const [tutorialVisible, setTutorialVisible] = useState(false);
+  const [transactionsInfo, setTransactionsInfo] = useState(null);
 
   const [infoPpupRef, popupContent, setPopupContent] = usePopup(
     classes["hidden-popup"]
@@ -47,7 +50,6 @@ function GamePage() {
     await connection.invoke("JoinGame", gameName);
 
     connection.on("OrdersChanged", () => {
-      console.log("shoudl  chnage");
       GetPlayerInfo();
     });
   };
@@ -92,6 +94,12 @@ function GamePage() {
     onExpandElement(gridRef, classes["hidden-details"]);
   };
 
+  useEffect(() => {
+    if (transactionsInfo && transactionsInfo.lenght > 0 && infoRef.current) {
+      infoRef.current.classList.remove(classes["hidden-info"]);
+    }
+  }, [transactionsInfo]);
+
   if (!playerInfo) {
     return <LoadingPage />;
   }
@@ -100,12 +108,34 @@ function GamePage() {
     <div className={classes.container}>
       <Header />
       <div ref={gridRef} className={classes["container__grid"]}>
+        <div
+          ref={infoRef}
+          className={`${classes["container__grid__info"]} ${classes["hidden-info"]}`}
+          onClick={() => {
+            setTransactionsInfo(null);
+            infoRef.current.classList.add(classes["hidden-info"]);
+          }}
+        >
+          {transactionsInfo !== null &&
+            transactionsInfo.map((info, index) => (
+              <div key={index}>
+                {info.moneyAmount !== null && (
+                  <p>Money Amount: {info.moneyAmount}</p>
+                )}
+                {info.coinAmount !== null && (
+                  <p>Coin Amount: {info.coinAmount}</p>
+                )}
+              </div>
+            ))}
+        </div>
         <div className={classes["container__grid__column"]}>
           <Panel
             gameName={gameName}
             playerInfo={playerInfo}
             connection={connectionRef.current}
             GetOwnerOrders={GetOwnerOrders}
+            setPopupContent={setPopupContent}
+            setTransactionsInfo={setTransactionsInfo}
           />
           <Orders
             gameName={gameName}

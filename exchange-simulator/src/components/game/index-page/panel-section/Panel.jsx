@@ -70,6 +70,8 @@ function Panel(props) {
         limitFormRef={limitFormRef}
         marketFormRef={marketFormRef}
         onExpandPanel={onExpandPanel}
+        setPopupContent={props.setPopupContent}
+        setTransactionsInfo={props.setTransactionsInfo}
       />
       <CreateMarketOrder
         gameName={props.gameName}
@@ -80,6 +82,8 @@ function Panel(props) {
         limitFormRef={limitFormRef}
         marketFormRef={marketFormRef}
         onExpandPanel={onExpandPanel}
+        setPopupContent={props.setPopupContent}
+        setTransactionsInfo={props.setTransactionsInfo}
       />
     </div>
   );
