@@ -10,14 +10,13 @@ import axios from "axios";
 
 import { onExpandElement } from "../../../Shared/functions/components-function";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
-import { OrderTypes, OrderStatus } from "../GamePageOptions";
+import { OrderTypes } from "../GamePageOptions";
 
 import classes from "./ManageOrders.module.scss";
 
 import LoadingPage from "../../../Shared/pages/loading-page/LoadingPage";
 import UpdateOrder from "./UpdateOrder";
 
-import FreezeSvg from "../../../Shared/svgs/FreezeSvg";
 import Order from "./Order";
 
 const ManageOrders = forwardRef((props, ref) => {
@@ -90,6 +89,7 @@ const ManageOrders = forwardRef((props, ref) => {
             setSelectedOrder={setSelectedOrder}
             GetOrders={GetOrders}
             gameName={props.gameName}
+            setPopupContent={props.setPopupContent}
           />
         </div>
         <div className={classes["manage__content__header"]}>
@@ -126,6 +126,8 @@ const ManageOrders = forwardRef((props, ref) => {
               onSelectOrder={onSelectOrder}
               gameName={props.gameName}
               GetOrders={GetOrders}
+              playerInfo={props.playerInfo}
+              setPopupContent={props.setPopupContent}
             />
           ))}
         </div>

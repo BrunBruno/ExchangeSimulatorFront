@@ -149,6 +149,7 @@ function GamePage() {
             gameName={gameName}
             playerInfo={playerInfo}
             connection={connectionRef.current}
+            setPopupContent={setPopupContent}
           />
           {window.innerWidth <= 800 ? (
             <div

@@ -5,7 +5,10 @@ import axios from "axios";
 import { baseUrl, authorization } from "../../../Shared/options/ApiOptions";
 import { onExpandElement } from "../../../Shared/functions/components-function";
 import { OrderTypes } from "../GamePageOptions";
-import { randomColor } from "../../../Shared/functions/extra-functions";
+import {
+  randomColor,
+  showPrecison,
+} from "../../../Shared/functions/extra-functions";
 
 import panelClasses from "./Panel.module.scss";
 import classes from "./CreateLimitOrder.module.scss";

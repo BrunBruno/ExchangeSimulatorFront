@@ -30,6 +30,69 @@ function Order(props) {
       );
 
       props.GetOrders();
+
+      props.setPopupContent("Unpublished.");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onOrderUpdate = async () => {
+    try {
+      const order = {
+        gameName: props.gameName,
+        orderId: props.order.id,
+        price: props.order.price,
+        quantity: props.order.quantity,
+      };
+
+      if (
+        props.order.type === OrderTypes.buy &&
+        props.playerInfo.totalBalance +
+          props.order.price -
+          order.price * order.quantity <
+          0
+      ) {
+        props.setPopupContent("Can not publish.");
+        return;
+      }
+
+      const coin = props.playerInfo.playerCoins.find(
+        (c) => c.name === props.order.coinName
+      );
+      if (
+        props.order.type === OrderTypes.sell &&
+        coin.totalBalance + props.order.quantity - order.quantity < 0
+      ) {
+        props.setPopupContent("Can not publish.");
+        return;
+      }
+
+      if (order.price <= 0 || order.price === "" || isNaN(order.price)) {
+        props.setPopupContent("Can not publish.");
+        return;
+      }
+
+      if (
+        order.quantity <= 0 ||
+        order.quantity === "" ||
+        isNaN(order.quantity)
+      ) {
+        props.setPopupContent("Can not publish.");
+        return;
+      }
+
+      await axios.put(
+        `${baseUrl}/game/${props.gameName}/order/${order.orderId}/${
+          props.order.type === OrderTypes.buy ? "limit-buy" : "limit-sell"
+        }`,
+        order,
+        authorization(localStorage.getItem("token"))
+      );
+
+      props.GetOrders();
+
+      props.setPopupContent("Published.");
     } catch (err) {
       console.log(err);
     }
@@ -61,7 +124,13 @@ function Order(props) {
       </p>
       <div className={classes.buttons}>
         {props.order.status === OrderStatus.freeze ? (
-          <button onClick={() => {}}>Publish</button>
+          <button
+            onClick={() => {
+              onOrderUpdate();
+            }}
+          >
+            Publish
+          </button>
         ) : (
           <button
             onClick={() => {

@@ -24,7 +24,7 @@ function Orders(props) {
   const [buyOrdersCount, setBuyOrdersCount] = useState(10);
   const [sellOrdersCount, setSellOrdersCount] = useState(10);
 
-  const [selectedCoin, setSelectedCoin] = useState("");
+  const [selectedCoin, setSelectedCoin] = useState(null);
   const [coinPrice, setCoinPrice] = useState(null);
   const [selectedType, setSelectedtype] = useState(OrderTypes.buy);
   const [playerInfo, setPlayerInfo] = useState(null);
