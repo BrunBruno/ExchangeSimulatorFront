@@ -93,6 +93,7 @@ function Browser() {
 
   useEffect(() => {
     if (location.state && location.state.title) {
+      console.log(location.state.title);
       setPageTitle(location.state.title);
       setGameType(location.state.title.toLowerCase().replace(" ", "-"));
       setNoGamesContent(<LoadingPage />);

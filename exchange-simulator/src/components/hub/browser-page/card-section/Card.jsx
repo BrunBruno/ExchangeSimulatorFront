@@ -37,7 +37,10 @@ function Card(props) {
       );
 
       navigate("/hub/current-games", {
-        state: { title: "Current Games", popup: "Game joined." },
+        state: {
+          popup: "Game joined.",
+          title: "current-games",
+        },
       });
     } catch (err) {
       passwordErrRef.current.classList.remove(classes["hidden-error"]);
@@ -49,7 +52,10 @@ function Card(props) {
 
     sessionStorage.setItem("gameName", props.game.name);
     navigate(`/game/${props.game.name}`, {
-      state: { gameName: props.game.name, popup: "Game joined." },
+      state: {
+        gameName: props.game.name,
+        popup: "Game joined.",
+      },
     });
   };
 
