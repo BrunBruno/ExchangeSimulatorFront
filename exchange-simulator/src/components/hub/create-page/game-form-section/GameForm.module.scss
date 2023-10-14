@@ -1,0 +1,190 @@
+@import "../../../Shared/css/Components.scss";
+
+// form
+.form {
+  @include flexBlock(column, 0, space-evenly, center);
+  width: 100%;
+  padding: 2rem 0;
+
+  // row
+  .row {
+    @include flexBlock(column, 2rem, start, start);
+    width: 100%;
+    padding: 1rem;
+
+    span {
+      @include flexBlock(row, 1rem, start, center);
+      font-size: 2rem;
+      white-space: nowrap;
+
+      svg {
+        height: 3rem;
+      }
+    }
+
+    input {
+      @include mainInput;
+      width: 50%;
+    }
+
+    textarea {
+      @include mainInput;
+      width: 100%;
+      height: calc(6 * 2rem);
+      text-align: left;
+      resize: none;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+      }
+    }
+
+    &__list {
+      @include flexBlock(row, 0, space-evenly, center);
+      width: 100%;
+      padding: 1rem;
+
+      .list {
+        @include flexBlock(row, 1rem, start, center);
+        @include roundedBlock(1rem, 1rem);
+        width: 80%;
+        height: 8rem;
+        border-left: solid 0.2rem $main-color0;
+        border-right: solid 0.2rem $main-color0;
+        overflow-x: scroll;
+        overflow-y: hidden;
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
+
+        .empty-list-info {
+          @include flexBlock(row, 1rem, start, center);
+          margin: auto;
+          font-size: 2rem;
+
+          svg {
+            height: 1rem;
+          }
+        }
+
+        .coin {
+          @include flexBlock(row, 0.5rem, start, center);
+          @include roundedBlock(1rem, 1rem);
+          width: fit-content;
+          height: 100%;
+          background-color: $main-color0;
+          color: $main-color9;
+          white-space: nowrap;
+          user-select: none;
+          font-size: 2rem;
+
+          img {
+            height: 3rem;
+          }
+
+          .x {
+            @include flexBlock(row, 0, center, center);
+            width: 2rem;
+            height: 100%;
+
+            svg {
+              height: 2rem;
+
+              &:hover {
+                cursor: pointer;
+                background-color: $main-color9;
+                border-radius: 100%;
+                stroke: $main-color0;
+              }
+            }
+          }
+        }
+      }
+
+      .add-button {
+        @include flexBlock(row, 0, center, center);
+        @include circleBlock(8%);
+        position: relative;
+
+        svg {
+          position: absolute;
+          background-color: $main-color9;
+          height: 80%;
+          border-radius: 100%;
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:active {
+            background-color: $main-color7;
+          }
+        }
+      }
+    }
+
+    // confirm button
+    button {
+      @include actionButton;
+      font-size: 3rem;
+      border-width: 1rem;
+      margin: 2rem;
+      transition: all 0.3s;
+      align-self: center;
+      animation: buttonAnime 2s infinite;
+
+      &:hover {
+        border-width: 1rem;
+        border-color: #992617;
+        color: #992617;
+        background-color: $grey-color0;
+        animation: none;
+        filter: invert(1);
+      }
+    }
+
+    @keyframes buttonAnime {
+      0% {
+        box-shadow: 0 0 1rem 0rem #fff;
+      }
+
+      50% {
+        box-shadow: 0 0 1rem 1rem #fff;
+      }
+
+      100% {
+        box-shadow: 0 0 1rem 0rem #fff;
+      }
+    }
+  }
+  // end row
+}
+// end form
+
+// mobile layout
+@media (max-width: 800px) {
+  .form {
+    gap: 2rem;
+
+    .row {
+      position: relative;
+
+      span {
+        font-size: 3rem;
+      }
+
+      input {
+        font-size: 3rem;
+        align-self: center;
+      }
+
+      button {
+        left: 50%;
+        font-size: 4rem;
+        border-width: 0.5rem;
+      }
+    }
+  }
+}
+// end mobile layout

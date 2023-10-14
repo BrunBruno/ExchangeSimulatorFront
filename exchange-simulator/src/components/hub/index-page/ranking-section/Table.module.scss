@@ -1,4 +1,4 @@
-@import "../../../Shared/Variables.scss";
+@import "../../../Shared/css/Components.scss";
 
 // table
 .table {
@@ -8,6 +8,8 @@
   grid-template-columns: 1fr;
   grid-template-rows: 9% 91%;
   overflow: hidden;
+  border-radius: 2rem;
+  padding: 2rem;
 
   // table header
   &__header {

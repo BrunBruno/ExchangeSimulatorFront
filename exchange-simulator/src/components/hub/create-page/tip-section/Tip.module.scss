@@ -1,4 +1,4 @@
-@import "../../../Shared/Variables.scss";
+@import "../../../Shared/css/Components.scss";
 
 // intro container
 .intro {
@@ -24,9 +24,14 @@
     transition: all 0.1s;
     background-color: $grey-color8;
     pointer-events: all;
+    text-align: justify;
 
     &:hover {
       cursor: pointer;
+    }
+
+    svg {
+      height: 2rem;
     }
   }
 

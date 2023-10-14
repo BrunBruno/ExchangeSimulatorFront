@@ -1,0 +1,204 @@
+@import "../../../Shared/css/Components.scss";
+
+// manage conatiner
+.manage {
+  @include flexBlock(row, 0, end, end);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 44%;
+  height: 80%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+
+  // container button
+  &__button {
+    position: relative;
+    background-color: $grey-color8;
+    border-bottom-left-radius: 2rem;
+    width: 3rem;
+    height: 100%;
+    z-index: 4;
+    pointer-events: all;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-color7;
+    }
+
+    p {
+      position: absolute;
+      width: 2rem;
+      bottom: 2rem;
+      right: 0.5rem;
+      font-size: 2rem;
+      rotate: -90deg;
+    }
+  }
+  // end container button
+
+  // content
+  &__content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: $grey-color9;
+    padding: 2rem;
+    padding-top: 8rem;
+    overflow: hidden;
+    pointer-events: all;
+    border-bottom: solid 0.5rem $grey-color8;
+    transition: all 0.3s;
+
+    // header
+    &__header {
+      @include flexBlock(row, 2rem, start, center);
+      height: 6rem;
+      padding-bottom: 2rem;
+
+      h2 {
+        font-size: 3rem;
+      }
+
+      //radios
+      .radios {
+        @include flexBlock(row, 0, space-evenly, center);
+        // background-color: blue;
+
+        label {
+          cursor: pointer;
+          display: inline-block;
+          user-select: none;
+
+          input[type="radio"] {
+            display: none;
+          }
+
+          span {
+            display: inline-block;
+            border: solid 0.2rem $grey-color0;
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 0.5rem 0 0 #000;
+            transition: all 0.1s;
+
+            &:hover {
+              background-color: $grey-color8;
+            }
+          }
+
+          .buy {
+            color: $success-color;
+            border-color: $success-color;
+            border-bottom-left-radius: 1rem;
+            border-top-left-radius: 1rem;
+          }
+          .sell {
+            color: $danger-color;
+            border-color: $danger-color;
+            border-bottom-right-radius: 1rem;
+            border-top-right-radius: 1rem;
+          }
+
+          input[type="radio"]:checked ~ .buy {
+            color: $grey-color9;
+            background-color: $success-color;
+            margin-top: 0.5rem;
+            box-shadow: none;
+          }
+          input[type="radio"]:checked ~ .sell {
+            color: $grey-color9;
+            background-color: $danger-color;
+            margin-top: 0.5rem;
+            box-shadow: none;
+          }
+        }
+      }
+      // end radois
+    }
+    // end header
+
+    // order list
+    .order-list {
+      @include flexBlock(column, 0.5rem, start, center);
+      width: 100%;
+      height: calc(100% - 5rem);
+      overflow-y: scroll;
+      overflow-x: hidden;
+      padding-right: 0.5rem;
+
+      &::-webkit-scrollbar {
+        background-color: #0000;
+        width: 1rem;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #000;
+        border-radius: 1rem;
+      }
+    }
+    // end order list
+
+    // update modal
+    &__update {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80%;
+      height: 36rem;
+      z-index: 3;
+      background-color: $grey-color9;
+      border-left: solid 0.5rem $grey-color8;
+      border-bottom: solid 0.5rem $grey-color8;
+      border-bottom-left-radius: 1rem;
+      padding: 2rem;
+      padding-top: 8rem;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    // end update modal
+
+    .hidden-update {
+      width: 0;
+      padding: 0;
+      border: none;
+      padding-top: 8rem;
+    }
+  }
+  // end content
+
+  .hidden-content {
+    padding: 0;
+    width: 0;
+  }
+}
+// end manag conatiner
+
+@media (max-width: 800px) {
+  .manage {
+    width: 80%;
+
+    &__button {
+      width: 4rem;
+
+      p {
+        font-size: 3rem;
+        right: 1rem;
+      }
+    }
+
+    &__content {
+      padding-top: 12rem;
+
+      .order-list {
+        .order {
+          .buttons {
+            button {
+              font-size: 1.6rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

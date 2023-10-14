@@ -1,0 +1,94 @@
+@import "../../../Shared/css/Components.scss";
+
+.order {
+  position: relative;
+  width: 100%;
+  padding: 1rem;
+  border-bottom: solid 0.3rem $grey-color8;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .freeze {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    svg {
+      height: 2rem;
+    }
+  }
+
+  h3 {
+    @include flexBlock(row, 1rem, start, center);
+    font-size: 2rem;
+
+    .buy {
+      color: $success-color;
+    }
+    .sell {
+      color: $danger-color;
+    }
+
+    img {
+      height: 2rem;
+    }
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+
+  .buttons {
+    @include flexBlock(row, 1rem, center, end);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 1rem;
+
+    button {
+      @include actionButton;
+      padding: 0.6rem 1.2rem;
+      border-width: 0.2rem;
+      color: $grey-color5;
+      border-color: $grey-color5;
+
+      &:hover {
+        border-width: 0.2rem;
+        color: $grey-color0;
+        border-color: $grey-color0;
+      }
+
+      &:last-child {
+        &:hover {
+          color: $danger-color;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .order {
+    padding-bottom: 6rem;
+
+    h3 {
+      font-size: 2.6rem;
+
+      img {
+        height: 2.2rem;
+      }
+    }
+
+    p {
+      font-size: 2rem;
+    }
+
+    .buttons {
+      button {
+        font-size: 2rem;
+      }
+    }
+  }
+}

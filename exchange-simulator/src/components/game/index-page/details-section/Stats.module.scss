@@ -1,0 +1,70 @@
+@import "../../../Shared/css/Components.scss";
+
+.stats {
+  height: 100%;
+  overflow-y: scroll;
+
+  &::-webkit-scrollbar {
+    background-color: #0000;
+    width: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 1rem;
+  }
+
+  h3 {
+    font-size: 2.5rem;
+    margin-top: 1rem;
+  }
+
+  p {
+    @include flexBlock(row, 1rem, start, center);
+    font-size: 2rem;
+
+    span {
+      color: $grey-color5;
+    }
+
+    .buy {
+      color: $success-color;
+    }
+    .sell {
+      color: $danger-color;
+    }
+  }
+
+  .coin {
+    margin: 1rem;
+
+    p {
+      @include flexBlock(row, 1rem, start, center);
+      font-size: 2rem;
+      padding-left: 3rem;
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      span {
+        color: $grey-color5;
+      }
+
+      img {
+        height: 2rem;
+      }
+
+      svg {
+        height: 2rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .stats {
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import "../../../Shared/css/Components.scss";
+
+.order {
+  @include roundedBlock(1rem, 1rem 2rem);
+  position: relative;
+  width: 100%;
+  background-color: rgba(#000, 0.1);
+  transition: all 0.1s;
+
+  &:hover {
+    background-color: rgba(#000, 0.2);
+  }
+
+  &:last-child {
+    margin-bottom: 10rem;
+  }
+
+  h3 {
+    @include flexBlock(row, 1rem, start, center);
+    font-size: 2.2rem;
+
+    img {
+      height: 2rem;
+    }
+
+    .buy {
+      color: $success-color;
+    }
+    .sell {
+      color: $danger-color;
+    }
+  }
+
+  p {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 800px) {
+  .order {
+    padding: 2rem;
+    padding-bottom: 6rem;
+
+    h3 {
+      font-size: 3.2rem;
+
+      img {
+        height: 3.2rem;
+      }
+    }
+
+    p {
+      font-size: 2.2rem;
+    }
+  }
+}

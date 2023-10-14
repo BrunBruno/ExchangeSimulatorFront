@@ -1,0 +1,40 @@
+@import "../../../Shared/css/Components.scss";
+
+.pagination {
+  @include flexBlock(row, 1rem, center, center);
+  width: 100%;
+  padding: 1rem;
+  background-color: $grey-color9;
+  z-index: 2;
+
+  button {
+    @include flexBlock(row, 0, center, center);
+    @include mainButton;
+    padding: 0.5rem;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+
+    svg {
+      height: 1.2rem;
+    }
+  }
+
+  .currentPage {
+    @include seconadryButton;
+    padding: 0.5rem;
+    height: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+  }
+}
+
+@media (max-width: 800px) {
+  .pagination {
+    button {
+      svg {
+        height: 1.6rem;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-@import "../../../Shared/Variables.scss";
+@import "../../../Shared/css/Components.scss";
 
 // games container
 .games {
@@ -92,7 +92,12 @@
         position: relative;
         background-color: #000;
         height: 100%;
-        padding-bottom: 8rem;
+        padding-bottom: 6rem;
+
+        &:hover > button {
+          opacity: 1;
+          transition: opacity 0.5s;
+        }
 
         h3 {
           font-size: 4rem;
@@ -105,11 +110,13 @@
         }
 
         button {
-          @include actionButton(25%);
+          @include arrowButton(2rem);
           position: absolute;
           bottom: 0;
           right: 0;
           margin: 2rem;
+          opacity: 0;
+          transition: opacity 0.5s;
         }
       }
       // end cards content
@@ -140,6 +147,14 @@
         @for $i from 1 through 3 {
           &:nth-child(#{$i}) {
             transition: all 1s 0s;
+          }
+        }
+
+        &__content {
+          padding-bottom: 10rem;
+
+          button {
+            opacity: 1;
           }
         }
       }

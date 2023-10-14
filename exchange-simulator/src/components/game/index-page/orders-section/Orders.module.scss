@@ -1,0 +1,179 @@
+@import "../../../Shared/css/Components.scss";
+
+.orders {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 16rem auto;
+
+  &__header {
+    @include flexBlock(row, 1rem, space-between, end);
+    padding: 2rem;
+    padding-left: 5rem;
+    padding-bottom: 0;
+    background-color: $grey-color9;
+
+    h2 {
+      @include flexBlock(row, 1rem, start, start);
+      font-size: 3rem;
+      padding-bottom: 2rem;
+    }
+
+    &__list {
+      @include flexBlock(row, 1rem, center, center);
+      padding-bottom: 2rem;
+      overflow: hidden;
+
+      .coin {
+        position: relative;
+        filter: brightness(30%);
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        img {
+          height: 4rem;
+        }
+
+        svg {
+          height: 4.6rem;
+        }
+
+        span {
+          position: absolute;
+          left: 50%;
+          top: 200%;
+          transform: translateX(-50%);
+          font-size: 1.2rem;
+          transition: all 0.3s;
+        }
+
+        &:hover > span {
+          top: 100%;
+        }
+      }
+
+      .selected-coin {
+        filter: brightness(100%);
+      }
+
+      .coin:not(.selected-coin):hover {
+        filter: brightness(60%);
+      }
+    }
+  }
+
+  &__lists {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 100%;
+    padding: 5rem 1rem 5rem 3rem;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 4rem;
+      border-top-right-radius: 4rem;
+      border-top: solid 0.5rem $grey-color8;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 4rem;
+      height: 100%;
+      border-top-right-radius: 4rem;
+      box-shadow: 0 -4rem 0 0 $grey-color9;
+      background-color: #0000;
+      border-right: solid 0.5rem $grey-color8;
+      border-top: solid 0.5rem $grey-color8;
+    }
+
+    &__column {
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+
+      &__list {
+        @include flexBlock(column, 1rem, start, center);
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+          background-color: #0000;
+          width: 1rem;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(#000, 0.3);
+          border-radius: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .orders {
+    grid-template-rows: 20rem auto;
+
+    &__header {
+      padding: 2rem 6rem 0 6rem;
+    }
+
+    &__lists {
+      display: flex;
+      padding: 1rem 3rem;
+
+      &__column {
+        @include flexBlock(column, 0, center, center);
+        padding: 1rem;
+
+        &__list {
+          &::-webkit-scrollbar {
+            width: 0;
+          }
+
+          &::after {
+            display: none;
+          }
+          &::before {
+            display: none;
+          }
+        }
+
+        &__change {
+          @include flexBlock(row, 0, center, center);
+          width: 100%;
+          height: 10rem;
+
+          p {
+            font-size: 4rem;
+            white-space: nowrap;
+            font-weight: 800;
+            text-shadow: 1px 1px #000;
+          }
+
+          .buy {
+            color: $success-color;
+          }
+          .sell {
+            color: $danger-color;
+          }
+        }
+      }
+    }
+  }
+}

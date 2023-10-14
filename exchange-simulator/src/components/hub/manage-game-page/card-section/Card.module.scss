@@ -1,0 +1,101 @@
+@import "../../../Shared/css/Components.scss";
+
+.card {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 38% 62%;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateX(12%);
+    cursor: pointer;
+  }
+
+  &:hover .arrow {
+    opacity: 1;
+  }
+
+  &__column {
+    width: 100%;
+    padding: 1.6rem;
+
+    &:first-child {
+      @include flexBlock(column, 0.5rem, start, start);
+      background-color: $main-color8;
+      color: $main-color1;
+      border-top-left-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+
+      h3 {
+        font-size: 2.4rem;
+        width: 1px;
+        min-width: 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      h5 {
+        font-size: 1.8rem;
+
+        .available {
+          color: $main-color3;
+        }
+        .active {
+          color: $success-color;
+        }
+        .finished {
+          color: $danger-color;
+        }
+      }
+    }
+
+    &:last-child {
+      position: relative;
+      background-color: $main-color1;
+      color: $main-color8;
+
+      .date {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        border: none;
+      }
+
+      p {
+        font-size: 1.6rem;
+      }
+
+      .indicator {
+        height: 1rem;
+        width: 50%;
+        background-color: #0000;
+        border: solid 0.3rem $main-color8;
+        border-radius: 1rem;
+        margin-top: 1rem;
+
+        &__fill {
+          height: 100%;
+          background-color: $main-color8;
+        }
+      }
+    }
+
+    .arrow {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translate(-150%, -50%);
+
+      opacity: 0;
+      transition: all 0.75s 0.15s;
+
+      svg {
+        height: 4rem;
+      }
+    }
+  }
+}

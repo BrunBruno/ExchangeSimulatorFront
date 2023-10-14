@@ -2,31 +2,26 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import baseUrl from "../Shared/Url";
+import { baseUrl, authorization } from "../Shared/options/ApiOptions";
 
-import CreateGame from "./create-page/CreateGame";
+import CreateGamePage from "./create-page/CreateGamePage";
 import HubPage from "./index-page/HubPage";
-import Browser from "./browser-page/Browser";
-import LoadingPage from "../Shared/LoadingPage";
-import Manage from "./manage-page/Manage";
+import BrowserPage from "./browser-page/BrowserPage";
+import LoadingPage from "../Shared/pages/loading-page/LoadingPage";
+import ManageGamePage from "./manage-game-page/ManageGamePage";
 
 function HubRouter() {
-  const [authorize, setAuthorize] = useState(false);
   const navigate = useNavigate();
+
+  const [authorize, setAuthorize] = useState(false);
 
   useEffect(() => {
     const verifyUsersToken = async () => {
-      const token = localStorage.getItem("token");
-
-      if (token) {
+      if (localStorage.getItem("token")) {
         try {
           const isEmailVerified = await axios.get(
             `${baseUrl}/user/is-verified`,
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
+            authorization(localStorage.getItem("token"))
           );
 
           if (!isEmailVerified.data.isEmailVerified) {
@@ -39,11 +34,10 @@ function HubRouter() {
           }
 
           // get user info
-          const user = await axios.get(`${baseUrl}/user`, {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          });
+          const user = await axios.get(
+            `${baseUrl}/user`,
+            authorization(localStorage.getItem("token"))
+          );
 
           // set user info
           localStorage.setItem("userInfo", JSON.stringify(user.data));
@@ -71,11 +65,11 @@ function HubRouter() {
   return (
     <Routes>
       <Route path="/" element={<HubPage />} />
-      <Route path="/create" element={<CreateGame />} />
-      <Route path="/manage" element={<Manage />} />
-      <Route path="/current-games" element={<Browser />} />
-      <Route path="/available-games" element={<Browser />} />
-      <Route path="/previous-games" element={<Browser />} />
+      <Route path="/create" element={<CreateGamePage />} />
+      <Route path="/manage" element={<ManageGamePage />} />
+      <Route path="/current-games" element={<BrowserPage />} />
+      <Route path="/available-games" element={<BrowserPage />} />
+      <Route path="/previous-games" element={<BrowserPage />} />
     </Routes>
   );
 }

@@ -1,4 +1,4 @@
-@import "../../../Shared/Variables.scss";
+@import "../../../Shared/css/Components.scss";
 
 // review contaner
 .review {
@@ -13,9 +13,12 @@
     position: absolute;
     z-index: -1;
     width: 100%;
-    height: auto;
     will-change: transform;
     transform-style: preserve-3d;
+    background-image: url("../../../../../public/images/review-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 
   // section conatnet
@@ -25,7 +28,7 @@
     @include roundedBlock(4rem, 4rem);
     width: 50%;
     height: 50%;
-    background-color: rgba(#000, 0.9);
+    background-color: rgba(#000, 0.7);
     background-image: linear-gradient(
       60deg,
       #0000 40%,
@@ -36,6 +39,7 @@
     overflow: hidden;
     white-space: nowrap;
     transition: all 1s;
+    backdrop-filter: blur(0.5rem);
     animation: bgAnimation 5s infinite;
 
     p {
@@ -93,6 +97,7 @@
     &__content {
       width: 60%;
       height: 60%;
+      animation: none;
     }
   }
 }

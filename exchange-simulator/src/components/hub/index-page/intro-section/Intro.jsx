@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
+
 import classes from "./Intro.module.scss";
+
+import Logo from "../../../Shared/svgs/Logo";
+
 import Bar from "./Bar";
-import Logo from "../../../Shared/Logo";
 
 function Intro() {
   const introRef = useRef(null);

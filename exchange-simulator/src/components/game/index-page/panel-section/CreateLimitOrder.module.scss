@@ -1,0 +1,272 @@
+@import "../../../Shared/css/Components.scss";
+@import "./Panel.module.scss";
+
+.limit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  height: 18rem;
+  pointer-events: none;
+
+  transition: top 0.3s, z-index 0s;
+
+  &:hover {
+    z-index: 8 !important;
+  }
+
+  .actions {
+    @include flexBlock(row, 0, space-between, start);
+    background-color: $grey-color9;
+    padding: 2rem;
+    padding-top: 7rem;
+    width: 80%;
+    overflow: hidden;
+    z-index: 6;
+    pointer-events: all;
+    transition: all 0.3s;
+
+    h1 {
+      font-size: 4rem;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .buttons {
+      @include flexBlock(row, 4rem, end, end);
+
+      button {
+        font-size: 3rem;
+        padding: 1rem 2rem;
+        border-radius: 2rem;
+        background-color: rgba(#000, 0.2);
+
+        &:first-child {
+          color: $success-color;
+          border: solid 0.3rem $success-color;
+
+          &:hover {
+            background-color: $success-color;
+          }
+        }
+        &:last-child {
+          color: $danger-color;
+          border: solid 0.3rem $danger-color;
+
+          &:hover {
+            background-color: $danger-color;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+          color: #000;
+          border-color: #000;
+        }
+      }
+    }
+  }
+
+  .hanlder {
+    position: relative;
+    background-color: $grey-color8;
+    border-top-right-radius: 2rem;
+    border-bottom-right-radius: 2rem;
+    width: 3rem;
+    z-index: 6;
+    pointer-events: all;
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey-color7;
+    }
+
+    p {
+      position: absolute;
+      width: 2rem;
+      bottom: 8rem;
+      left: 0.5rem;
+      font-size: 2rem;
+      rotate: 90deg;
+      user-select: none;
+    }
+  }
+
+  .expand {
+    position: absolute;
+    top: 0;
+    height: calc(200%);
+    left: calc(20%);
+    width: 60%;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg);
+    display: grid;
+    grid-template-rows: 50% auto;
+    z-index: 5;
+    pointer-events: all;
+    transition: all 0.3s;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -4rem;
+      top: 50%;
+      width: 4rem;
+      height: 50%;
+      border-top-right-radius: 4rem;
+      background-color: #0000;
+      box-shadow: 0 -4rem 0 0 $grey-color9;
+    }
+
+    .form {
+      @include flexBlock(column, 2rem, start, center);
+      padding: 4rem;
+      padding-top: 1rem;
+      background-color: $grey-color9;
+      border-bottom-left-radius: 2rem;
+      border-bottom-right-radius: 2rem;
+
+      h2 {
+        @include flexBlock(row, 2rem, start, center);
+        position: relative;
+        align-self: start;
+        font-size: 3rem;
+
+        .buy {
+          color: $success-color;
+        }
+        .sell {
+          color: $danger-color;
+        }
+
+        .icon {
+          @include flexBlock(column, 0, center, center);
+
+          img {
+            height: 3rem;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+
+          svg {
+            height: 4rem;
+          }
+        }
+
+        .coin-list {
+          @include roundedBlock(0.6rem, 0.6rem);
+          position: absolute;
+          top: 0;
+          left: calc(100% + 2rem);
+          background-color: $grey-color1;
+          color: $grey-color9;
+          z-index: 10;
+          border: solid 0.2rem $grey-color2;
+
+          p {
+            @include flexBlock(row, 0.5rem, start, center);
+            font-size: 1.6rem;
+            background-color: $grey-color1;
+            padding: 0.5rem;
+
+            &:hover {
+              cursor: pointer;
+              background-color: $grey-color9;
+              color: $grey-color0;
+            }
+
+            img {
+              height: 1.2rem;
+            }
+
+            .coin {
+              width: 2rem;
+              height: 2rem;
+              svg {
+                height: 100%;
+              }
+            }
+          }
+        }
+
+        .hidden-list {
+          display: none;
+        }
+      }
+
+      .input {
+        position: relative;
+
+        input {
+          @include mainInput;
+          text-align: start;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none;
+        }
+
+        .error::placeholder {
+          color: $danger-color;
+        }
+
+        p {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+          margin-left: 2rem;
+        }
+
+        span {
+          position: absolute;
+          right: 2rem;
+          top: calc(50% + 1.5rem);
+          transform: translateY(-50%);
+          font-size: 2rem;
+          color: $main-color9;
+          font-weight: 600;
+        }
+
+        .max {
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .buttons {
+        @include flexBlock(row, 1rem, end, center);
+        width: 100%;
+
+        button {
+          @include actionButton;
+          font-size: 1.6rem;
+          padding: 0.8rem 1.6rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .limit {
+    height: 24rem;
+
+    .actions {
+      padding-top: 12rem;
+    }
+
+    .hanlder {
+      width: 4rem;
+
+      p {
+        font-size: 3rem;
+        left: 1rem;
+        bottom: 10rem;
+      }
+    }
+  }
+}

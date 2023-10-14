@@ -1,4 +1,4 @@
-@import "../../../Shared/Variables.scss";
+@import "../../../Shared/css/Components.scss";
 
 // ranking conatiner
 .ranking {
@@ -16,7 +16,6 @@
     // column
     &__column {
       @include flexBlock(column, 0, start, center);
-      padding: 2rem;
 
       // table
       &:nth-child(1) {
@@ -28,7 +27,7 @@
         background-position: center;
         background-size: cover;
         border-radius: 2rem;
-        border-bottom: solid 0.5rem $main-color0;
+        box-shadow: -1rem -1rem 0 0 $grey-color9;
 
         &::after {
           content: "";
@@ -47,6 +46,7 @@
       // header
       &:nth-child(2) {
         width: 30%;
+        padding: 2rem;
 
         // section title
         h2 {
